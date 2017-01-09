@@ -1,0 +1,161 @@
+var _ = require('underscore');
+var models = require('../db.js');
+var cryptojs = require('crypto-js');
+
+// GET /api/v1/users
+exports.list = function (req, res) {
+    var query = req.query;
+    var where = {};
+
+    // QUERY PARAMETERS
+
+    // email -> Email
+    if (query.hasOwnProperty('email') && query.email.length > 0) {
+        where.email = {
+            $like: '%' + query.email + '%'
+        };
+    }
+    // fn -> First Name
+    if (query.hasOwnProperty('fn') && query.fn.length > 0) {
+        where.first_name = {
+            $like: '%' + query.fn + '%'
+        };
+    }
+    // ln -> Last Name
+    if (query.hasOwnProperty('ln') && query.ln.length > 0) {
+        where.last_name = {
+            $like: '%' + query.ln + '%'
+        };
+    }
+    // type -> Type
+    if (query.hasOwnProperty('type') && query.type.length > 0) {
+        where.type = {
+            $like: '%' + query.type + '%'
+        };
+    }
+
+    models.users.findAll({
+        attributes: ['id', 'email', 'first_name', 'last_name', 'type'],
+        where: where
+    }).then(function (users) {
+        res.json(users);
+    }, function (e) {
+        res.status(500).send();
+    });
+};
+
+// GET /api/v1/users/:id
+exports.view = function (req, res) {
+    var userID = parseInt(req.params.id, 10);
+    models.users.findById(userID).then(function (user) {
+        res.json(user.toPublicJSON());
+    }, function (e) {
+        res.status(404).json(e);
+    });
+};
+
+// POST /api/v1/user
+exports.create = function (req, res) {
+    var body = _.pick(req.body, 'email', 'password', 'type');
+
+    models.users.create(body).then(function (user) {
+        var userType = _.pick(user, 'id', 'type');
+        var userDetails = _.pick(user, 'id');
+        if (userType.type == 'customer') {
+
+        } else if (userType.type == 'owner') {
+
+        } else {
+            res.json(user.toPublicJSON());
+        }
+
+    }, function (e) {
+        res.status(400).json(e);
+    });
+};
+
+// POST /api/v1/users/login
+exports.login = function (req, res) {
+    var body = _.pick(req.body, 'email', 'password');
+    var userInstance;
+
+    models.users.authenticate(body).then(function (user) {
+        var token = user.generateToken('authentication');
+        userInstance = user;
+        return models.tokens.create({
+            token: token
+        });
+
+    }).then(function(tokenInstance){
+        res.header('Auth', tokenInstance.get('token')).json(userInstance.toPublicJSON());
+    }).catch(function () {
+        res.status(401).send();
+    });
+
+};
+
+// PUT /api/v1/user/:id
+exports.update = function (req, res) {
+    var userID = parseInt(req.params.id, 10);
+    var body = _.pick(req.body, 'email', 'password', 'first_name', 'last_name');
+    var attributes = {};
+
+    if (body.hasOwnProperty('email')) {
+        attributes.email = body.email;
+    }
+
+    if (body.hasOwnProperty('password')) {
+        attributes.password = body.password;
+    }
+
+    if (body.hasOwnProperty('first_name')) {
+        attributes.first_name = body.first_name;
+    }
+
+    if (body.hasOwnProperty('last_name')) {
+        attributes.last_name = body.last_name;
+    }
+
+    models.users.findById(userID).then(function (user) {
+        if (user) {
+            user.update(attributes).then(function (user) {
+                res.json(user.toPublicJSON());
+            }, function (e) {
+                res.status(400).json(e);
+            });
+        } else {
+            res.status(404).send();
+        }
+    }, function () {
+        res.status(500).send();
+    });
+};
+
+// DELETE /api/v1/user/:id
+exports.delete = function (req, res) {
+    var userID = parseInt(req.params.id, 10);
+    models.users.destroy({
+        where: {
+            id: userID
+        }
+    }).then(function (rowsDeleted) {
+        if (rowsDeleted === 0) {
+            res.status(404).json({
+                error: 'No user found'
+            });
+        } else {
+            res.status(204).send();
+        }
+    }, function () {
+        res.status(500).send();
+    });
+};
+
+// DELETE /api/v1/users/login
+exports.logout = function (req, res) {
+    req.token.destroy({force: true}).then(function () {
+		res.status(204).send();
+	}).catch(function () {
+		res.status(500).send();
+	});
+};
