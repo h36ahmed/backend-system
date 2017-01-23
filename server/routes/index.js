@@ -8,7 +8,7 @@ var user = require('./user');
 
 // Views
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Express' });
+    res.render('index', { title: 'Lunch Society' });
 });
 
 // Users

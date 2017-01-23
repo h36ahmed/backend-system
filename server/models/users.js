@@ -10,12 +10,8 @@ Attributes:
 -> Salt
 -> Password Hash
 -> Password
--> First Name
--> Last Name
 -> Type
--> Confirmed Email? - Add It
--> Date User Joined - Add It
--> Referral Code - Add It
+-> Confirmed Email?
 
 Methods:
 -> beforeValidate: This lower cases the email to avoid duplication.
@@ -39,6 +35,7 @@ var keys = {
 };
 
 module.exports = function (sequelize, DataTypes) {
+
     var users = sequelize.define('users', {
         email: {
             type: DataTypes.STRING,
@@ -68,28 +65,20 @@ module.exports = function (sequelize, DataTypes) {
                 this.setDataValue('password_hash', hashedPassword);
             }
         },
-        first_name: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            validate: {
-                is: ["^[a-z]+$", 'i']
-            }
-        },
-        last_name: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            validate: {
-                is: ["^[a-z]+$", 'i']
-            }
-        },
         type: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                isIn: [['student', 'client', 'admin']]
+                isIn: [['owner', 'customer', 'admin']]
             }
+        },
+        confirmed_email: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
         }
     }, {
+        timestamps: false,
         hooks: {
             beforeValidate: function (user, options) {
                 if (typeof user.email === 'string') {
@@ -142,7 +131,7 @@ module.exports = function (sequelize, DataTypes) {
         instanceMethods: {
             toPublicJSON: function () {
                 var json = this.toJSON();
-                return _.pick(json, 'id', 'email', 'first_name', 'last_name', 'createdAt', 'updatedAt');
+                return _.pick(json, 'id', 'email', 'type', 'confirmed_email');
             },
             generateToken: function (type) {
                 if (!_.isString(type)) {
