@@ -36,7 +36,7 @@ Use Cases:
 module.exports = function(sequelize, DataTypes) {
     var paymentPlan = sequelize.import(__dirname + "/paymentPlans.js");
     var users = sequelize.import(__dirname + "/users.js");
-    var referralCodes = sequelize.import(__dirname + "/referralcodes.js");
+    var referralCodes = sequelize.import(__dirname + "/referralCodes.js");
 
     var customers = sequelize.define('customers', {
         first_name: {
@@ -136,7 +136,7 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             references: {
                 model: referralCodes,
-                key: 'referralCode'
+                key: 'referral_code'
             }
         },
         stripe_token: {
