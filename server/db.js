@@ -37,8 +37,8 @@ db.Sequelize = Sequelize;
 
 // ASSOCIATIONS
 
-db.customers.belongsToMany(db.meals, { as: 'Meals', through: db.customerFavorites });
-db.meals.belongsToMany(db.customers, { as: 'Customers', through: db.customerFavorites });
+/*db.customers.belongsToMany(db.meals, { as: 'Meals', through: db.customerFavorites });
+db.meals.belongsToMany(db.customers, { as: 'Customers', through: db.customerFavorites });*/
 
 module.exports = db;
 
