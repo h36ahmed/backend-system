@@ -25,6 +25,7 @@ Use Cases:
 */
 
 module.exports = function(sequelize, DataTypes) {
+    var owners = sequelize.import(__dirname + "/owners.js");
 
     var restaurants = sequelize.define('restaurants', {
         name: {
@@ -82,6 +83,15 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false
+        },
+        owner_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            unique: true,
+            references: {
+                model: owners,
+                key: 'id'
+            }
         }
     }, {
         timestamps: false

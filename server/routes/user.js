@@ -2,20 +2,6 @@ var _ = require('underscore');
 var models = require('../db.js');
 var cryptojs = require('crypto-js');
 
-/*// fn -> First Name
-if (query.hasOwnProperty('fn') && query.fn.length > 0) {
-    where.first_name = {
-        $like: '%' + query.fn + '%'
-    };
-}
-// ln -> Last Name
-if (query.hasOwnProperty('ln') && query.ln.length > 0) {
-    where.last_name = {
-        $like: '%' + query.ln + '%'
-    };
-}*/
-
-
 // GET /api/v1/users
 exports.list = function(req, res) {
     var query = req.query;
@@ -58,7 +44,11 @@ exports.list = function(req, res) {
 exports.view = function(req, res) {
     var userID = parseInt(req.params.id, 10);
     models.users.findById(userID).then(function(user) {
-        res.json(user.toPublicJSON());
+        if (user == null) {
+            res.status(404);
+        } else {
+            res.json(user.toPublicJSON());
+        }
     }, function(e) {
         res.status(404).json(e);
     });
@@ -69,16 +59,7 @@ exports.create = function(req, res) {
     var body = _.pick(req.body, 'email', 'password', 'type');
 
     models.users.create(body).then(function(user) {
-        var userType = _.pick(user, 'id', 'type');
-        var userDetails = _.pick(user, 'id');
-        if (userType.type == 'customer') {
-
-        } else if (userType.type == 'owner') {
-
-        } else {
-            res.json(user.toPublicJSON());
-        }
-
+        res.json(user.toPublicJSON());
     }, function(e) {
         res.status(400).json(e);
     });

@@ -21,7 +21,6 @@ Use Cases:
 
 module.exports = function(sequelize, DataTypes) {
     var users = sequelize.import(__dirname + "/users.js");
-    var restaurants = sequelize.import(__dirname + "/restaurants.js");
 
     var owners = sequelize.define('owners', {
         first_name: {
@@ -39,7 +38,8 @@ module.exports = function(sequelize, DataTypes) {
             }
         },
         date_joined: {
-            type: DataTypes.DATE
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW
         },
         phone_number: {
             type: DataTypes.INTEGER,
@@ -49,14 +49,6 @@ module.exports = function(sequelize, DataTypes) {
         },
         profile_image: {
             type: DataTypes.STRING
-        },
-        restaurant_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: restaurants,
-                key: 'id'
-            }
         },
         user_id: {
             type: DataTypes.INTEGER,
