@@ -13,7 +13,6 @@ var db = require('./db.js');
 // *** routes *** //
 var routes = require('./routes/index.js');
 
-
 // *** express instance *** //
 var app = express();
 
@@ -22,10 +21,8 @@ var swig = new swig.Swig();
 app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
 
-
 // *** static directory *** //
 app.set('views', path.join(__dirname, 'views'));
-
 
 // *** config middleware *** //
 app.use(logger('dev'));
@@ -54,7 +51,6 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-
 // *** error handlers *** //
 
 // development error handler
@@ -78,13 +74,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
-app.all("/*", function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
-    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
-    return next();
-});
-
 
 module.exports = app;
