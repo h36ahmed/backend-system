@@ -77,7 +77,8 @@ exports.login = function(req, res) {
         });
 
     }).then(function(tokenInstance) {
-        res.header('Auth', tokenInstance.get('token')).json(userInstance.toPublicJSON());
+        var token = tokenInstance.get('token');
+        res.header('Auth', token).json(userInstance.toPublicJSON(token));
     }).catch(function() {
         res.status(401).send();
     });
