@@ -37,13 +37,19 @@ exports.list = function(req, res) {
     };
   }
 
+  if (query.hasOwnProperty('type') && query.type.length > 0) {
+    where.type = {
+      $like: '%' + query.type + '%'
+    };
+  }
+
   models.owners.findAll({
     attributes: ['first_name', 'email', 'last_name', 'date_joined', 'phone_number', 'profile_image', 'restaurant_id'],
     where: where,
     include: [{
       model: models.users,
       where: {
-        id: Sequelize.col('owners.user_id')
+        id: models.owners.user_id
       }
     }]
   }).then(function(owners) {
