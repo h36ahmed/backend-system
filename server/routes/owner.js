@@ -6,6 +6,7 @@ var models = require('../db.js');
 exports.list = function(req, res) {
   var query = req.query;
   var where = {};
+  var userWhere = {};
 
   // QUERY PARAMETERS
 
@@ -32,25 +33,24 @@ exports.list = function(req, res) {
 
   // email -> Email
   if (query.hasOwnProperty('email') && query.email.length > 0) {
-    where.email = {
+    userWhere.email = {
       $like: '%' + query.email + '%'
     };
   }
-
+  // type -> Type
   if (query.hasOwnProperty('type') && query.type.length > 0) {
-    where.type = {
+    userWhere.type = {
       $like: '%' + query.type + '%'
     };
   }
 
   models.owners.findAll({
-    attributes: ['first_name', 'email', 'last_name', 'date_joined', 'phone_number', 'profile_image', 'restaurant_id'],
+    attributes: ['id', 'first_name', 'last_name', 'phone_number', 'date_joined', 'profile_image'],
     where: where,
     include: [{
       model: models.users,
-      where: {
-        id: models.owners.user_id
-      }
+      attributes: ['email', 'confirmed_email'],
+      where: userWhere
     }]
   }).then(function(owners) {
     res.json(owners);

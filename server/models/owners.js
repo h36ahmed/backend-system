@@ -20,8 +20,6 @@ Use Cases:
 */
 
 module.exports = function(sequelize, DataTypes) {
-    var users = sequelize.import(__dirname + "/users.js");
-
     var owners = sequelize.define('owners', {
         first_name: {
             type: DataTypes.STRING,
@@ -49,18 +47,10 @@ module.exports = function(sequelize, DataTypes) {
         },
         profile_image: {
             type: DataTypes.STRING
-        },
-        user_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            unique: true,
-            references: {
-                model: users,
-                key: 'id'
-            }
         }
     }, {
-        timestamps: false
+        timestamps: false,
+        underscored: true
     });
 
     return owners;

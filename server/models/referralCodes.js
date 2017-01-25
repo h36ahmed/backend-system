@@ -16,8 +16,6 @@ Use Cases:
 */
 
 module.exports = function(sequelize, DataTypes) {
-    var users = sequelize.import(__dirname + "/users.js");
-
     var referralCodes = sequelize.define('referralCodes', {
         referral_code: {
             type: DataTypes.STRING,
@@ -37,15 +35,6 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: 0,
             validate: {
                 min: 0
-            }
-        },
-        user_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            unique: true,
-            references: {
-                model: users,
-                key: 'id'
             }
         }
     }, {

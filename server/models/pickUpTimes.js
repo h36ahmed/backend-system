@@ -19,6 +19,7 @@ module.exports = function(sequelize, DataTypes) {
         pickup_time: {
             type: DataTypes.STRING,
             allowNull: false,
+            primaryKey: true
         }
     }, {
         timestamps: false

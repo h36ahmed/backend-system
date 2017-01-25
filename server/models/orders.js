@@ -39,31 +39,14 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             defaultValue: true
         },
-        pickup_time_id: {
-            type: DataTypes.INTEGER,
+        pickup_time: {
+            type: DataTypes.STRING,
             allowNull: false,
             references: {
                 model: pickUpTimes,
-                key: 'id'
+                key: 'pickup_time'
             }
-        },
-        offer_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: offers,
-                key: 'id'
-            }
-        },
-        customer_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: customers,
-                key: 'id'
-            }
-        },
-
+        }
     });
 
     return orders;

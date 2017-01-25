@@ -34,8 +34,6 @@ Use Cases:
 */
 
 module.exports = function(sequelize, DataTypes) {
-    var paymentPlan = sequelize.import(__dirname + "/paymentPlans.js");
-    var users = sequelize.import(__dirname + "/users.js");
     var referralCodes = sequelize.import(__dirname + "/referralCodes.js");
 
     var customers = sequelize.define('customers', {
@@ -114,23 +112,6 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             defaultValue: false
         },
-        payment_plan_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: paymentPlan,
-                key: 'id'
-            }
-        },
-        user_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            unique: true,
-            references: {
-                model: users,
-                key: 'id'
-            }
-        },
         referral_code_used: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -145,6 +126,7 @@ module.exports = function(sequelize, DataTypes) {
         }
     }, {
         timestamps: false,
+        underscored: true,
         instanceMethods: {
             toPublicJSON: function() {
                 var json = this.toJSON();

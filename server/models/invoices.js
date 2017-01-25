@@ -19,36 +19,38 @@ Use Cases:
 
 module.exports = function(sequelize, DataTypes) {
 
-    var customers = sequelize.import(__dirname + "/customers.js");
-
     var invoices = sequelize.define('invoices', {
         invoice_date: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW
         },
-        charged: {
-            type: DataTypes.BOOLEAN,
+        status: {
+            type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: true
+            defaultValue: true,
+            validate: {
+                isIn: ['created', 'declined', 'paid', 'disputed', 'incorrect']
+            }
         },
-        payment: {
+        tax_amount: {
             type: DataTypes.FLOAT,
             allowNull: false,
             validate: {
                 min: 0
             }
         },
-        customer_id: {
-            type: DataTypes.INTEGER,
+        total_payment_before_tax: {
+            type: DataTypes.FLOAT,
             allowNull: false,
-            references: {
-                model: customers,
-                key: 'id'
+            validate: {
+                min: 0
             }
         },
         notes: {
             type: DataTypes.STRING
         }
+    }, {
+        underscored: true
     });
 
     return invoices;

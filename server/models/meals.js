@@ -25,8 +25,6 @@ Use Cases:
 */
 
 module.exports = function(sequelize, DataTypes) {
-    var restaurants = sequelize.import(__dirname + "/restaurants.js");
-
     var meals = sequelize.define('meals', {
         name: {
             type: DataTypes.STRING,
@@ -71,19 +69,6 @@ module.exports = function(sequelize, DataTypes) {
         },
         meal_image: {
             type: DataTypes.STRING
-        },
-        available: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValue: false
-        },
-        restaurant_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: restaurants,
-                key: 'id'
-            }
         }
     }, {
         timestamps: false
