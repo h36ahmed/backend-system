@@ -29,4 +29,12 @@ router.delete('/api/v1/user/:id', middleware.requireAuthentication, user.delete)
 router.delete('/api/v1/users/login', middleware.requireAuthentication, user.logout);
 
 
+// Owners
+router.get('/api/v1/owners', middleware.requireAuthentication, user.list);
+router.get('/api/v1/owners/:id', middleware.requireAuthentication, user.view);
+router.post('/api/v1/owner', user.create);
+router.put('/api/v1/owner/:id', middleware.requireAuthentication, user.update);
+router.delete('/api/v1/owner/:id', middleware.requireAuthentication, user.delete);
+
+
 module.exports = router;
