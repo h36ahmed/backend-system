@@ -44,7 +44,7 @@ module.exports = function(sequelize, DataTypes) {
         phone_number: {
             type: DataTypes.INTEGER,
             validate: {
-                len: [9]
+                len: [10,10]
             }
         },
         profile_image: {
