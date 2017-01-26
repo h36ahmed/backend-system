@@ -24,8 +24,8 @@ exports.view = function(req, res) {
 
 // POST /api/v1/restaurant
 exports.create = function(req, res) {
-  var body = _.pick(req.body, 'name', 'street_address', 'city', 'state', 'country', 'postal_code', 'phone_number', 'logo', 'visible', 'owner_id');
-  models.restaurants.create(body).then(function(restaurant) {
+  var restaurantDetails = _.pick(req.body, 'name', 'street_address', 'city', 'state', 'country', 'postal_code', 'phone_number', 'logo', 'visible', 'owner_id');
+  models.restaurants.create(restaurantDetails).then(function(restaurant) {
     res.json(restaurant.toJSON());
   }, function(e) {
     res.status(400).json(e);

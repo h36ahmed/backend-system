@@ -35,17 +35,11 @@ module.exports = function(sequelize, DataTypes) {
         },
         description: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                isAlphanumeric: true
-            }
+            allowNull: false
         },
         tagline: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                isAlphanumeric: true
-            }
+            allowNull: false
         },
         ingredients: {
             type: DataTypes.STRING,

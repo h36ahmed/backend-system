@@ -41,7 +41,7 @@ router.delete('/api/v1/owner/:id', middleware.requireAuthentication, owner.delet
 // Restaurants
 router.get('/api/v1/restaurants', middleware.requireAuthentication, restaurant.list);
 router.get('/api/v1/restaurants/:id', middleware.requireAuthentication, restaurant.view);
-router.post('/api/v1/restaurant', restaurant.create);
+router.post('/api/v1/restaurant', middleware.requireAuthentication, restaurant.create);
 /*router.put('/api/v1/owner/:id', middleware.requireAuthentication, owner.update);*/
 router.delete('/api/v1/restaurant/:id', middleware.requireAuthentication, restaurant.delete);
 

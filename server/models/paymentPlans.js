@@ -21,17 +21,11 @@ module.exports = function(sequelize, DataTypes) {
     var paymentPlans = sequelize.define('paymentPlans', {
         name: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                isAlphanumeric: true
-            }
+            allowNull: false
         },
         description: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                isAlphanumeric: true
-            }
+            allowNull: false
         },
         image: {
             type: DataTypes.STRING
