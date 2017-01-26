@@ -11,7 +11,7 @@ exports.list = function(req, res){
     }
 
     models.meals.findAll({
-        attributes: ['id', 'name', 'description', 'tagline', 'ingredients', 'rating', 'price', 'meal_image', 'available', 'restaurant_id'],
+        attributes: ['id', 'name', 'description', 'tagline', 'ingredients', 'rating', 'price', 'meal_image', 'restaurant_id'],
         where: where
     }).then(function (meals) {
         res.json(meals);
@@ -32,7 +32,7 @@ exports.view = function (req, res) {
 
 // POST /api/v1/meal
 exports.create = function(req, res){
-    var body = _.pick(req.body, 'name', 'description', 'tagline', 'ingredients', 'rating', 'price', 'meal_image', 'available', 'restaurant_id');
+    var body = _.pick(req.body, 'name', 'description', 'tagline', 'ingredients', 'rating', 'price', 'meal_image', 'restaurant_id');
 
      models.meals.create(body).then(function(meal){
          res.json(meal.toJSON());

@@ -7,6 +7,7 @@ var middleware = require('../middleware.js')(models);
 var user = require('./user');
 var owner = require('./owner');
 var restaurant = require('./restaurant');
+var meal = require('./meal');
 
 router.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -45,5 +46,11 @@ router.post('/api/v1/restaurant', middleware.requireAuthentication, restaurant.c
 /*router.put('/api/v1/owner/:id', middleware.requireAuthentication, owner.update);*/
 router.delete('/api/v1/restaurant/:id', middleware.requireAuthentication, restaurant.delete);
 
+// Restaurants
+router.get('/api/v1/meals', middleware.requireAuthentication, meal.list);
+router.get('/api/v1/meals/:id', middleware.requireAuthentication, meal.view);
+router.post('/api/v1/meal', middleware.requireAuthentication, meal.create);
+/*router.put('/api/v1/owner/:id', middleware.requireAuthentication, owner.update);*/
+router.delete('/api/v1/meal/:id', middleware.requireAuthentication, meal.delete);
 
 module.exports = router;
