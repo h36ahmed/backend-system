@@ -22,7 +22,8 @@ module.exports = function(sequelize, DataTypes) {
             primaryKey: true
         }
     }, {
-        timestamps: false
+        timestamps: false,
+        underscored: true
     });
 
     return pickUpTimes;

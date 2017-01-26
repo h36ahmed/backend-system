@@ -83,7 +83,8 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: false
         }
     }, {
-        timestamps: false
+        timestamps: false,
+        underscored: true
     });
 
     return restaurants;

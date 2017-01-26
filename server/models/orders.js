@@ -47,6 +47,8 @@ module.exports = function(sequelize, DataTypes) {
                 key: 'pickup_time'
             }
         }
+    }, {
+        underscored: true
     });
 
     return orders;

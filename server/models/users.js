@@ -79,6 +79,7 @@ module.exports = function (sequelize, DataTypes) {
         }
     }, {
         timestamps: false,
+        underscored: true,
         hooks: {
             beforeValidate: function (user, options) {
                 if (typeof user.email === 'string') {

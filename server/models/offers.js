@@ -28,6 +28,8 @@ module.exports = function(sequelize, DataTypes) {
                 min: 0
             }
         }
+    }, {
+        underscored: true
     });
 
     return offers;

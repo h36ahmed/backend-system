@@ -71,7 +71,8 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING
         }
     }, {
-        timestamps: false
+        timestamps: false,
+        underscored: true
     });
 
     return meals;

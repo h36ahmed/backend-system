@@ -38,7 +38,8 @@ module.exports = function(sequelize, DataTypes) {
             }
         }
     }, {
-        timestamps: false
+        timestamps: false,
+        underscored: true
     });
 
     return referralCodes;
