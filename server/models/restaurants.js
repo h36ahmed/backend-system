@@ -63,10 +63,7 @@ module.exports = function(sequelize, DataTypes) {
             }
         },
         phone_number: {
-            type: DataTypes.INTEGER,
-            validate: {
-                len: [10]
-            }
+            type: DataTypes.BIGINT(10)
         },
         logo: {
             type: DataTypes.STRING

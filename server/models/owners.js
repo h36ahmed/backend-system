@@ -40,10 +40,7 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: DataTypes.NOW
         },
         phone_number: {
-            type: DataTypes.INTEGER,
-            validate: {
-                len: [10,10]
-            }
+            type: DataTypes.BIGINT(10)
         },
         profile_image: {
             type: DataTypes.STRING
