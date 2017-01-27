@@ -48,12 +48,6 @@ module.exports = function(sequelize, DataTypes) {
                 is: ["^[a-z]+$", 'i']
             }
         },
-        rating: {
-            type: DataTypes.FLOAT,
-            validate: {
-                min: 0
-            }
-        },
         price: {
             type: DataTypes.FLOAT,
             allowNull: false,
