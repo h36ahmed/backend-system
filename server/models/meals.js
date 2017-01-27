@@ -28,10 +28,7 @@ module.exports = function(sequelize, DataTypes) {
     var meals = sequelize.define('meals', {
         name: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                is: ["^[a-z]+$", 'i']
-            }
+            allowNull: false
         },
         description: {
             type: DataTypes.STRING,
@@ -43,10 +40,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         ingredients: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                is: ["^[a-z]+$", 'i']
-            }
+            allowNull: false
         },
         price: {
             type: DataTypes.FLOAT,
