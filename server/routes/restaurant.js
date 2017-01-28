@@ -9,7 +9,7 @@ exports.list = function(req, res) {
             attributes: ['name', 'id', 'price', 'meal_image'],
             model: models.meals
         }, {
-            attributes: ['first_name', 'last_name'],
+            attributes: ['first_name', 'last_name', 'phone_number'],
             model: models.owners
         }]
     }).then(function(restaurant) {
@@ -26,6 +26,9 @@ exports.view = function(req, res) {
         include: [{
             attributes: ['name', 'id', 'price', 'meal_image'],
             model: models.meals
+        }, {
+            attributes: ['first_name', 'last_name', 'phone_number'],
+            model: models.owners
         }]
     }).then(function(restaurant) {
         res.json(restaurant.toJSON());
