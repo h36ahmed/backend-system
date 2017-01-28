@@ -5,14 +5,19 @@ var models = require('../db.js');
 exports.list = function(req, res){
     var query = req.query;
     var where = {};
+    var restaurantWhere = {};
 
     if (query.hasOwnProperty('restaurant_id') && query.restaurant_id.length > 0) {
         where.restaurant_id =  query.restaurant_id;
     }
 
     models.meals.findAll({
-        attributes: ['id', 'name', 'description', 'tagline', 'ingredients', 'price', 'meal_image', 'restaurant_id'],
-        where: where
+        attributes: ['id', 'name', 'description', 'tagline', 'ingredients', 'price', 'meal_image'],
+        where: where,
+        include: [{
+          model: models.restaurants,
+          where: restaurantWhere
+        }]
     }).then(function (meals) {
         res.json(meals);
     }, function(e) {

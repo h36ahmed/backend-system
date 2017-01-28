@@ -131,6 +131,10 @@ module.exports = function(sequelize, DataTypes) {
             toPublicJSON: function() {
                 var json = this.toJSON();
                 return _.pick(json, 'id', 'first_name', 'last_name', 'age', 'gender', 'cycle_start_date', 'cycle_end_date', 'user_id', 'payment_plan_id', 'reminder_emails', 'active', 'country', 'city', 'meals_remaining', 'profile_image', 'phone_number', 'date_joined');
+            },
+            getStripeToken: function() {
+                var json = this.toJSON();
+                return _.pick(json, 'id', 'first_name', 'last_name', 'stripe_token');
             }
         }
     });

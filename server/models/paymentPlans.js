@@ -39,7 +39,7 @@ module.exports = function(sequelize, DataTypes) {
         }
     }, {
         timestamps: false,
-        underscored: true,
+        underscored: true
     });
 
     return paymentPlans;

@@ -40,7 +40,6 @@ db.Sequelize = Sequelize;
 db.owners.belongsTo(db.users);
 db.customers.belongsTo(db.users);
 db.restaurants.belongsTo(db.owners);
-db.customers.belongsTo(db.users);
 db.referralCodes.belongsTo(db.users);
 
 db.paymentPlans.hasMany(db.customers);

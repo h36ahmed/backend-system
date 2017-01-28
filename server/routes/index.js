@@ -8,18 +8,22 @@ var user = require('./user');
 var owner = require('./owner');
 var restaurant = require('./restaurant');
 var meal = require('./meal');
+var customer = require('./customer');
+var offer = require('./offer');
+var paymentPlan = require('./paymentPlan');
+var order = require('./order');
 
 router.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Auth");
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Auth");
     next();
 });
 
 // Views
 router.get('/', function(req, res, next) {
-  res.render('index', {
-    title: 'Lunch Society'
-  });
+    res.render('index', {
+        title: 'Lunch Society'
+    });
 });
 
 // Users
@@ -43,14 +47,33 @@ router.delete('/api/v1/owner/:id', middleware.requireAuthentication, owner.delet
 router.get('/api/v1/restaurants', middleware.requireAuthentication, restaurant.list);
 router.get('/api/v1/restaurants/:id', middleware.requireAuthentication, restaurant.view);
 router.post('/api/v1/restaurant', middleware.requireAuthentication, restaurant.create);
-/*router.put('/api/v1/owner/:id', middleware.requireAuthentication, owner.update);*/
 router.delete('/api/v1/restaurant/:id', middleware.requireAuthentication, restaurant.delete);
 
-// Restaurants
+// Meals
 router.get('/api/v1/meals', middleware.requireAuthentication, meal.list);
 router.get('/api/v1/meals/:id', middleware.requireAuthentication, meal.view);
 router.post('/api/v1/meal', middleware.requireAuthentication, meal.create);
-/*router.put('/api/v1/owner/:id', middleware.requireAuthentication, owner.update);*/
 router.delete('/api/v1/meal/:id', middleware.requireAuthentication, meal.delete);
+
+// Meal Offers
+router.get('/api/v1/offers', middleware.requireAuthentication, offer.list);
+router.post('/api/v1/offer', middleware.requireAuthentication, offer.create);
+router.delete('/api/v1/offer/:id', middleware.requireAuthentication, offer.delete);
+
+// Orders
+router.get('/api/v1/orders', middleware.requireAuthentication, order.list);
+router.post('/api/v1/order', middleware.requireAuthentication, order.create);
+router.delete('/api/v1/order/:id', middleware.requireAuthentication, order.delete);
+
+// Customers
+router.get('/api/v1/customers', middleware.requireAuthentication, customer.list);
+router.get('/api/v1/customers/:id', middleware.requireAuthentication, customer.view);
+router.post('/api/v1/customer', middleware.requireAuthentication, customer.create);
+router.delete('/api/v1/customer/:id', middleware.requireAuthentication, customer.delete);
+
+// Payment Plans
+router.get('/api/v1/payment-plans', middleware.requireAuthentication, paymentPlan.list);
+router.post('/api/v1/payment-plan', middleware.requireAuthentication, paymentPlan.create);
+router.delete('/api/v1/payment-plan/:id', middleware.requireAuthentication, paymentPlan.delete);
 
 module.exports = router;

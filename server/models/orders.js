@@ -9,7 +9,7 @@ Attributes:
 -> Order Date
 -> Cancelled?
 -> Active?
--> Pick Up ID
+-> Pick Up Time
 -> Offer ID
 -> Customer ID
 
@@ -21,8 +21,6 @@ Use Cases:
 module.exports = function(sequelize, DataTypes) {
 
     var pickUpTimes = sequelize.import(__dirname + "/pickUpTimes.js");
-    var customers = sequelize.import(__dirname + "/customers.js");
-    var offers = sequelize.import(__dirname + "/offers.js");
 
     var orders = sequelize.define('orders', {
         order_date: {
@@ -34,7 +32,7 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             defaultValue: false
         },
-        active:  {
+        active: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true
