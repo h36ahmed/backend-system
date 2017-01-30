@@ -7,7 +7,6 @@ Description:
 Attributes:
 -> Feedback ID
 -> Order ID
--> Customer ID
 -> Portion Size
 -> Flavour
 -> Overall

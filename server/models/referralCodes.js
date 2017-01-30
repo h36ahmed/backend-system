@@ -7,7 +7,7 @@ Description:
 Attributes:
 -> Referral Code
 -> Activate
-->
+-> Number of Times Used
 
 
 Use Cases:

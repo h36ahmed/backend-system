@@ -1,41 +1,41 @@
 var _ = require('underscore');
 var models = require('../db.js');
 
-// GET /api/v1/payment-plans
+// GET /api/v1/referral-codes
 exports.list = function(req, res) {
     var query = req.query;
     var where = {};
 
-    models.paymentPlans.findAll({
+    models.referralCodes.findAll({
         where: where
-    }).then(function(paymentPlans) {
-        res.json(paymentPlans);
+    }).then(function(referralCodes) {
+        res.json(referralCodes);
     }, function(e) {
         res.status(500).send();
     });
 };
 
-// POST /api/v1/payment-plan
+// POST /api/v1/referral-code
 exports.create = function(req, res) {
-    var paymentPlanDetails = _.pick(req.body, 'name', 'description', 'image', 'price');
-    models.paymentPlans.create(paymentPlanDetails).then(function(paymentPlan) {
-        res.json(paymentPlan);
+    var referralCodeDetails = _.pick(req.body, 'referral_code');
+    models.referralCodes.create(referralCodeDetails).then(function(referralCode) {
+        res.json(referralCode);
     }, function(e) {
         res.status(400).json(e);
     });
 };
 
-// DELETE /api/v1/payment-plan/:id
+// DELETE /api/v1/referral-code/:id
 exports.delete = function(req, res) {
-    var paymentPlanID = parseInt(req.params.id, 10);
-    models.paymentPlans.destroy({
+    var referralCodeID = parseInt(req.params.id, 10);
+    models.referralCodes.destroy({
         where: {
-            id: paymentPlanID
+            id: referralCodeID
         }
     }).then(function(rowsDeleted) {
         if (rowsDeleted === 0) {
             res.status(404).json({
-                error: 'No payment plan found'
+                error: 'No referral code found'
             });
         } else {
             res.status(204).send();

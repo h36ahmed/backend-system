@@ -57,9 +57,6 @@ db.meals.belongsTo(db.restaurants);
 db.paymentPlans.hasMany(db.customers);
 db.customers.belongsTo(db.paymentPlans);
 
-// Customers & Feedbacks C:F -> 1:M
-db.customers.hasMany(db.feedbacks);
-db.feedbacks.belongsTo(db.customers);
 
 // Orders & Feedbacks O:F -> 1:M
 db.orders.hasMany(db.feedbacks);
