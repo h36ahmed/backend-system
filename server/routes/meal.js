@@ -54,7 +54,7 @@ exports.create = function(req, res) {
 
 // PUT /api/v1/meal/:id
 exports.update = function(req, res) {
-    var restuarantID = parseInt(req.params.id, 10);
+    var mealID = parseInt(req.params.id, 10);
     var body = _.pick(req.body, 'name', 'description', 'tagline', 'ingredients', 'price', 'meal_image', 'restaurant_id');
 
     var attributes = {};

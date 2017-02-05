@@ -82,7 +82,7 @@ exports.create = function(req, res) {
 
 // PUT /api/v1/owner/:id
 exports.update = function(req, res) {
-    var restuarantID = parseInt(req.params.id, 10);
+    var ownerID = parseInt(req.params.id, 10);
     var body = _.pick(req.body, 'first_name', 'last_name', 'phone_number', 'date_joined', 'profile_image', 'user_id');
 
     var attributes = {};
