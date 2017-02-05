@@ -52,6 +52,56 @@ exports.create = function(req, res) {
     });
 };
 
+// PUT /api/v1/meal/:id
+exports.update = function(req, res) {
+    var restuarantID = parseInt(req.params.id, 10);
+    var body = _.pick(req.body, 'name', 'description', 'tagline', 'ingredients', 'price', 'meal_image', 'restaurant_id');
+
+    var attributes = {};
+
+    if (body.hasOwnProperty('name')) {
+        attributes.name = body.name;
+    }
+
+    if (body.hasOwnProperty('description')) {
+        attributes.description = body.description;
+    }
+
+    if (body.hasOwnProperty('tagline')) {
+        attributes.tagline = body.tagline;
+    }
+
+    if (body.hasOwnProperty('ingredients')) {
+        attributes.ingredients = body.ingredients;
+    }
+
+    if (body.hasOwnProperty('price')) {
+        attributes.price = body.price;
+    }
+
+    if (body.hasOwnProperty('meal_image')) {
+        attributes.meal_image = body.meal_image;
+    }
+
+    if (body.hasOwnProperty('restaurant_id')) {
+        attributes.restaurant_id = body.restaurant_id;
+    }
+
+    models.meals.findById(mealID).then(function(meal) {
+        if (meal) {
+            meal.update(attributes).then(function(meal) {
+                res.json(meal);
+            }, function(e) {
+                res.status(400).json(e);
+            });
+        } else {
+            res.status(404).send();
+        }
+    }, function() {
+        res.status(500).send();
+    });
+};
+
 // DELETE /api/v1/meal/:id
 exports.delete = function(req, res) {
     var mealID = parseInt(req.params.id, 10);

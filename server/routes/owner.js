@@ -80,6 +80,52 @@ exports.create = function(req, res) {
     });
 };
 
+// PUT /api/v1/owner/:id
+exports.update = function(req, res) {
+    var restuarantID = parseInt(req.params.id, 10);
+    var body = _.pick(req.body, 'first_name', 'last_name', 'phone_number', 'date_joined', 'profile_image', 'user_id');
+
+    var attributes = {};
+
+    if (body.hasOwnProperty('first_name')) {
+        attributes.first_name = body.first_name;
+    }
+
+    if (body.hasOwnProperty('last_name')) {
+        attributes.last_name = body.last_name;
+    }
+
+    if (body.hasOwnProperty('phone_number')) {
+        attributes.phone_number = body.phone_number;
+    }
+
+    if (body.hasOwnProperty('date_joined')) {
+        attributes.date_joined = body.date_joined;
+    }
+
+    if (body.hasOwnProperty('profile_image')) {
+        attributes.profile_image = body.profile_image;
+    }
+
+    if (body.hasOwnProperty('user_id')) {
+        attributes.user_id = body.user_id;
+    }
+
+  models.owners.findById(ownerID).then(function(owner) {
+        if (owner) {
+            owner.update(attributes).then(function(owner) {
+                res.json(owner);
+            }, function(e) {
+                res.status(400).json(e);
+            });
+        } else {
+            res.status(404).send();
+        }
+    }, function() {
+        res.status(500).send();
+    });
+};
+
 // DELETE /api/v1/owner/:id
 exports.delete = function(req, res) {
     var ownerID = parseInt(req.params.id, 10);

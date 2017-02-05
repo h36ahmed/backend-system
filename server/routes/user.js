@@ -103,7 +103,7 @@ exports.update = function(req, res) {
         attributes.confirmed_email = body.confirmed_email;
     }
 
-    models.users.findById(userID).then(function(user) {
+  models.users.findById(userID).then(function(user) {
         if (user) {
             user.update(attributes).then(function(user) {
                 res.json(user.toPublicJSON());

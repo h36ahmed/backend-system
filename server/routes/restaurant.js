@@ -47,6 +47,63 @@ exports.create = function(req, res) {
     });
 };
 
+// PUT /api/v1/restaurant/:id
+exports.update = function(req, res) {
+    var restuarantID = parseInt(req.params.id, 10);
+    var body = _.pick(req.body, 'name', 'street_address', 'city', 'state', 'country', 'postal_code', 'phone_number', 'logo', 'visible', 'owner_id');
+    var attributes = {};
+
+    if (body.hasOwnProperty('name')) {
+        attributes.name = body.name;
+    }
+
+    if (body.hasOwnProperty('street_address')) {
+        attributes.street_address = body.street_address;
+    }
+
+    if (body.hasOwnProperty('city')) {
+        attributes.city = body.city;
+    }
+
+    if (body.hasOwnProperty('state')) {
+        attributes.state = body.state;
+    }
+
+    if (body.hasOwnProperty('country')) {
+        attributes.country = body.country;
+    }
+
+    if (body.hasOwnProperty('postal_code')) {
+        attributes.postal_code = body.postal_code;
+    }
+
+    if (body.hasOwnProperty('phone_number')) {
+        attributes.phone_number = body.phone_number;
+    }
+
+    if (body.hasOwnProperty('logo')) {
+        attributes.logo = body.logo;
+    }
+
+    if (body.hasOwnProperty('visible')) {
+        attributes.visible = body.visible;
+    }
+
+    models.restaurants.findById(restaurantID).then(function(restaurant) {
+        if (restaurant) {
+            restaurant.update(attributes).then(function(restaurant) {
+                res.json(restaurant);
+            }, function(e) {
+                res.status(400).json(e);
+            });
+        } else {
+            res.status(404).send();
+        }
+    }, function() {
+        res.status(500).send();
+    });
+};
+
 // DELETE /api/v1/restaurant/:id
 exports.delete = function(req, res) {
     var restaurantID = parseInt(req.params.id, 10);

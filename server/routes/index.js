@@ -44,7 +44,7 @@ router.delete('/api/v1/users/login', middleware.requireAuthentication, user.logo
 router.get('/api/v1/owners', middleware.requireAuthentication, owner.list);
 router.get('/api/v1/owners/:id', middleware.requireAuthentication, owner.view);
 router.post('/api/v1/owner', owner.create);
-/*router.put('/api/v1/owner/:id', middleware.requireAuthentication, owner.update);*/
+router.put('/api/v1/owner/:id', middleware.requireAuthentication, owner.update);
 //router.delete('/api/v1/owner/:id', middleware.requireAuthentication, owner.delete);
 
 // Customers
@@ -57,12 +57,14 @@ router.post('/api/v1/customer', middleware.requireAuthentication, customer.creat
 router.get('/api/v1/restaurants', middleware.requireAuthentication, restaurant.list);
 router.get('/api/v1/restaurants/:id', middleware.requireAuthentication, restaurant.view);
 router.post('/api/v1/restaurant', middleware.requireAuthentication, restaurant.create);
+router.put('/api/v1/restaurant/:id', middleware.requireAuthentication, restaurant.update);
 router.delete('/api/v1/restaurant/:id', middleware.requireAuthentication, restaurant.delete);
 
 // Meals
 router.get('/api/v1/meals', middleware.requireAuthentication, meal.list);
 router.get('/api/v1/meals/:id', middleware.requireAuthentication, meal.view);
 router.post('/api/v1/meal', middleware.requireAuthentication, meal.create);
+router.put('/api/v1/meal/:id', middleware.requireAuthentication, meal.update);
 router.delete('/api/v1/meal/:id', middleware.requireAuthentication, meal.delete);
 
 // Meal Offers
