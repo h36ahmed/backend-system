@@ -36,24 +36,15 @@ module.exports = function(sequelize, DataTypes) {
         },
         city: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                is: ["^[a-z]+$", 'i']
-            }
+            allowNull: false
         },
         state: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                is: ["^[a-z]+$", 'i']
-            }
+            allowNull: false
         },
         country: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                is: ["^[a-z]+$", 'i']
-            }
+            allowNull: false
         },
         postal_code: {
             type: DataTypes.STRING,

@@ -23,17 +23,11 @@ module.exports = function(sequelize, DataTypes) {
     var owners = sequelize.define('owners', {
         first_name: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                is: ["^[a-z]+$", 'i']
-            }
+            allowNull: false
         },
         last_name: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                is: ["^[a-z]+$", 'i']
-            }
+            allowNull: false
         },
         date_joined: {
             type: DataTypes.DATE,

@@ -39,17 +39,11 @@ module.exports = function(sequelize, DataTypes) {
     var customers = sequelize.define('customers', {
         first_name: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                is: ["^[a-z]+$", 'i']
-            }
+            allowNull: false
         },
         last_name: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                is: ["^[a-z]+$", 'i']
-            }
+            allowNull: false
         },
         age: {
             type: DataTypes.INTEGER,
@@ -88,16 +82,10 @@ module.exports = function(sequelize, DataTypes) {
             }
         },
         city: {
-            type: DataTypes.STRING,
-            validate: {
-                is: ["^[a-z]+$", 'i']
-            }
+            type: DataTypes.STRING
         },
         country: {
-            type: DataTypes.STRING,
-            validate: {
-                is: ["^[a-z]+$", 'i']
-            }
+            type: DataTypes.STRING
         },
         profile_image: {
             type: DataTypes.STRING
