@@ -49,7 +49,7 @@ exports.create = function(req, res) {
 
 // PUT /api/v1/restaurant/:id
 exports.update = function(req, res) {
-    var restuarantID = parseInt(req.params.id, 10);
+    var restaurantID = parseInt(req.params.id, 10);
     var body = _.pick(req.body, 'name', 'street_address', 'city', 'state', 'country', 'postal_code', 'phone_number', 'logo', 'visible', 'owner_id');
     var attributes = {};
 
