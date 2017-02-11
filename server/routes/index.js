@@ -46,7 +46,7 @@ router.get('/api/v1/owners', middleware.requireAuthentication, owner.list);
 router.get('/api/v1/owners/:id', middleware.requireAuthentication, owner.view);
 router.post('/api/v1/owner', owner.create);
 router.put('/api/v1/owner/:id', middleware.requireAuthentication, owner.update);
-//router.delete('/api/v1/owner/:id', middleware.requireAuthentication, owner.delete);
+router.delete('/api/v1/owner/:id', middleware.requireAuthentication, owner.delete);
 
 // Customers
 router.get('/api/v1/customers', middleware.requireAuthentication, customer.list);

@@ -111,7 +111,7 @@ exports.update = function(req, res) {
         attributes.user_id = body.user_id;
     }
 
-  models.owners.findById(ownerID).then(function(owner) {
+    models.owners.findById(ownerID).then(function(owner) {
         if (owner) {
             owner.update(attributes).then(function(owner) {
                 res.json(owner);
@@ -129,17 +129,35 @@ exports.update = function(req, res) {
 // DELETE /api/v1/owner/:id
 exports.delete = function(req, res) {
     var ownerID = parseInt(req.params.id, 10);
-    models.owners.destroy({
-        where: {
-            id: ownerID
-        }
-    }).then(function(rowsDeleted) {
-        if (rowsDeleted === 0) {
-            res.status(404).json({
-                error: 'No owner found'
+    models.owners.findById(ownerID).then(function(owner) {
+        if (owner) {
+            var user_id = owner.user_id;
+            console.log(user_id);
+            models.owners.destroy({
+                where: {
+                    id: ownerID
+                }
+            }).then(function(rowsDeleted) {
+                if (rowsDeleted === 0) {
+                    res.status(404).json({
+                        error: 'No owner found'
+                    });
+                } else {
+                    models.users.destroy({
+                        where: {
+                            id: user_id
+                        }
+                    }).then(function(rowsDeleted) {
+                        res.status(204).send();
+                    }, function() {
+                        res.status(500).send();
+                    });
+                }
+            }, function() {
+                res.status(500).send();
             });
         } else {
-            res.status(204).send();
+            res.status(404).send();
         }
     }, function() {
         res.status(500).send();
