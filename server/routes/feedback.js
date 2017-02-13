@@ -13,7 +13,7 @@ exports.list = function(req, res) {
             model: models.orders,
             include: [{
                 model: models.customers,
-                attributes: ['first_name', 'last_name'],
+                attributes: ['id', 'first_name', 'last_name'],
                 include: [{
                     model: models.users,
                     attributes: ['email']
@@ -23,10 +23,10 @@ exports.list = function(req, res) {
                 attributes: ['id'],
                 include: [{
                     model: models.meals,
-                    attributes: ['name'],
+                    attributes: ['id','name'],
                     include: [{
                         model: models.restaurants,
-                        attributes: ['name']
+                        attributes: ['id', 'name']
                     }]
                 }]
             }]

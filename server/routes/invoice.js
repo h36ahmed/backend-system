@@ -10,7 +10,7 @@ exports.list = function(req, res) {
         where: where,
         include: [{
             model: models.customers,
-            attributes: ['first_name', 'last_name'],
+            attributes: ['id', 'first_name', 'last_name'],
             include: [{
                 model: models.users,
                 attributes: ['email']
