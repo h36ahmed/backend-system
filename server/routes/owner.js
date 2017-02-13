@@ -63,7 +63,12 @@ exports.list = function(req, res) {
 exports.view = function(req, res) {
     var ownerID = parseInt(req.params.id, 10);
     // When presenting a list option make option value user id and display value emails.
-    models.owners.findById(ownerID).then(function(owner) {
+    models.owners.findById(ownerID, {
+        include: [{
+            attributes: ['name', 'id', 'phone_number'],
+            model: models.restaurants
+        }]
+    }).then(function(owner) {
         res.json(owner);
     }, function(e) {
         res.status(404).json(e);
