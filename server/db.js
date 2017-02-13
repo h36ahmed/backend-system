@@ -39,15 +39,19 @@ db.Sequelize = Sequelize;
 
 // Users & Owners U:O -> 1:1
 db.owners.belongsTo(db.users);
+db.users.hasOne(db.owners);
 
 // Users & Customers U:C -> 1:1
 db.customers.belongsTo(db.users);
+db.users.hasOne(db.customers);
 
 // Restaurants & Owners R:O -> 1:1
 db.restaurants.belongsTo(db.owners);
+db.owners.hasOne(db.restaurants);
 
 // Referral Codes & Users RC:U -> 1:1
 db.referralCodes.belongsTo(db.users);
+db.users.hasOne(db.referralCodes);
 
 // Restaurants & Meals R:M -> 1:M
 db.restaurants.hasMany(db.meals);

@@ -7,6 +7,8 @@ exports.list = function(req, res) {
     var query = req.query;
     var where = {};
 
+    var include = [];
+
     // QUERY PARAMETERS
 
     // email -> Email
@@ -30,11 +32,30 @@ exports.list = function(req, res) {
         };
     }
 
+    if (query.hasOwnProperty('waiting_list') && query.waiting_list.length > 0) {
+        where.type = {
+            $not: 'admin'
+        };
+        include = [{
+            attributes: ['id'],
+            model: models.owners
+        }, {
+            attributes: ['id'],
+            model: models.customers
+        }];
+    }
+
     models.users.findAll({
         attributes: ['id', 'email', 'confirmed_email', 'type'],
-        where: where
+        where: where,
+        include: include
     }).then(function(users) {
-        res.json(users);
+        if (query.hasOwnProperty('waiting_list') && query.waiting_list.length > 0) {
+            var filteredUsers = _.where(users, {owner: null, customer: null});
+            res.json(filteredUsers);
+        } else {
+            res.json(users);
+        }
     }, function(e) {
         res.status(500).send();
     });
