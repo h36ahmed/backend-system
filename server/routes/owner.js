@@ -88,7 +88,7 @@ exports.create = function(req, res) {
 // PUT /api/v1/owner/:id
 exports.update = function(req, res) {
     var ownerID = parseInt(req.params.id, 10);
-    var body = _.pick(req.body, 'first_name', 'last_name', 'phone_number', 'date_joined', 'profile_image', 'user_id');
+    var body = _.pick(req.body, 'first_name', 'last_name', 'phone_number', 'profile_image', 'user_id');
 
     var attributes = {};
 
