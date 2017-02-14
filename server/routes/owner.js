@@ -88,7 +88,7 @@ exports.create = function(req, res) {
 // PUT /api/v1/owner/:id
 exports.update = function(req, res) {
     var ownerID = parseInt(req.params.id, 10);
-    var body = _.pick(req.body, 'first_name', 'last_name', 'phone_number', 'date_joined', 'profile_image', 'user_id', 'email');
+    var body = _.pick(req.body, 'first_name', 'last_name', 'phone_number', 'date_joined', 'profile_image', 'user_id');
 
     var attributes = {};
 
@@ -102,10 +102,6 @@ exports.update = function(req, res) {
 
     if (body.hasOwnProperty('phone_number')) {
         attributes.phone_number = body.phone_number;
-    }
-
-    if (body.hasOwnProperty('date_joined')) {
-        attributes.date_joined = body.date_joined;
     }
 
     if (body.hasOwnProperty('profile_image')) {
