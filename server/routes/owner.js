@@ -91,7 +91,6 @@ exports.update = function(req, res) {
     var body = _.pick(req.body, 'first_name', 'last_name', 'phone_number', 'date_joined', 'profile_image', 'user_id', 'email');
 
     var attributes = {};
-    var userAttributes = {};
 
     if (body.hasOwnProperty('first_name')) {
         attributes.first_name = body.first_name;
@@ -117,31 +116,11 @@ exports.update = function(req, res) {
         attributes.user_id = body.user_id;
     }
 
-    if (body.hasOwnProperty('email')) {
-        userAttributes.email = body.email;
-    }
 
     models.owners.findById(ownerID).then(function(owner) {
         if (owner) {
             owner.update(attributes).then(function(owner) {
-                if (body.hasOwnProperty('email')) {
-                    var userID = parseInt(attributes.user_id, 10);
-                    models.users.findById(userID).then(function(user) {
-                        if (user) {
-                            user.update(userAttributes).then(function(user) {
-                                var result = owner;
-                                result.user = user.toPublicJSON();
-                                res.json(result);
-                            }, function(e) {
-                                res.status(400).json(e);
-                            });
-                        }
-                    }, function() {
-                        res.status(500).send();
-                    });
-                } else {
-                    res.json(owner);
-                }
+                res.json(owner);
             }, function(e) {
                 res.status(400).json(e);
             });
