@@ -109,7 +109,7 @@ exports.update = function(req, res) {
     }
 
     if (body.hasOwnProperty('user_id')) {
-        attributes.user_id = body.user_id;
+        attributes.user_id = parseInt(body.user_id, 10);
     }
 
 

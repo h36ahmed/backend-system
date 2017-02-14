@@ -88,6 +88,9 @@ exports.update = function(req, res) {
     if (body.hasOwnProperty('visible')) {
         attributes.visible = body.visible;
     }
+    if (body.hasOwnProperty('owner_id')) {
+        attributes.owner_id = parseInt(body.owner_id, 10);
+    }
 
     models.restaurants.findById(restaurantID).then(function(restaurant) {
         if (restaurant) {
