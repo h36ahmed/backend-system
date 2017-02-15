@@ -82,6 +82,7 @@ router.post('/api/v1/order', middleware.requireAuthentication, order.create);
 router.get('/api/v1/payment-plans', middleware.requireAuthentication, paymentPlan.list);
 router.get('/api/v1/payment-plans/:id', middleware.requireAuthentication, paymentPlan.view);
 router.post('/api/v1/payment-plan', middleware.requireAuthentication, paymentPlan.create);
+router.put('/api/v1/payment-plan/:id', middleware.requireAuthentication, paymentPlan.update);
 router.delete('/api/v1/payment-plan/:id', middleware.requireAuthentication, paymentPlan.delete);
 
 // Referral Codes

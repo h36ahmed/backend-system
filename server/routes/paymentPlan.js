@@ -29,9 +29,49 @@ exports.create = function(req, res) {
 exports.view = function(req, res) {
     var paymentPlanID = parseInt(req.params.id, 10);
     models.paymentPlans.findById(paymentPlanID).then(function(paymentPlan) {
-        res.json(paymentPlan);
-    }, function(e) {
-        res.status(404).json(e);
+                res.json(paymentPlan).toJSON());
+        },
+        function(e) {
+            res.status(404).json(e);
+        });
+};
+
+// PUT /api/v1/payment-plan/:id
+exports.update = function(req, res) {
+    var paymentPlanID = parseInt(req.params.id, 10);
+
+    var body = _.pick(req.body, 'name', 'description', 'image', 'price');
+
+    var attributes = {};
+
+    if (body.hasOwnProperty('email')) {
+        attributes.email = body.email;
+    }
+
+    if (body.hasOwnProperty('description')) {
+        attributes.password = body.password;
+    }
+
+    if (body.hasOwnProperty('price')) {
+        attributes.price = body.price;
+    }
+
+    if (body.hasOwnProperty('image')) {
+        attributes.image = body.image;
+    }
+
+    models.paymentPlans.findById(paymentPlanID).then(function(paymentPlan) {
+        if (paymentPlan) {
+            paymentPlan.update(attributes).then(function(paymentPlan) {
+                res.json(paymentPlan);
+            }, function(e) {
+                res.status(400).json(e);
+            });
+        } else {
+            res.status(404).send();
+        }
+    }, function() {
+        res.status(500).send();
     });
 };
 
