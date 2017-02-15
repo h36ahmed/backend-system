@@ -29,11 +29,11 @@ exports.create = function(req, res) {
 exports.view = function(req, res) {
     var paymentPlanID = parseInt(req.params.id, 10);
     models.paymentPlans.findById(paymentPlanID).then(function(paymentPlan) {
-                res.json(paymentPlan).toJSON());
-        },
-        function(e) {
-            res.status(404).json(e);
-        });
+        res.json(paymentPlan.toJSON());
+    },
+    function(e) {
+        res.status(404).json(e);
+    });
 };
 
 // PUT /api/v1/payment-plan/:id
