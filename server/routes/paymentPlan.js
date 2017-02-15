@@ -25,6 +25,16 @@ exports.create = function(req, res) {
     });
 };
 
+// GET /api/v1/payment-plans/:id
+exports.view = function(req, res) {
+    var paymentPlanID = parseInt(req.params.id, 10);
+    models.paymentPlans.findById(paymentPlanID).then(function(paymentPlan) {
+        res.json(paymentPlan);
+    }, function(e) {
+        res.status(404).json(e);
+    });
+};
+
 // DELETE /api/v1/payment-plan/:id
 exports.delete = function(req, res) {
     var paymentPlanID = parseInt(req.params.id, 10);
