@@ -63,7 +63,22 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false
-        }
+        },
+        longitude: {
+            type: DataTypes.FLOAT,
+            allowNull: false
+        },
+        latitude: {
+            type: DataTypes.FLOAT,
+            allowNull: false
+        },
+        price: {
+            type: DataTypes.FLOAT,
+            allowNull: false,
+            validate: {
+                min: 0
+            }
+        },
     }, {
         timestamps: false,
         underscored: true
