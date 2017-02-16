@@ -69,14 +69,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         latitude: {
             type: DataTypes.FLOAT
-        },
-        price: {
-            type: DataTypes.FLOAT,
-            allowNull: false,
-            validate: {
-                min: 0
-            }
-        },
+        }
     }, {
         timestamps: false,
         underscored: true
