@@ -46,11 +46,11 @@ exports.list = function(req, res) {
     }
 
     models.customers.findAll({
-        attributes: ['id', 'first_name', 'last_name', 'phone_number', 'date_joined', 'profile_image', 'meals_remaining', 'phone_number', 'city', 'country', 'profile_image', 'active', 'reminder_emails'],
+        attributes: ['id', 'first_name', 'last_name', 'phone_number', 'date_joined', 'profile_image', 'meals_remaining', 'phone_number', 'city', 'country', 'active', 'reminder_emails'],
         where: where,
         include: [{
             model: models.users,
-            attributes: ['email', 'confirmed_email'],
+            attributes: ['email'],
             where: userWhere
         }, {
             model: models.paymentPlans,
