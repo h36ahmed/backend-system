@@ -31,8 +31,7 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false
         },
         description: {
-            type: DataTypes.STRING,
-            allowNull: false
+            type: DataTypes.STRING
         },
         tagline: {
             type: DataTypes.STRING,
