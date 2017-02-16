@@ -61,7 +61,6 @@ module.exports = function(sequelize, DataTypes) {
         },
         visible: {
             type: DataTypes.BOOLEAN,
-            allowNull: false,
             defaultValue: false
         },
         longitude: {
