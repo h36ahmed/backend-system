@@ -50,7 +50,8 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING
         }
     }, {
-        underscored: true
+        underscored: true,
+        timestamps: false
     });
 
     return invoices;

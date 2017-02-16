@@ -46,7 +46,8 @@ module.exports = function(sequelize, DataTypes) {
             }
         }
     }, {
-        underscored: true
+        underscored: true,
+        timestamps: false
     });
 
     return orders;

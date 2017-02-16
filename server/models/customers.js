@@ -66,7 +66,8 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.DATE
         },
         date_joined: {
-            type: DataTypes.DATE
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW
         },
         meals_remaining: {
             type: DataTypes.INTEGER,
@@ -102,7 +103,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         referral_code_used: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: referralCodes,
                 key: 'referral_code'
