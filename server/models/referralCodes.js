@@ -16,7 +16,7 @@ Use Cases:
 */
 
 module.exports = function(sequelize, DataTypes) {
-    var referralCodes = sequelize.define('referralCodes', {
+    var referralCodes = sequelize.define('referral_codes', {
         referral_code: {
             type: DataTypes.STRING,
             allowNull: false,

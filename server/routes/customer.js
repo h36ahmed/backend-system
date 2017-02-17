@@ -53,7 +53,7 @@ exports.list = function(req, res) {
             attributes: ['email'],
             where: userWhere
         }, {
-            model: models.paymentPlans,
+            model: models.payment_plans,
             where: paymentPlanWhere
         }]
     }).then(function(customers) {
@@ -86,7 +86,7 @@ exports.secure = function(req, res) {
 
 // POST /api/v1/customer
 exports.create = function(req, res) {
-    var customerDetails = _.pick(req.body, 'id', 'first_name', 'last_name', 'phone_number', 'date_joined', 'profile_image', 'meals_remaining', 'phone_number', 'city', 'country', 'profile_image', 'active', 'reminder_emails', 'paymentPlan_id', 'stripe_token', 'referral_code_used');
+    var customerDetails = _.pick(req.body, 'id', 'first_name', 'last_name', 'phone_number', 'date_joined', 'profile_image', 'meals_remaining', 'phone_number', 'city', 'country', 'profile_image', 'active', 'reminder_emails', 'payment_plan_id', 'stripe_token', 'referral_code_used');
 
     models.customers.create(customerDetails).then(function(customer) {
         res.json(customer.toPublicJSON());

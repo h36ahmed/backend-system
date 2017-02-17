@@ -18,7 +18,7 @@ Use Cases:
 
 module.exports = function(sequelize, DataTypes) {
 
-    var paymentPlans = sequelize.define('paymentPlans', {
+    var paymentPlans = sequelize.define('payment_plans', {
         name: {
             type: DataTypes.STRING,
             allowNull: false

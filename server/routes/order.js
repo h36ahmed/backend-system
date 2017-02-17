@@ -35,7 +35,10 @@ exports.list = function(req, res) {
                     attributes: ['name']
                 }]
             }]
-        } ]
+        }, {
+            model: models.pickup_times,
+            attributes: ['pickup_time']
+        }]
     }).then(function(orders) {
         res.json(orders);
     }, function(e) {
@@ -45,7 +48,7 @@ exports.list = function(req, res) {
 
 // POST /api/v1/order
 exports.create = function(req, res) {
-    var orderDetails = _.pick(req.body, 'order_date', 'cancelled', 'active', 'pickup_time', 'offer_id', 'customer_id');
+    var orderDetails = _.pick(req.body, 'order_date', 'cancelled', 'active', 'pickup_time_id', 'offer_id', 'customer_id');
     models.orders.create(orderDetails).then(function(order) {
         res.json(order);
     }, function(e) {

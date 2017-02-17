@@ -50,17 +50,16 @@ db.restaurants.belongsTo(db.owners);
 db.owners.hasOne(db.restaurants);
 
 // Referral Codes & Users RC:U -> 1:1
-db.referralCodes.belongsTo(db.users);
-db.users.hasOne(db.referralCodes);
+db.referral_codes.belongsTo(db.users);
+db.users.hasOne(db.referral_codes);
 
 // Restaurants & Meals R:M -> 1:M
 db.restaurants.hasMany(db.meals);
 db.meals.belongsTo(db.restaurants);
 
 // Payment Plans & Customers PP:C -> 1:M
-db.paymentPlans.hasMany(db.customers);
-db.customers.belongsTo(db.paymentPlans);
-
+db.payment_plans.hasMany(db.customers);
+db.customers.belongsTo(db.payment_plans);
 
 // Orders & Feedbacks O:F -> 1:M
 db.orders.hasMany(db.feedbacks);
@@ -79,16 +78,16 @@ db.offers.hasMany(db.orders);
 db.orders.belongsTo(db.offers);
 
 // Pickup Times & Orders Of:Or -> 1:M
-db.pickUpTimes.hasMany(db.orders);
-db.orders.belongsTo(db.pickUpTimes);
+db.pickup_times.hasMany(db.orders);
+db.orders.belongsTo(db.pickup_times);
 
 // Customers & Orders C:O -> 1:M
 db.customers.hasMany(db.orders);
 db.orders.belongsTo(db.customers);
 
 // Customers & Meals ==> Favorites C:M -> M:M
-db.customers.belongsToMany(db.meals, { as: 'Meals', through: db.customerFavorites });
-db.meals.belongsToMany(db.customers, { as: 'Customers', through: db.customerFavorites });
+db.customers.belongsToMany(db.meals, { as: 'Meals', through: db.customer_favorites });
+db.meals.belongsToMany(db.customers, { as: 'Customers', through: db.customer_favorites });
 
 module.exports = db;
 

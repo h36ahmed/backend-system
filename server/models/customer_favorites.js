@@ -19,7 +19,7 @@ Use Cases:
 
 module.exports = function(sequelize, DataTypes) {
 
-    var customerFavorites = sequelize.define('customerFavorites', {
+    var customerFavorites = sequelize.define('customer_favorites', {
         n_ordered_from_fav: {
             type: DataTypes.INTEGER,
             validate: {

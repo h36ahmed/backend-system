@@ -15,7 +15,7 @@ Use Cases:
 
 module.exports = function(sequelize, DataTypes) {
 
-    var pickUpTimes = sequelize.define('pickUpTimes', {
+    var pickUpTimes = sequelize.define('pickup_times', {
         pickup_time: {
             type: DataTypes.STRING,
             allowNull: false,

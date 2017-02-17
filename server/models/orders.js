@@ -9,7 +9,7 @@ Attributes:
 -> Order Date
 -> Cancelled?
 -> Active?
--> Pick Up Time
+-> Pick Up Time ID
 -> Offer ID
 -> Customer ID
 
@@ -19,8 +19,6 @@ Use Cases:
 */
 
 module.exports = function(sequelize, DataTypes) {
-
-    var pickUpTimes = sequelize.import(__dirname + "/pickUpTimes.js");
 
     var orders = sequelize.define('orders', {
         order_date: {

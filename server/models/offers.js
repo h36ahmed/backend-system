@@ -8,8 +8,8 @@ Attributes:
 -> Offer ID
 -> Offer Date
 -> Plates Left
+-> Plates Assigned
 -> Meal ID
-
 
 Use Cases:
 
