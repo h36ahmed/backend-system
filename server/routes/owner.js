@@ -8,6 +8,12 @@ exports.list = function(req, res) {
     var where = {};
     var userWhere = {};
 
+    var include = [{
+        model: models.users,
+        attributes: ['email', 'confirmed_email'],
+        where: userWhere
+    }];
+
     // QUERY PARAMETERS
 
     // fn -> First Name
@@ -44,16 +50,25 @@ exports.list = function(req, res) {
         };
     }
 
+    if (query.hasOwnProperty('no_restaurant_list') && query.no_restaurant_list.length > 0) {
+        include.push({
+            attributes: ['id'],
+            model: models.restaurants
+        });
+    }
+
     models.owners.findAll({
         attributes: ['id', 'first_name', 'last_name', 'phone_number', 'date_joined', 'profile_image'],
         where: where,
-        include: [{
-            model: models.users,
-            attributes: ['email', 'confirmed_email'],
-            where: userWhere
-        }]
+        include: include
     }).then(function(owners) {
-        res.json(owners);
+         if (query.hasOwnProperty('no_restaurant_list') && query.no_restaurant_list.length > 0) {
+            var filteredOwners = _.where(owners, { restaurant: null});
+            res.json(filteredOwners);
+        } else {
+            res.json(owners);
+        }
+
     }, function(e) {
         res.status(500).send();
     });

@@ -45,6 +45,13 @@ exports.list = function(req, res) {
         }];
     }
 
+    if (query.hasOwnProperty('owner_list') && query.owner_list.length > 0) {
+        include = [{
+            attributes: ['id'],
+            model: models.owners
+        }];
+    }
+
     models.users.findAll({
         attributes: ['id', 'email', 'confirmed_email', 'type'],
         where: where,
@@ -53,6 +60,9 @@ exports.list = function(req, res) {
         if (query.hasOwnProperty('waiting_list') && query.waiting_list.length > 0) {
             var filteredUsers = _.where(users, {owner: null, customer: null});
             res.json(filteredUsers);
+        } else if (query.hasOwnProperty('owner_list') && query.owner_list.length > 0) {
+            var filteredOwners = _.where(users, {owner: null});
+            res.json(filteredOwners);
         } else {
             res.json(users);
         }
