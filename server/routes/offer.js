@@ -7,9 +7,7 @@ exports.list = function(req, res) {
     var where = {};
 
     if (query.hasOwnProperty('offer_date') && query.offer_date.length > 0) {
-        where.offer_date = {
-            $like: query.offer_date
-        }
+        where.offer_date = query.offer_date
     }
 
     models.offers.findAll({
