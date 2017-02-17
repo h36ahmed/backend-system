@@ -6,6 +6,10 @@ exports.list = function(req, res) {
     var query = req.query;
     var where = {};
 
+    if (query.hasOwnProperty('offer_date') && query.offer_date.length > 0) {
+        where.offer_date = query.offer_date;
+    }
+
     models.offers.findAll({
         where: where,
         include: [{
