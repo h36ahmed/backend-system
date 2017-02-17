@@ -8,7 +8,6 @@ exports.list = function(req, res) {
 
     // QUERY PARAMETERS
 
-    // fn -> First Name
     if (query.hasOwnProperty('order_date') && query.order_date.length > 0) {
         where.order_date = {
             $like: query.order_date
