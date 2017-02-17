@@ -64,11 +64,11 @@ INSERT INTO offers VALUES (2,'2017-02-17 05:00:00+00',30,30,2);
 INSERT INTO offers VALUES (3,'2017-02-17 05:00:00+00',30,30,3);
 INSERT INTO offers VALUES (4,'2017-02-21 05:00:00+00',35,35,4);
 
-INSERT INTO orders VALUES (1,'2017-02-17','FALSE','FALSE',3,2,1);
-INSERT INTO orders VALUES (2,'2017-02-17','FALSE','FALSE',2,3,2);
-INSERT INTO orders VALUES (3,'2017-02-17','FALSE','FALSE',5,2,3);
-INSERT INTO orders VALUES (4,'2017-02-17','FALSE','FALSE',5,3,4);
-INSERT INTO orders VALUES (5,'2017-02-17','FALSE','FALSE',6,3,4);
+INSERT INTO orders VALUES (1,'2017-02-17','FALSE','FALSE',2,3,1);
+INSERT INTO orders VALUES (2,'2017-02-17','FALSE','FALSE',3,2,2);
+INSERT INTO orders VALUES (3,'2017-02-17','FALSE','FALSE',2,5,3);
+INSERT INTO orders VALUES (4,'2017-02-17','FALSE','FALSE',3,5,4);
+INSERT INTO orders VALUES (5,'2017-02-17','FALSE','FALSE',3,6,4);
 
 INSERT INTO feedbacks VALUES (1,'Meal was very  good!',5,5,5,1);
 INSERT INTO feedbacks VALUES (2,'Terrible Meal. Salad was dry and stale.',2,3,2,2);
@@ -78,13 +78,15 @@ INSERT INTO feedbacks VALUES (5,'Loved It!',5,5,5,5);
 
 SELECT setval('users_id_seq', (SELECT MAX(id) from "users"));
 SELECT setval('owners_id_seq', (SELECT MAX(id) from "owners"));
-SELECT setval('paymentPlans_id_seq', (SELECT MAX(id) from "paymentPlans"));
+
 SELECT setval('restaurants_id_seq', (SELECT MAX(id) from "restaurants"));
 SELECT setval('meals_id_seq', (SELECT MAX(id) from "meals"));
 SELECT setval('customers_id_seq', (SELECT MAX(id) from "customers"));
 SELECT setval('invoices_id_seq', (SELECT MAX(id) from "invoices"));
-SELECT setval('pickUpTimes_id_seq', (SELECT MAX(id) from "pickUpTimes"));
+
 SELECT setval('offers_id_seq', (SELECT MAX(id) from "offers"));
 SELECT setval('orders_id_seq', (SELECT MAX(id) from "orders"));
 SELECT setval('feedbacks_id_seq', (SELECT MAX(id) from "feedbacks"));
+SELECT setval('payment_plans_id_seq', (SELECT MAX(id) from "payment_plans"));
+SELECT setval('pickup_times_id_seq', (SELECT MAX(id) from "pickup_times"));
 COMMIT;
