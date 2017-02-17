@@ -78,6 +78,10 @@ db.offers.belongsTo(db.meals);
 db.offers.hasMany(db.orders);
 db.orders.belongsTo(db.offers);
 
+// Pickup Times & Orders Of:Or -> 1:M
+db.pickUpTimes.hasMany(db.orders);
+db.orders.belongsTo(db.pickUpTimes);
+
 // Customers & Orders C:O -> 1:M
 db.customers.hasMany(db.orders);
 db.orders.belongsTo(db.customers);

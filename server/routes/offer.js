@@ -9,11 +9,11 @@ exports.list = function(req, res) {
     models.offers.findAll({
         where: where,
         include: [{
-            attributes: ['name', 'meal_image'],
+            attributes: ['id', 'name'],
             model: models.meals,
             include: [{
                 model: models.restaurants,
-                attributes: ['name']
+                attributes: ['id', 'name']
             }]
         }]
     }).then(function(offers) {
@@ -25,7 +25,7 @@ exports.list = function(req, res) {
 
 // POST /api/v1/offer
 exports.create = function(req, res) {
-    var offerDetails = _.pick(req.body, 'meal_id', 'offer_date', 'plates_left');
+    var offerDetails = _.pick(req.body, 'meal_id', 'offer_date', 'plates_assigned', 'plates_left');
     models.offers.create(offerDetails).then(function(offer) {
         res.json(offer);
     }, function(e) {

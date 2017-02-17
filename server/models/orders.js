@@ -36,14 +36,6 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true
-        },
-        pickup_time: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            references: {
-                model: pickUpTimes,
-                key: 'pickup_time'
-            }
         }
     }, {
         underscored: true,
