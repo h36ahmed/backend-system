@@ -19,7 +19,7 @@ exports.list = function(req, res) {
     models.offers.findAll({
         include: [{
             model: models.meals,
-            attributes: ['name'],
+            attributes: ['name', 'ingredients'],
             include: [{
                 model: models.restaurants,
                 attributes: ['name'],
