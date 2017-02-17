@@ -21,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
 
     var invoices = sequelize.define('invoices', {
         invoice_date: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             defaultValue: DataTypes.NOW
         },
         status: {

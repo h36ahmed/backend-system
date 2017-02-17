@@ -22,7 +22,7 @@ module.exports = function(sequelize, DataTypes) {
 
     var orders = sequelize.define('orders', {
         order_date: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             defaultValue: DataTypes.NOW
         },
         cancelled: {

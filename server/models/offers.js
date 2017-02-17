@@ -19,7 +19,7 @@ Use Cases:
 module.exports = function(sequelize, DataTypes) {
     var offers = sequelize.define('offers', {
         offer_date: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             defaultValue: DataTypes.NOW
         },
         plates_assigned: {

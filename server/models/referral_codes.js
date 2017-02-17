@@ -36,6 +36,13 @@ module.exports = function(sequelize, DataTypes) {
             validate: {
                 min: 0
             }
+        },
+        date_created: {
+            type: DataTypes.DATEONLY,
+            defaultValue: DataTypes.NOW
+        },
+        type: {
+            type: DataTypes.STRING
         }
     }, {
         timestamps: false,

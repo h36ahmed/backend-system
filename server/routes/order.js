@@ -10,7 +10,9 @@ exports.list = function(req, res) {
 
     // fn -> First Name
     if (query.hasOwnProperty('order_date') && query.order_date.length > 0) {
-        where.order_date = query.order_date ;
+        where.order_date = {
+            $like: query.order_date
+        };
     }
 
     models.orders.findAll({

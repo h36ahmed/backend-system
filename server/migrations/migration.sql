@@ -10,10 +10,10 @@ INSERT INTO users VALUES (9,'zuckerberg@fb.com','$2a$10$k3lEbGW65aZunIxSuolGLO',
 INSERT INTO users VALUES (10,'thomas@bayern.de','$2a$10$Da19EZuesvRdXZqOvTX4dO','$2a$10$Da19EZuesvRdXZqOvTX4dOVe.m3IRNUTGcdC4MfWpdE4/cHOF9u8q','customer','FALSE');
 
 
-INSERT INTO owners VALUES (1,'Monty','Singh','2017-02-16 18:54:58+00',4167822931,'',2);
-INSERT INTO owners VALUES (2,'Bill','Xiu','2017-02-16 18:59:12+00',4127443512,'',3);
-INSERT INTO owners VALUES (3,'Bob','Thames','2017-02-16 19:03:11+00',4124135221,'',4);
-INSERT INTO owners VALUES (4,'Will','Homes','2017-02-16 19:07:12+00',4124153512,'',5);
+INSERT INTO owners VALUES (1,'Monty','Singh','2017-02-16',4167822931,'',2);
+INSERT INTO owners VALUES (2,'Bill','Xiu','2017-02-16',4127443512,'',3);
+INSERT INTO owners VALUES (3,'Bob','Thames','2017-02-16',4124135221,'',4);
+INSERT INTO owners VALUES (4,'Will','Homes','2017-02-16',4124153512,'',5);
 
 
 
@@ -37,11 +37,11 @@ INSERT INTO payment_plans VALUES (1,'Lunch A Bunch','You get 10 Meals. $6/ meal.
 INSERT INTO payment_plans VALUES (2,'Lunch A Lot','You get 20 Meals. $6/ meal.','',120.0);
 
 
-INSERT INTO customers VALUES (1,'Christmas','Carter',22,'female','2017-02-01','2017-02-28','2017-02-16 18:54:58+00',10,4167211829,'Toronto','Canada','','TRUE','FALSE',NULL,'',6,1);
-INSERT INTO customers VALUES (2,'Joe','Soto',32,'male','2017-02-01','2017-02-28','2017-02-16 18:59:12+00',20,4167221824,'Toronto','Canada','','TRUE','FALSE',NULL,'',7,2);
-INSERT INTO customers VALUES (3,'Chris','Rock',42,'male','2017-02-01','2017-02-28','2017-02-16 19:03:11+00',10,4167211212,'Toronto','Canada','','TRUE','FALSE',NULL,'',8,1);
-INSERT INTO customers VALUES (4,'Mark','Zuckerberg',32,'male','2017-02-01','2017-02-28','2017-02-16 19:07:12+00',20,4167211888,'Toronto','Canada','','TRUE','FALSE',NULL,'',9,2);
-INSERT INTO customers VALUES (5,'Thomas','Muller',31,'male','2017-02-01','2017-02-28','2017-02-16 18:54:58+01',20,4167211329,'Toronto','Canada','','TRUE','FALSE',NULL,'',10,2);
+INSERT INTO customers VALUES (1,'Christmas','Carter',22,'female','2017-02-01','2017-02-28','2017-02-16',10,4167211829,'Toronto','Canada','','TRUE','FALSE',NULL,'',6,1);
+INSERT INTO customers VALUES (2,'Joe','Soto',32,'male','2017-02-01','2017-02-28','2017-02-16',20,4167221824,'Toronto','Canada','','TRUE','FALSE',NULL,'',7,2);
+INSERT INTO customers VALUES (3,'Chris','Rock',42,'male','2017-02-01','2017-02-28','2017-02-16',10,4167211212,'Toronto','Canada','','TRUE','FALSE',NULL,'',8,1);
+INSERT INTO customers VALUES (4,'Mark','Zuckerberg',32,'male','2017-02-01','2017-02-28','2017-02-16',20,4167211888,'Toronto','Canada','','TRUE','FALSE',NULL,'',9,2);
+INSERT INTO customers VALUES (5,'Thomas','Muller',31,'male','2017-02-01','2017-02-28','2017-02-16',20,4167211329,'Toronto','Canada','','TRUE','FALSE',NULL,'',10,2);
 
 
 INSERT INTO invoices VALUES (1,'2017-02-01','paid',8.0,60.0,'',1);
@@ -59,10 +59,10 @@ INSERT INTO pickup_times VALUES (6,'12:45 PM to 13:00 PM');
 INSERT INTO pickup_times VALUES (7,'13:00 PM to 13:15 PM');
 INSERT INTO pickup_times VALUES (8,'13:15 PM to 13:30 PM');
 
-INSERT INTO offers VALUES (1,'2017-02-16 05:00:00+00',40,40,4);
-INSERT INTO offers VALUES (2,'2017-02-17 05:00:00+00',30,30,2);
-INSERT INTO offers VALUES (3,'2017-02-17 05:00:00+00',30,30,3);
-INSERT INTO offers VALUES (4,'2017-02-21 05:00:00+00',35,35,4);
+INSERT INTO offers VALUES (1,'2017-02-16',40,40,4);
+INSERT INTO offers VALUES (2,'2017-02-17',30,30,2);
+INSERT INTO offers VALUES (3,'2017-02-17',30,30,3);
+INSERT INTO offers VALUES (4,'2017-02-21',35,35,4);
 
 INSERT INTO orders VALUES (1,'2017-02-17','FALSE','FALSE',2,3,1);
 INSERT INTO orders VALUES (2,'2017-02-17','FALSE','FALSE',3,2,2);

@@ -60,13 +60,13 @@ module.exports = function(sequelize, DataTypes) {
             }
         },
         cycle_start_date: {
-            type: DataTypes.DATE
+            type: DataTypes.DATEONLY
         },
         cycle_end_date: {
-            type: DataTypes.DATE
+            type: DataTypes.DATEONLY
         },
         date_joined: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             defaultValue: DataTypes.NOW
         },
         meals_remaining: {
