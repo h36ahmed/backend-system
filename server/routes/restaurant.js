@@ -6,7 +6,7 @@ exports.list = function(req, res) {
     models.restaurants.findAll({
         attributes: ['id', 'name', 'street_address', 'city', 'state', 'country', 'postal_code', 'phone_number', 'logo', 'visible', 'owner_id'],
         include: [{
-            attributes: ['name', 'id', 'price', 'meal_image'],
+            attributes: ['name', 'id', 'price', 'meal_image', 'ingredients'],
             model: models.meals
         }, {
             attributes: ['first_name', 'last_name', 'phone_number'],

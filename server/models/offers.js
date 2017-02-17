@@ -22,6 +22,12 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW
         },
+        plates_assigned: {
+            type: DataTypes.INTEGER,
+            validate: {
+                min: 0
+            }
+        },
         plates_left: {
             type: DataTypes.INTEGER,
             validate: {
