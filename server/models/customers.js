@@ -34,7 +34,7 @@ Use Cases:
 */
 
 module.exports = function(sequelize, DataTypes) {
-    var referralCodes = sequelize.import(__dirname + "/referralCodes.js");
+    var referralCodes = sequelize.import(__dirname + "/referral_codes.js");
 
     var customers = sequelize.define('customers', {
         first_name: {
