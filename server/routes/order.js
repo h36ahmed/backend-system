@@ -12,6 +12,10 @@ exports.list = function(req, res) {
         where.order_date =  query.order_date;
     }
 
+    if (query.hasOwnProperty('cancelled') && query.cancelled.length > 0) {
+        where.cancelled =  query.cancelled;
+    }
+
     models.offers.findAll({
         include: [{
             model: models.meals,
@@ -24,13 +28,13 @@ exports.list = function(req, res) {
         }, {
             model: models.orders,
             where: where,
+            order: [['pickup_time']],
             include: [{
                 model: models.customers,
-                attributes: ['first_name', 'last_name'],
-                include: [{
-                    model: models.users,
-                    attributes: ['email']
-                }]
+                attributes: ['first_name', 'last_name']
+            }, {
+                model: models.pickup_times,
+                attributes: ['pickup_time']
             }]
         }]
     }).then(function(orders) {
