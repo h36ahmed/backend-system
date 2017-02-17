@@ -68,7 +68,7 @@ INSERT INTO orders VALUES (1,'2017-02-17','FALSE','FALSE',2,3,1);
 INSERT INTO orders VALUES (2,'2017-02-17','FALSE','FALSE',3,2,2);
 INSERT INTO orders VALUES (3,'2017-02-17','FALSE','FALSE',2,5,3);
 INSERT INTO orders VALUES (4,'2017-02-17','FALSE','FALSE',3,5,4);
-INSERT INTO orders VALUES (5,'2017-02-17','FALSE','FALSE',3,6,4);
+INSERT INTO orders VALUES (5,'2017-02-17','FALSE','FALSE',3,6,5);
 
 INSERT INTO feedbacks VALUES (1,'Meal was very  good!',5,5,5,1);
 INSERT INTO feedbacks VALUES (2,'Terrible Meal. Salad was dry and stale.',2,3,2,2);

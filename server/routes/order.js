@@ -9,13 +9,40 @@ exports.list = function(req, res) {
     // QUERY PARAMETERS
 
     if (query.hasOwnProperty('order_date') && query.order_date.length > 0) {
-        where.order_date = {
-            $like: query.order_date
-        };
+        where.order_date =  query.order_date;
     }
 
-    models.orders.findAll({
+    models.offers.findAll({
+        include: [{
+            model: models.meals,
+            attributes: ['name'],
+            include: [{
+                model: models.restaurants,
+                attributes: ['name'],
+
+            }]
+        }, {
+            model: models.orders,
+            where: where,
+            include: [{
+                model: models.customers,
+                attributes: ['first_name', 'last_name'],
+                include: [{
+                    model: models.users,
+                    attributes: ['email']
+                }]
+            }]
+        }]
+    }).then(function(orders) {
+        res.json(orders);
+    }, function(e) {
+        res.status(500).send();
+    });
+
+
+    /*models.orders.findAll({
         where: where,
+        group: ['offer_id'],
         include: [{
             model: models.customers,
             attributes: ['first_name', 'last_name'],
@@ -31,7 +58,8 @@ exports.list = function(req, res) {
                 attributes: ['name'],
                 include: [{
                     model: models.restaurants,
-                    attributes: ['name']
+                    attributes: ['name'],
+
                 }]
             }]
         }, {
@@ -42,7 +70,7 @@ exports.list = function(req, res) {
         res.json(orders);
     }, function(e) {
         res.status(500).send();
-    });
+    });*/
 };
 
 // POST /api/v1/order
