@@ -50,6 +50,9 @@ exports.view = function(req, res) {
                         attributes: ['id', 'name']
                     }]
                 }]
+            }, {
+                model: models.pickup_times,
+                attributes: ['pickup_time']
             }]
         }]
     }).then(function(customer) {
