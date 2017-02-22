@@ -6,10 +6,10 @@ exports.list = function(req, res) {
     var query = req.query;
     var where = {};
 
-    models.paymentPlans.findAll({
+    models.payment_plans.findAll({
         where: where
-    }).then(function(paymentPlans) {
-        res.json(paymentPlans);
+    }).then(function(payment_plans) {
+        res.json(payment_plans);
     }, function(e) {
         res.status(500).send();
     });
@@ -18,7 +18,7 @@ exports.list = function(req, res) {
 // POST /api/v1/payment-plan
 exports.create = function(req, res) {
     var paymentPlanDetails = _.pick(req.body, 'name', 'description', 'image', 'price');
-    models.paymentPlans.create(paymentPlanDetails).then(function(paymentPlan) {
+    models.payment_plans.create(paymentPlanDetails).then(function(paymentPlan) {
         res.json(paymentPlan);
     }, function(e) {
         res.status(400).json(e);
@@ -28,7 +28,7 @@ exports.create = function(req, res) {
 // GET /api/v1/payment-plans/:id
 exports.view = function(req, res) {
     var paymentPlanID = parseInt(req.params.id, 10);
-    models.paymentPlans.findById(paymentPlanID).then(function(paymentPlan) {
+    models.payment_plans.findById(paymentPlanID).then(function(paymentPlan) {
         res.json(paymentPlan.toJSON());
     },
     function(e) {
@@ -60,7 +60,7 @@ exports.update = function(req, res) {
         attributes.image = body.image;
     }
 
-    models.paymentPlans.findById(paymentPlanID).then(function(paymentPlan) {
+    models.payment_plans.findById(paymentPlanID).then(function(paymentPlan) {
         if (paymentPlan) {
             paymentPlan.update(attributes).then(function(paymentPlan) {
                 res.json(paymentPlan);
@@ -78,7 +78,7 @@ exports.update = function(req, res) {
 // DELETE /api/v1/payment-plan/:id
 exports.delete = function(req, res) {
     var paymentPlanID = parseInt(req.params.id, 10);
-    models.paymentPlans.destroy({
+    models.payment_plans.destroy({
         where: {
             id: paymentPlanID
         }

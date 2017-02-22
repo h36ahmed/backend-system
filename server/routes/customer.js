@@ -29,12 +29,13 @@ exports.view = function(req, res) {
     models.customers.findById(customerID, {
         include: [{
             model: models.users,
-            attributes: ['email']
+            attributes: ['email'],
+            include: [{
+                model: models.referral_codes,
+                attributes: ['referral_code']
+            }]
         }, {
             model: models.payment_plans
-        }, {
-            model: models.referral_codes,
-            attributes: ['referral_code']
         }, {
             model: models.orders,
             attributes: ['id', 'order_date', 'status'],

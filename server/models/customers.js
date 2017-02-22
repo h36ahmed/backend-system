@@ -33,6 +33,8 @@ Use Cases:
 
 */
 
+var _ = require('underscore');
+
 module.exports = function(sequelize, DataTypes) {
     var referralCodes = sequelize.import(__dirname + "/referral_codes.js");
 
