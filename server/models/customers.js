@@ -116,7 +116,7 @@ module.exports = function(sequelize, DataTypes) {
         instanceMethods: {
             toPublicJSON: function() {
                 var json = this.toJSON();
-                return _.pick(json, 'id', 'first_name', 'last_name', 'age', 'gender', 'cycle_start_date', 'cycle_end_date', 'user_id', 'payment_plan_id', 'reminder_emails', 'active', 'country', 'city', 'meals_remaining', 'profile_image', 'phone_number', 'date_joined');
+                return _.omit(json, 'stripe_token', 'referral_code_used');
             },
             getStripeToken: function() {
                 var json = this.toJSON();

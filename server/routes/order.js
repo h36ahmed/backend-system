@@ -12,8 +12,8 @@ exports.list = function(req, res) {
         where.order_date =  query.order_date;
     }
 
-    if (query.hasOwnProperty('cancelled') && query.cancelled.length > 0) {
-        where.cancelled =  query.cancelled;
+    if (query.hasOwnProperty('status') && query.status.length > 0) {
+        where.status =  query.status;
     }
 
     models.offers.findAll({
@@ -43,43 +43,11 @@ exports.list = function(req, res) {
         res.status(500).send();
     });
 
-
-    /*models.orders.findAll({
-        where: where,
-        group: ['offer_id'],
-        include: [{
-            model: models.customers,
-            attributes: ['first_name', 'last_name'],
-            include: [{
-                model: models.users,
-                attributes: ['email']
-            }]
-        }, {
-            model: models.offers,
-            attributes: ['id'],
-            include: [{
-                model: models.meals,
-                attributes: ['name'],
-                include: [{
-                    model: models.restaurants,
-                    attributes: ['name'],
-
-                }]
-            }]
-        }, {
-            model: models.pickup_times,
-            attributes: ['pickup_time']
-        }]
-    }).then(function(orders) {
-        res.json(orders);
-    }, function(e) {
-        res.status(500).send();
-    });*/
 };
 
 // POST /api/v1/order
 exports.create = function(req, res) {
-    var orderDetails = _.pick(req.body, 'order_date', 'cancelled', 'active', 'pickup_time_id', 'offer_id', 'customer_id');
+    var orderDetails = _.pick(req.body, 'order_date', 'pickup_time_id', 'offer_id', 'customer_id');
     models.orders.create(orderDetails).then(function(order) {
         res.json(order);
     }, function(e) {

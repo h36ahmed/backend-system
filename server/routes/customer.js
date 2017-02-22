@@ -6,55 +6,15 @@ var models = require('../db.js');
 exports.list = function(req, res) {
     var query = req.query;
     var where = {};
-    var userWhere = {};
-    var paymentPlanWhere = {};
-
-    // QUERY PARAMETERS
-
-    // fn -> First Name
-    if (query.hasOwnProperty('first_name') && query.first_name.length > 0) {
-        where.first_name = {
-            $like: '%' + query.fn + '%'
-        };
-    }
-
-    // ln -> Last Name
-    if (query.hasOwnProperty('last_name') && query.last_name.length > 0) {
-        where.last_name = {
-            $like: '%' + query.ln + '%'
-        };
-    }
-
-    // date_joined -> Date Joined
-    if (query.hasOwnProperty('date_joined') && query.date_joined.length > 0) {
-        where.date_joined = {
-            $like: '%' + query.date_joined + '%'
-        };
-    }
-
-    // email -> Email
-    if (query.hasOwnProperty('email') && query.email.length > 0) {
-        userWhere.email = {
-            $like: '%' + query.email + '%'
-        };
-    }
-    // type -> Type
-    if (query.hasOwnProperty('type') && query.type.length > 0) {
-        userWhere.type = {
-            $like: '%' + query.type + '%'
-        };
-    }
 
     models.customers.findAll({
-        attributes: ['id', 'first_name', 'last_name', 'phone_number', 'date_joined', 'profile_image', 'meals_remaining', 'phone_number', 'city', 'country', 'active', 'reminder_emails'],
+        attributes: ['id', 'first_name', 'last_name', 'profile_image', 'active'],
         where: where,
         include: [{
             model: models.users,
-            attributes: ['email'],
-            where: userWhere
+            attributes: ['email']
         }, {
-            model: models.payment_plans,
-            where: paymentPlanWhere
+            model: models.payment_plans
         }]
     }).then(function(customers) {
         res.json(customers);
@@ -66,7 +26,32 @@ exports.list = function(req, res) {
 // GET /api/v1/customers/:id
 exports.view = function(req, res) {
     var customerID = parseInt(req.params.id, 10);
-    models.customers.findById(customerID).then(function(customer) {
+    models.customers.findById(customerID, {
+        include: [{
+            model: models.users,
+            attributes: ['email']
+        }, {
+            model: models.payment_plans
+        }, {
+            model: models.referral_codes,
+            attributes: ['referral_code']
+        }, {
+            model: models.orders,
+            attributes: ['id', 'order_date', 'status'],
+            include: [{
+                model: models.offers,
+                attributes: ['id'],
+                include: [{
+                    model: models.meals,
+                    attributes: ['name'],
+                    include: [{
+                        model: models.restaurants,
+                        attributes: ['id', 'name']
+                    }]
+                }]
+            }]
+        }]
+    }).then(function(customer) {
         res.json(customer.toPublicJSON());
     }, function(e) {
         res.status(404).json(e);

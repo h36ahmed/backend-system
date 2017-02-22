@@ -25,15 +25,13 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.DATEONLY,
             defaultValue: DataTypes.NOW
         },
-        cancelled: {
-            type: DataTypes.BOOLEAN,
+        status: {
+            type: DataTypes.STRING,
+            defaultValue: 'active',
             allowNull: false,
-            defaultValue: false
-        },
-        active: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValue: true
+            validate: {
+                isIn: [['cancelled', 'active', 'completed', 'error']]
+            }
         }
     }, {
         underscored: true,

@@ -48,10 +48,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         postal_code: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                isAlphanumeric: true
-            }
+            allowNull: false
         },
         phone_number: {
             type: DataTypes.BIGINT(10)

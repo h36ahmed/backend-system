@@ -20,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
         referral_code: {
             type: DataTypes.STRING,
             allowNull: false,
-            primaryKey: true,
+            unique: true,
             validate: {
                 isAlphanumeric: true
             }
