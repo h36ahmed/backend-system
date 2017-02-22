@@ -36,6 +36,8 @@ exports.list = function(req, res) {
                 model: models.pickup_times,
                 attributes: ['pickup_time']
             }]
+        }, {
+            model: models.invoices
         }]
     }).then(function(orders) {
         res.json(orders);
