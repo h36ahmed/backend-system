@@ -15,6 +15,7 @@ var paymentPlan = require('./paymentPlan');
 var referralCode = require('./referralCode');
 var invoice = require('./invoice');
 var feedback = require('./feedback');
+var aws = require('./aws');
 
 
 router.use(function(req, res, next) {
@@ -99,5 +100,8 @@ router.delete('/api/v1/feedback/:id', middleware.requireAuthentication, feedback
 router.get('/api/v1/invoices', middleware.requireAuthentication, invoice.list);
 router.post('/api/v1/invoice', middleware.requireAuthentication, invoice.create);
 //router.delete('/api/v1/invoice/:id', middleware.requireAuthentication, invoice.delete);
+
+// Amazon
+router.get('/api/v1/signing', middleware.requireAuthentication, aws.signing);
 
 module.exports = router;
