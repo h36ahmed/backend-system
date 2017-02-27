@@ -16,6 +16,7 @@ var referralCode = require('./referralCode');
 var invoice = require('./invoice');
 var feedback = require('./feedback');
 var aws = require('./aws');
+var email = require('./email');
 
 
 router.use(function(req, res, next) {
@@ -103,5 +104,10 @@ router.post('/api/v1/invoice', middleware.requireAuthentication, invoice.create)
 
 // Amazon
 router.post('/api/v1/signing', middleware.requireAuthentication, aws.signing);
+
+// Email
+router.post('/api/v1/submit', middleware.requireAuthentication, email.basic);
+router.post('/api/v1/validate', middleware.requireAuthentication, email.validate);
+router.post('/api/v1/invoice', middleware.requireAuthentication, email.invoice);
 
 module.exports = router;
