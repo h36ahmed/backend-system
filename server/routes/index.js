@@ -102,6 +102,6 @@ router.post('/api/v1/invoice', middleware.requireAuthentication, invoice.create)
 //router.delete('/api/v1/invoice/:id', middleware.requireAuthentication, invoice.delete);
 
 // Amazon
-router.get('/api/v1/signing', middleware.requireAuthentication, aws.signing);
+router.post('/api/v1/signing', middleware.requireAuthentication, aws.signing);
 
 module.exports = router;

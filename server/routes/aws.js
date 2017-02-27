@@ -15,7 +15,7 @@ exports.signing = function(req, res) {
 
     var path = "";
 
-    switch(req.query.page) {
+    switch(request.page) {
         case "meals":
             path = "meals/" + fileName;
             break;
