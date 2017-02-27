@@ -4,13 +4,33 @@ var models = require('../db.js');
 var aws = 'path to credentials';
 var crypto = require('crypto');
 var moment = require('moment');
+var shortid = require('shortid');
 
 var s3Url = 'https://' + aws.bucket + '.s3-' + aws.region + '.amazonaws.com';
 
 exports.signing = function(req, res) {
     var request = req.body;
-    var fileName = request.filename
-    var path = 'somedirectory in s3' + fileName;
+
+    var fileName = shortid.generate();
+
+    var path = "";
+
+    switch(req.query.page) {
+        case "meals":
+            path = "meals/" + fileName;
+            break;
+        case "restaurants":
+            path = "restaurants/" + fileName;
+            break;
+        case "users":
+            path = "users/" + fileName;
+            break;
+        case "paymentPlans":
+            path = "paymentPlans/" + fileName;
+            break;
+        default:
+            path = "misc/" + fileName;
+    }
 
     var readType = 'private';
 
@@ -50,7 +70,9 @@ exports.signing = function(req, res) {
             signature: signature,
             'Content-Type': request.type,
             success_action_status: 201
-        }
+        },
+        file_name: fileName
+
     };
     res.jsonp(credentials);
 };
