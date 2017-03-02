@@ -47,20 +47,6 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false
         },
-        age: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            validate: {
-                min: 16,
-                max: 90
-            }
-        },
-        gender: {
-            type: DataTypes.STRING,
-            validate: {
-                isIn: [['male', 'female', 'other']]
-            }
-        },
         cycle_start_date: {
             type: DataTypes.DATEONLY
         },
@@ -78,14 +64,9 @@ module.exports = function(sequelize, DataTypes) {
                 max: 500
             }
         },
-        phone_number: {
-            type: DataTypes.BIGINT(10)
-        },
-        city: {
-            type: DataTypes.STRING
-        },
-        country: {
-            type: DataTypes.STRING
+        postal_code: {
+            type: DataTypes.STRING,
+            allowNull: false
         },
         profile_image: {
             type: DataTypes.STRING

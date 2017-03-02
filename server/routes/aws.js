@@ -1,7 +1,12 @@
 var _ = require('underscore');
 var models = require('../db.js');
 
-var aws = 'path to credentials';
+var aws = {
+    bucket: 'ls-frontend',
+    region: 'ca-central-1',
+    secret: 'AKIAIIFU7XS25I6B7FMA',
+    key: 'i+sAULkpYNsysKv/Z7+Kx5lPr2OAhRmxIGywKiru'
+}
 var crypto = require('crypto');
 var moment = require('moment');
 var shortid = require('shortid');
@@ -24,9 +29,6 @@ exports.signing = function(req, res) {
             break;
         case "users":
             path = "users/" + fileName;
-            break;
-        case "paymentPlans":
-            path = "paymentPlans/" + fileName;
             break;
         default:
             path = "misc/" + fileName;

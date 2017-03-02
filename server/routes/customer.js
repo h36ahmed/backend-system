@@ -75,7 +75,7 @@ exports.secure = function(req, res) {
 
 // POST /api/v1/customer
 exports.create = function(req, res) {
-    var customerDetails = _.pick(req.body, 'id', 'first_name', 'last_name', 'phone_number', 'date_joined', 'profile_image', 'meals_remaining', 'phone_number', 'city', 'country', 'profile_image', 'active', 'reminder_emails', 'payment_plan_id', 'stripe_token', 'referral_code_used');
+    var customerDetails = _.pick(req.body, 'id', 'first_name', 'last_name', 'date_joined', 'profile_image', 'meals_remaining', 'postal_code', 'profile_image', 'active', 'reminder_emails', 'payment_plan_id', 'stripe_token', 'referral_code_used');
 
     models.customers.create(customerDetails).then(function(customer) {
         res.json(customer.toPublicJSON());
