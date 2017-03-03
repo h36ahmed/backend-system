@@ -16,13 +16,11 @@ var s3Url = 'https://' + aws.bucket + '.s3-' + aws.region + '.amazonaws.com';
 exports.signing = function(req, res) {
     var request = req.body;
 
-    var file = req.file;
-
     var fileName = shortid.generate();
 
     var path = "";
 
-    switch(request.page) {
+    switch (request.page) {
         case "meals":
             path = "meals/" + fileName;
             break;
@@ -38,43 +36,55 @@ exports.signing = function(req, res) {
 
     var readType = 'public-read';
 
-    var expiration = moment().add(5, 'm').toDate(); //15 minutes
+    const date = new Date().toISOString().replace(/[\.\-:]/gi, "").substr(0, 15) + "Z";
+    const dateNowRaw = date.substr(0, date.indexOf("T"));
 
-    var s3Policy = {
-        'expiration': expiration,
-        'conditions': [{
-                'bucket': aws.bucket
+    const expirationDate = new Date();
+    expirationDate.setHours(expirationDate.getHours() + 1);
+    const expiration = expirationDate.toISOString();
+
+    const credentials = '779056531898/' + dateNowRaw + '/ca-central-1/s3/aws4_request';
+
+    const policy = {
+        expiration: expiration,
+        conditions: [{
+                "bucket": aws.bucket
+            }, {
+                "acl": "private"
             },
-            ['starts-with', '$key', path],
-            {
-                'acl': readType
-            },
-            {
-              'success_action_status': '201'
-            },
-            ['starts-with', '$Content-Type', request.type],
-            ['content-length-range', 2048, 10485760], //min and max
+            ["starts-with", "$key", path],
+            ['starts-with', '$Content-Type', request.type], {
+                "x-amz-credential": credentials
+            }, {
+                "x-amz-algorithm": "AWS4-HMAC-SHA256"
+            }, {
+                "x-amz-date": date
+            }
         ]
     };
 
-    var stringPolicy = JSON.stringify(s3Policy);
-    var base64Policy = new Buffer(stringPolicy, 'utf-8').toString('base64');
+    const base64Policy = new Buffer(JSON.stringify(policy), "utf-8").toString("base64");
 
-    // sign policy
-    var signature = crypto.createHmac('sha1', aws.secret)
-        .update(new Buffer(base64Policy, 'utf-8')).digest('base64');
+    const dateKey = crypto.createHmac('sha256', "AWS4" + aws.key).update(dateNowRaw).digest();
+    const dateRegionKey = crypto.createHmac('sha256', dateKey).update('ca-central-1').digest();
+    const dateRegionServiceKey = crypto.createHmac('sha256', dateRegionKey).update('s3').digest();
+    const signingKey = crypto.createHmac('sha256', dateRegionServiceKey).update('aws4_request').digest();
+
+    const signature = crypto.createHmac('sha256', signingKey).update(base64Policy).digest('hex');
+
 
     var credentials = {
         url: s3Url,
         fields: {
             key: path,
-            AWSAccessKeyId: aws.key,
             acl: readType,
             policy: base64Policy,
-            signature: signature,
+            'X-Amz-Credential': credentials,
+            'X-Amz-Algorithm': 'AWS4-HMAC-SHA256',
+            'X-Amz-Date': date,
+            'X-Amz-Signature': signature,
             'Content-Type': request.type,
-            success_action_status: 201,
-            file: file
+            success_action_status: 201
         },
         file_name: fileName
 
