@@ -73,7 +73,7 @@ exports.signing = function(req, res) {
     const signature = crypto.createHmac('sha256', signingKey).update(base64Policy).digest('hex');
 
 
-    var credentials = {
+    var final = {
         url: s3Url,
         fields: {
             key: path,
@@ -88,5 +88,5 @@ exports.signing = function(req, res) {
         },
         file_name: fileName
     };
-    res.jsonp(credentials);
+    res.jsonp(final);
 };
