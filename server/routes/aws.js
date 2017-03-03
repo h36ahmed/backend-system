@@ -87,7 +87,6 @@ exports.signing = function(req, res) {
             success_action_status: 201
         },
         file_name: fileName
-
     };
     res.jsonp(credentials);
 };
