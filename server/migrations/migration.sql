@@ -34,11 +34,11 @@ INSERT INTO payment_plans VALUES (1,'Lunch A Bunch','You get 10 Meals. $6/ meal.
 INSERT INTO payment_plans VALUES (2,'Lunch A Lot','You get 20 Meals. $6/ meal.','',120.0);
 
 
-INSERT INTO customers VALUES (1,'Christmas','Carter','2017-02-01','2017-02-28','2017-02-16',10,'M5V2J2','',TRUE,FALSE,'','',6,1);
-INSERT INTO customers VALUES (2,'Joe','Soto','2017-02-01','2017-02-28','2017-02-17',20,'M5V2J2','',TRUE,FALSE,'','',7,2);
-INSERT INTO customers VALUES (3,'Chris','Rock','2017-02-01','2017-02-28','2017-02-18',10,'M5V2J2','',TRUE,FALSE,'','',8,1);
-INSERT INTO customers VALUES (4,'Mark','Zuckerberg','2017-02-01','2017-02-28','2017-02-19',20,'M5V2J2','',TRUE,FALSE,'','',9,2);
-INSERT INTO customers VALUES (5,'Thomas','Muller','2017-02-01','2017-02-28','2017-02-20',20,'M5V2J2','',TRUE,FALSE,'','',10,2);
+INSERT INTO customers VALUES (1,'Christmas','Carter','2017-02-01','2017-02-28','2017-02-16',10,'M5V2J2','',TRUE,FALSE,NULL,'',6,1);
+INSERT INTO customers VALUES (2,'Joe','Soto','2017-02-01','2017-02-28','2017-02-17',20,'M5V2J2','',TRUE,FALSE,NULL,'',7,2);
+INSERT INTO customers VALUES (3,'Chris','Rock','2017-02-01','2017-02-28','2017-02-18',10,'M5V2J2','',TRUE,FALSE,NULL,'',8,1);
+INSERT INTO customers VALUES (4,'Mark','Zuckerberg','2017-02-01','2017-02-28','2017-02-19',20,'M5V2J2','',TRUE,FALSE,NULL,'',9,2);
+INSERT INTO customers VALUES (5,'Thomas','Muller','2017-02-01','2017-02-28','2017-02-20',20,'M5V2J2','',TRUE,FALSE,NULL,'',10,2);
 
 
 INSERT INTO invoices VALUES (1,'2017-02-01','paid',8.0,60.0,'',1);

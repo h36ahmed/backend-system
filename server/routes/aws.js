@@ -16,6 +16,8 @@ var s3Url = 'https://' + aws.bucket + '.s3-' + aws.region + '.amazonaws.com';
 exports.signing = function(req, res) {
     var request = req.body;
 
+    var file = req.file;
+
     var fileName = shortid.generate();
 
     var path = "";
@@ -34,7 +36,7 @@ exports.signing = function(req, res) {
             path = "misc/" + fileName;
     }
 
-    var readType = 'private';
+    var readType = 'public-read';
 
     var expiration = moment().add(5, 'm').toDate(); //15 minutes
 
@@ -71,7 +73,8 @@ exports.signing = function(req, res) {
             policy: base64Policy,
             signature: signature,
             'Content-Type': request.type,
-            success_action_status: 201
+            success_action_status: 201,
+            file: file
         },
         file_name: fileName
 
