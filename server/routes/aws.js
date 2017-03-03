@@ -78,6 +78,7 @@ exports.signing = function(req, res) {
         fields: {
             key: path,
             acl: readType,
+            AWSAccessKeyId: aws.key,
             policy: base64Policy,
             'X-Amz-Credential': credentials,
             'X-Amz-Algorithm': 'AWS4-HMAC-SHA256',
