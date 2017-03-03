@@ -83,6 +83,7 @@ exports.signing = function(req, res) {
             'X-Amz-Credential': credentials,
             'X-Amz-Algorithm': 'AWS4-HMAC-SHA256',
             'X-Amz-Date': date,
+            'X-Amz-Signature': signature,
             'Signature': signature,
             'Content-Type': request.type,
             success_action_status: 201
