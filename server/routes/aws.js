@@ -43,14 +43,14 @@ exports.signing = function(req, res) {
     expirationDate.setHours(expirationDate.getHours() + 1);
     const expiration = expirationDate.toISOString();
 
-    const credentials = '779056531898/' + dateNowRaw + '/ca-central-1/s3/aws4_request';
+    const credentials = aws.secret + '/' + dateNowRaw + '/ca-central-1/s3/aws4_request';
 
     const policy = {
         expiration: expiration,
         conditions: [{
                 "bucket": aws.bucket
             }, {
-                "acl": "private"
+                "acl": readType
             },
             ["starts-with", "$key", path],
             ['starts-with', '$Content-Type', request.type], {
@@ -78,13 +78,11 @@ exports.signing = function(req, res) {
         fields: {
             key: path,
             acl: readType,
-            AWSAccessKeyId: aws.key,
             policy: base64Policy,
             'X-Amz-Credential': credentials,
             'X-Amz-Algorithm': 'AWS4-HMAC-SHA256',
             'X-Amz-Date': date,
             'X-Amz-Signature': signature,
-            'Signature': signature,
             'Content-Type': request.type,
             success_action_status: 201
         },
