@@ -44,8 +44,8 @@ exports.update = function(req, res) {
 
     var attributes = {};
 
-    if (body.hasOwnProperty('email')) {
-        attributes.email = body.email;
+    if (body.hasOwnProperty('name')) {
+        attributes.name = body.name;
     }
 
     if (body.hasOwnProperty('description')) {
