@@ -82,6 +82,9 @@ exports.view = function(req, res) {
         include: [{
             attributes: ['name', 'id', 'phone_number'],
             model: models.restaurants
+        }, {
+            attributes: ['email', 'confirmed_email'],
+            model: models.users
         }]
     }).then(function(owner) {
         res.json(owner);
