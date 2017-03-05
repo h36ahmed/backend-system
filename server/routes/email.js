@@ -24,12 +24,8 @@ var sendWelcomeEmail = function(data, res) {
 
     var welcomeEmail = new EmailTemplate(path.join(templatesDir, 'welcome-email'));
 
-    Handlebars.registerHelper('capitalize', function capitalize(context) {
-        return context.toUpperCase()
-    })
-
     Handlebars.registerPartial('name',
-        '{{ capitalize name.first }} {{ capitalize name.last }}'
+        '{{ name.first }} {{ name.last }}'
     );
 
     var locals = {
@@ -51,8 +47,6 @@ var sendWelcomeEmail = function(data, res) {
             html: results.html
         }
 
-        console.log(results.html);
-
         mailgun.messages().send(data, function(err, body) {
             if (err) {
                 res.status(500).send();
@@ -64,8 +58,6 @@ var sendWelcomeEmail = function(data, res) {
         });
     });
 };
-
-
 
 // POST /api/v1/sendEmail
 exports.sendEmail = function(req, res) {
