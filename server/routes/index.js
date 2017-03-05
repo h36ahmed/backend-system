@@ -106,8 +106,7 @@ router.post('/api/v1/invoice', middleware.requireAuthentication, invoice.create)
 router.post('/api/v1/signing', middleware.requireAuthentication, aws.signing);
 
 // Email
-router.post('/api/v1/submit', middleware.requireAuthentication, email.basic);
+router.post('/api/v1/sendEmail', middleware.requireAuthentication, email.sendEmail);
 router.post('/api/v1/validate', middleware.requireAuthentication, email.validate);
-router.post('/api/v1/invoice', middleware.requireAuthentication, email.invoice);
 
 module.exports = router;
