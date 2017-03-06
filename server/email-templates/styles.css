@@ -2,7 +2,6 @@
     GLOBAL
     A very basic CSS reset
 ------------------------------------- */
-@import url('https://fonts.googleapis.com/css?family=Nunito+Sans');
 
 * {
   margin: 0;
