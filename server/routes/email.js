@@ -276,7 +276,7 @@ exports.sendEmail = function(req, res) {
     var email = req.body.email;
 
     switch (emailType) {
-        case "welcome-email":
+        case "welcome":
             sendWelcomeEmail({
                 email: email
             }, res);
@@ -291,12 +291,12 @@ exports.sendEmail = function(req, res) {
                 email: email
             }, res);
             break;
-        case "feedback-email":
+        case "feedback":
             sendFeedbackEmail({
                 email: email
             }, res);
             break;
-        case "exit-email":
+        case "exit":
             sendExitEmail({
                 email: email
             }, res);
