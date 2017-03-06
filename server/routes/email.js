@@ -2,6 +2,7 @@ var _ = require('underscore');
 var Mailgun = require('mailgun-js');
 var EmailTemplate = require('email-templates').EmailTemplate;
 var path = require('path');
+var fs = require('fs');
 var Handlebars = require('handlebars');
 
 //Your api key, from Mailgun’s Control Panel
@@ -20,208 +21,146 @@ var mailgun = new Mailgun({
 
 var templatesDir = path.resolve(__dirname, '..', 'email-templates');
 
-var sendWelcomeEmail = function(data, res) {
+var templates = {};
 
-    var welcomeEmail = new EmailTemplate(path.join(templatesDir, 'welcome'));
+var response;
 
-    Handlebars.registerPartial('name',
-        '{{ name.first }} {{ name.last }}'
-    );
+// load templates once
+fs.readdirSync(templatesDir).forEach(function(file) {
+    if (fs.statSync(path.join(templatesDir, file)).isDirectory()) {
+        templates[file] = new EmailTemplate(path.join(templatesDir, file));
+    }
+});
 
-    var locals = {
-        email: data.email,
-        name: {
-            first: 'Customer',
-            last: ''
-        }
+function send(locals, cb) {
+    var data = {};
+    var template = templates[locals.template];
+
+    if (!template) {
+        return cb({
+            msg: 'Template not found',
+            status: 500
+        });
     }
 
-    welcomeEmail.render(locals, function(err, results) {
+    template.render(locals, function(err, results) {
         if (err) {
-            return console.error(err)
+            return cb(err);
         }
-        var data = {
-            from: from_who,
+
+        data = {
+            from: locals.from,
             to: locals.email,
-            subject: 'Hello from Lunch Society',
-            html: results.html
-        }
+            subject: locals.subject,
+            html: results.html,
+            text: results.text
+        };
 
         mailgun.messages().send(data, function(err, body) {
             if (err) {
-                res.status(500).send();
-                console.log("got an error: ", err);
-            } else {
-                res.status(200).send();
-                console.log(body);
+                return cb(err);
             }
+            cb(null);
         });
     });
+}
+
+function complete(err) {
+    if (err) {
+        response.status(err.status).send();
+        console.log("got an error: ", err.msg);
+    } else {
+        response.status(200).send();
+    }
+}
+
+var sendWelcomeEmail = function(data, res) {
+
+    var locals = {
+        email: data.email,
+        from: from_who,
+        data: {
+            name: 'Hassan Ahmed'
+        },
+        template: 'welcome',
+        subject: 'Hello from Lunch Society'
+    }
+
+    response = res;
+
+    send(locals, complete);
 };
 
 var sendOrderEmail = function(data, res) {
 
-    var orderEmail = new EmailTemplate(path.join(templatesDir, 'order'));
-
-    // Magic Needs to Happen Here.
-
-    Handlebars.registerPartial('name',
-        '{{ name.first }} {{ name.last }}'
-    );
-
     var locals = {
         email: data.email,
-        name: {
-            first: 'Hassan',
-            last: 'Ahmed'
-        }
+        from: from_who,
+        data: {
+            name: 'Hassan Ahmed'
+        },
+        template: 'order',
+        subject: 'Order Information'
     }
 
-    orderEmail.render(locals, function(err, results) {
-        if (err) {
-            return console.error(err)
-        }
-        var data = {
-            from: from_who,
-            to: locals.email,
-            subject: 'Order Information',
-            html: results.html
-        }
+    response = res;
 
-        mailgun.messages().send(data, function(err, body) {
-            if (err) {
-                res.status(500).send();
-                console.log("got an error: ", err);
-            } else {
-                res.status(200).send();
-                console.log(body);
-            }
-        });
-    });
+    send(locals, complete);
 };
 
 // Cancel Order Email
 var sendCOEmail = function(data, res) {
 
-    var coEmail = new EmailTemplate(path.join(templatesDir, 'cancel-order'));
-
-    // Magic Needs to Happen Here.
-
-    Handlebars.registerPartial('name',
-        '{{ name.first }} {{ name.last }}'
-    );
 
     var locals = {
         email: data.email,
-        name: {
-            first: 'Hassan',
-            last: 'Ahmed'
-        }
+        from: from_who,
+        data: {
+            name: 'Hassan Ahmed'
+        },
+        template: 'cancel-order',
+        subject: 'CANCELLED: Order Status Update'
     }
 
-    coEmail.render(locals, function(err, results) {
-        if (err) {
-            return console.error(err)
-        }
-        var data = {
-            from: from_who,
-            to: locals.email,
-            subject: 'CANCELLED: Order Status Update',
-            html: results.html
-        }
+    response = res;
 
-        mailgun.messages().send(data, function(err, body) {
-            if (err) {
-                res.status(500).send();
-                console.log("got an error: ", err);
-            } else {
-                res.status(200).send();
-                console.log(body);
-            }
-        });
-    });
+    send(locals, complete);
+
 };
 
 var sendFeedbackEmail = function(data, res) {
 
-    var feedbackEmail = new EmailTemplate(path.join(templatesDir, 'feedback'));
-
-    // Magic Needs to Happen Here.
-
-    Handlebars.registerPartial('name',
-        '{{ name.first }} {{ name.last }}'
-    );
-
     var locals = {
         email: data.email,
-        name: {
-            first: 'Hassan',
-            last: 'Ahmed'
-        }
+        from: from_who,
+        data: {
+            name: 'Hassan Ahmed'
+        },
+        template: 'feedback',
+        subject: 'Thank You For Providing Feedback!'
     }
 
-    feedbackEmail.render(locals, function(err, results) {
-        if (err) {
-            return console.error(err)
-        }
-        var data = {
-            from: from_who,
-            to: locals.email,
-            subject: 'Thank You For Providing Feedback!',
-            html: results.html
-        }
+    response = res;
 
-        mailgun.messages().send(data, function(err, body) {
-            if (err) {
-                res.status(500).send();
-                console.log("got an error: ", err);
-            } else {
-                res.status(200).send();
-                console.log(body);
-            }
-        });
-    });
+    send(locals, complete);
+
 };
 
 var sendExitEmail = function(data, res) {
 
-    var exitEmail = new EmailTemplate(path.join(templatesDir, 'exit'));
-
-    // Magic Needs to Happen Here.
-
-    Handlebars.registerPartial('name',
-        '{{ name.first }} {{ name.last }}'
-    );
-
     var locals = {
         email: data.email,
-        name: {
-            first: 'Hassan',
-            last: 'Ahmed'
-        }
+        from: from_who,
+        data: {
+            name: 'Hassan Ahmed'
+        },
+        template: 'exit',
+        subject: 'Sad To See You Leaving!'
     }
 
-    exitEmail.render(locals, function(err, results) {
-        if (err) {
-            return console.error(err)
-        }
-        var data = {
-            from: from_who,
-            to: locals.email,
-            subject: 'Sad To See You Leaving!',
-            html: results.html
-        }
+    response = res;
 
-        mailgun.messages().send(data, function(err, body) {
-            if (err) {
-                res.status(500).send();
-                console.log("got an error: ", err);
-            } else {
-                res.status(200).send();
-                console.log(body);
-            }
-        });
-    });
+    send(locals, complete);
 };
 
 function formatDate(date) {
@@ -302,7 +241,7 @@ exports.sendEmail = function(req, res) {
             }, res);
             break;
         default:
-            return true;
+            res.status(204).send();
     }
 };
 
@@ -311,27 +250,3 @@ exports.sendOrderEmail = sendOrderEmail;
 exports.sendCOEmail = sendCOEmail;
 exports.sendFeedbackEmail = sendFeedbackEmail;
 exports.sendExitEmail = sendExitEmail;
-
-/*
-exports.validate = function(req, res) {
-    var mailgun = new Mailgun({
-        apiKey: api_key,
-        domain: domain
-    });
-
-    var members = [{
-        address: req.params.mail
-    }];
-    mailgun.lists('NAME@MAILINGLIST.COM').members().add({
-        members: members,
-        subscribed: true
-    }, function(err, body) {
-        console.log(body);
-        if (err) {
-            res.send("Error - check console");
-        } else {
-            res.send("Added to mailing list");
-        }
-    });
-};
-*/
