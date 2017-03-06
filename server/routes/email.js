@@ -79,9 +79,7 @@ var sendWelcomeEmail = function(data, res) {
     var locals = {
         email: data.email,
         from: from_who,
-        data: {
-            name: 'Hassan Ahmed'
-        },
+        data: data,
         template: 'welcome',
         subject: 'Hello from Lunch Society'
     }

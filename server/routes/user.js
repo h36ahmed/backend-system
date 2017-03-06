@@ -1,6 +1,7 @@
 var _ = require('underscore');
 var models = require('../db.js');
 var cryptojs = require('crypto-js');
+var email = require('./email');
 
 // GET /api/v1/users
 exports.list = function(req, res) {
@@ -90,7 +91,21 @@ exports.create = function(req, res) {
     var body = _.pick(req.body, 'email', 'password', 'type');
 
     models.users.create(body).then(function(user) {
-        res.json(user.toPublicJSON());
+        if(body.type == "customer") {
+            var data = {
+                name: 'Customer',
+                email: user.email,
+                password: body.password
+            }
+            email.sendWelcomeEmail(data, res);
+        } else if (body.type == "owner") {
+            var data = {
+                name: 'Restaurant Owner',
+                email: user.email,
+                password: body.password
+            }
+            email.sendWelcomeEmail(data, res);
+        }
     }, function(e) {
         res.status(400).json(e);
     });
