@@ -1,5 +1,14 @@
 var _ = require('underscore');
 var models = require('../db.js');
+var NodeGeocoder = require('node-geocoder');
+
+var options = {
+    provider: 'google',
+    httpAdapter: 'https',
+    apiKey: 'AIzaSyD36yXcN829WP0wpCdiSiY_ZQ9VBlJK6iM',
+};
+
+var geocoder = NodeGeocoder(options);
 
 // GET /api/v1/restaurants
 exports.list = function(req, res) {
@@ -40,11 +49,25 @@ exports.view = function(req, res) {
 // POST /api/v1/restaurant
 exports.create = function(req, res) {
     var restaurantDetails = _.pick(req.body, 'name', 'street_address', 'city', 'state', 'country', 'postal_code', 'phone_number', 'logo', 'visible', 'owner_id');
-    models.restaurants.create(restaurantDetails).then(function(restaurant) {
-        res.json(restaurant.toJSON());
-    }, function(e) {
-        res.status(400).json(e);
+
+    geocoder.geocode({
+        address: restaurantDetails.street_address,
+        postal_code: restaurantDetails.postal_code,
+        city: restaurantDetails.city,
+        country: restaurantDetails.country
+    }, function(err, body) {
+        if (err) {
+            res.status(500).send();
+        }
+        restaurantDetails.latitude = body[0].latitude;
+        restaurantDetails.longitude = body[0].longitude;
+        models.restaurants.create(restaurantDetails).then(function(restaurant) {
+            res.json(restaurant.toJSON());
+        }, function(e) {
+            res.status(400).json(e);
+        });
     });
+
 };
 
 // PUT /api/v1/restaurant/:id
@@ -92,18 +115,30 @@ exports.update = function(req, res) {
         attributes.owner_id = parseInt(body.owner_id, 10);
     }
 
-    models.restaurants.findById(restaurantID).then(function(restaurant) {
-        if (restaurant) {
-            restaurant.update(attributes).then(function(restaurant) {
-                res.json(restaurant);
-            }, function(e) {
-                res.status(400).json(e);
-            });
-        } else {
-            res.status(404).send();
+    geocoder.geocode({
+        address: attributes.street_address,
+        postal_code: attributes.postal_code,
+        city: attributes.city,
+        country: attributes.country
+    }, function(err, body) {
+        if (err) {
+            res.status(500).send();
         }
-    }, function() {
-        res.status(500).send();
+        attributes.latitude = body[0].latitude;
+        attributes.longitude = body[0].longitude;
+        models.restaurants.findById(restaurantID).then(function(restaurant) {
+            if (restaurant) {
+                restaurant.update(attributes).then(function(restaurant) {
+                    res.json(restaurant);
+                }, function(e) {
+                    res.status(400).json(e);
+                });
+            } else {
+                res.status(404).send();
+            }
+        }, function() {
+            res.status(500).send();
+        });
     });
 };
 
