@@ -144,6 +144,24 @@ var sendFeedbackEmail = function(data, res) {
 
 };
 
+var sendInvoiceEmail = function(data, res) {
+
+    var locals = {
+        email: data.email,
+        from: from_who,
+        data: {
+            name: 'Hassan Ahmed'
+        },
+        template: 'invoice',
+        subject: 'Invoice For Lunch Society'
+    }
+
+    response = res;
+
+    send(locals, complete);
+
+};
+
 var sendExitEmail = function(data, res) {
 
     var locals = {
@@ -233,6 +251,11 @@ exports.sendEmail = function(req, res) {
                 email: email
             }, res);
             break;
+        case "invoice":
+            sendInvoiceEmail({
+                email: email
+            }, res);
+            break;
         case "exit":
             sendExitEmail({
                 email: email
@@ -248,3 +271,4 @@ exports.sendOrderEmail = sendOrderEmail;
 exports.sendCOEmail = sendCOEmail;
 exports.sendFeedbackEmail = sendFeedbackEmail;
 exports.sendExitEmail = sendExitEmail;
+exports.sendInvoiceEmail = sendInvoiceEmail;

@@ -4,7 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Restaurant Orders</title>
+    <title>Order Email</title>
     <style>
         /* -------------------------------------
             RESPONSIVE AND MOBILE FRIENDLY STYLES
@@ -70,38 +70,53 @@
                                     </tr>
                                     <tr>
                                         <td class="content-block ls-body">
-                                            Hi Richmond Station,
+                                            Hi {{name}},
                                         </td>
                                     </tr>
                                     <tr class="">
                                         <td class="content-block">
-                                            Here are your <strong>30</strong> orders for Grilled Cornish Hen for <strong>12/01/2017</strong>:
+                                            <h2>Your Invoice For $122 is Paid!</h2>
                                         </td>
                                     </tr>
                                     <tr class="">
                                         <td class="content-block">
-                                            <h2 class="ls-pickup-time">Pick-Up Time: <strong>12:30 PM to 12:45 PM</strong></h2>
+                                            Thank you for using Lunch Society. Here are your details for the invoice:
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="content-block">
-                                            <ul>
-                                                <li>Lucy Wu - lucy@gmail.com</li>
-                                                <li>Logan Wol - logan@gmail.com</li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr class="">
-                                        <td class="content-block">
-                                            <h2 class="ls-pickup-time">Pick-Up Time: <strong>12:45 PM to 1:00 PM</strong></h2>
+                                        <td class="content-block aligncenter">
+                                            <table class="invoice">
+                                                <tr>
+                                                    <td>Lee Munroe<br>Invoice #12345<br>June 01 2014</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <table class="invoice-items" cellpadding="0" cellspacing="0">
+                                                            <tr>
+                                                                <td>Service 1</td>
+                                                                <td class="alignright">$ 19.99</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Service 2</td>
+                                                                <td class="alignright">$ 9.99</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Service 3</td>
+                                                                <td class="alignright">$ 4.00</td>
+                                                            </tr>
+                                                            <tr class="total">
+                                                                <td class="alignright" width="80%">Total</td>
+                                                                <td class="alignright">$ 33.98</td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="content-block">
-                                            <ul>
-                                                <li>Calvin Wu - cal@gmail.com</li>
-                                                <li>Souel Wol - so@gmail.com</li>
-                                            </ul>
+                                        <td class="content-block aligncenter" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
+                                            <a href="http://www.mailgun.com" itemprop="url">Order Meal</a>
                                         </td>
                                     </tr>
                                     <tr>
