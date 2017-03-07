@@ -17,7 +17,7 @@ exports.list = function(req, res) {
             model: models.meals,
             include: [{
                 model: models.restaurants,
-                attributes: ['id', 'name']
+                attributes: ['id', 'name', 'longitude', 'latitude']
             }]
         }]
     }).then(function(offers) {
