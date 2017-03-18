@@ -65,6 +65,10 @@ module.exports = function(sequelize, DataTypes) {
         },
         latitude: {
             type: DataTypes.FLOAT
+        },
+        payout_rate: {
+            type: DataTypes.FLOAT,
+            allowNull: false
         }
     }, {
         timestamps: false,
