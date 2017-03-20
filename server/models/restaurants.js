@@ -14,7 +14,12 @@ Attributes:
 -> Postal Code
 -> Phone Number
 -> Logo
--> Visible?
+-> Status
+-> Longitude
+-> Latitude
+-> Payout Rate
+-> Stripe Token
+
 
 Methods:
 -> toPublicJSON: This outputs only the fields that should be seen by public.
@@ -56,9 +61,13 @@ module.exports = function(sequelize, DataTypes) {
         logo: {
             type: DataTypes.STRING
         },
-        visible: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false
+        status: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'inactive',
+            validate: {
+                isIn: ['active', 'inactive']
+            }
         },
         longitude: {
             type: DataTypes.FLOAT
@@ -69,6 +78,10 @@ module.exports = function(sequelize, DataTypes) {
         payout_rate: {
             type: DataTypes.FLOAT,
             allowNull: false
+        },
+        stripe_token: {
+            type: DataTypes.STRING,
+            allowNull: true
         }
     }, {
         timestamps: false,

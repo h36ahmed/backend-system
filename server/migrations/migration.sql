@@ -10,15 +10,15 @@ INSERT INTO users VALUES (9,'zuckerberg@fb.com','$2a$10$k3lEbGW65aZunIxSuolGLO',
 INSERT INTO users VALUES (10,'thomas@bayern.de','$2a$10$Da19EZuesvRdXZqOvTX4dO','$2a$10$Da19EZuesvRdXZqOvTX4dOVe.m3IRNUTGcdC4MfWpdE4/cHOF9u8q','customer',FALSE);
 
 
-INSERT INTO owners VALUES (1,'Monty','Singh','2017-02-16',4167822931,'',2);
-INSERT INTO owners VALUES (2,'Bill','Xiu','2017-02-16',4127443512,'',3);
-INSERT INTO owners VALUES (3,'Bob','Thames','2017-02-16',4124135221,'',4);
-INSERT INTO owners VALUES (4,'Will','Homes','2017-02-16',4124153512,'',5);
+INSERT INTO owners VALUES (1,'Monty','Singh','2017-02-16',4167822931,'','active',2);
+INSERT INTO owners VALUES (2,'Bill','Xiu','2017-02-16',4127443512,'','active', 3);
+INSERT INTO owners VALUES (3,'Bob','Thames','2017-02-16',4124135221,'','active', 4);
+INSERT INTO owners VALUES (4,'Will','Homes','2017-02-16',4124153512,'','active', 5);
 
-INSERT INTO restaurants VALUES (1,'Riddle Room','579 Yonge Street','Toronto','Ontario','Canada','M4Y1Z2',6473442637,'',FALSE,NULL,NULL,1);
-INSERT INTO restaurants VALUES (2,'Kaiju','384 Yonge Street','Toronto','Ontario','Canada','M5B241',6477486338,'',FALSE,NULL,NULL,2);
-INSERT INTO restaurants VALUES (3,'Richmond Station','1 Richmond Street W','Toronto','Ontario','Canada','M5H3W4',6477481444,'',FALSE,NULL,NULL,3);
-INSERT INTO restaurants VALUES (4,'PAI','18 Duncan Street','Toronto','Ontario','Canada','M5H3G6',4169014724,'',FALSE,NULL,NULL,4);
+INSERT INTO restaurants VALUES (1,'Riddle Room','579 Yonge Street','Toronto','Ontario','Canada','M4Y1Z2',6473442637,'','active',NULL,NULL,5.00,NULL,1);
+INSERT INTO restaurants VALUES (2,'Kaiju','384 Yonge Street','Toronto','Ontario','Canada','M5B241',6477486338,'','active',NULL,NULL,5.00,NULL,2);
+INSERT INTO restaurants VALUES (3,'Richmond Station','1 Richmond Street W','Toronto','Ontario','Canada','M5H3W4',6477481444,'','active',NULL,NULL,5.00,NULL,3);
+INSERT INTO restaurants VALUES (4,'PAI','18 Duncan Street','Toronto','Ontario','Canada','M5H3G6',4169014724,'','active',NULL,NULL,5.00,NULL,4);
 
 
 INSERT INTO meals VALUES (1,'Chocolate Milkshake','Amazing','Amazingly Good','Chocolate, Milk, Sugar',5.0,'',1);
@@ -30,15 +30,15 @@ INSERT INTO meals VALUES (6,'Station Burger','Burger that is in a station.','The
 INSERT INTO meals VALUES (7,'Khao Soi with braised beef','Fresh egg noodles in a golden curry topped with crispy noodles, coriander, green onions and braised beef (contains shrimp paste)','Braising Beef All Day','shrimp paste, beef, noodles, coriander, green onions',13.0,'',4);
 INSERT INTO meals VALUES (8,'Fried Fish with Green Curry sauce and Rice','Crispy Basa Fillet with crispy shallots served with green curry sauce and rice. (contains oyster sauce)','I see Green Fish All Day!','fish, shallots, green curry sauce, rice, oyster sauce',13.0,'',4);
 
-INSERT INTO payment_plans VALUES (1,'Lunch A Bunch','You get 10 Meals. $6/ meal.','',60.0);
-INSERT INTO payment_plans VALUES (2,'Lunch A Lot','You get 20 Meals. $6/ meal.','',120.0);
+INSERT INTO payment_plans VALUES (1,'Lunch A Bunch','You get 10 Meals. $6/ meal.','',60.0, 12, 'active');
+INSERT INTO payment_plans VALUES (2,'Lunch A Lot','You get 20 Meals. $6/ meal.','',120.0, 20, 'active');
 
 
-INSERT INTO customers VALUES (1,'Christmas','Carter','2017-02-01','2017-02-28','2017-02-16',10,'M5V2J2','',TRUE,FALSE,NULL,'',6,1);
-INSERT INTO customers VALUES (2,'Joe','Soto','2017-02-01','2017-02-28','2017-02-17',20,'M5V2J2','',TRUE,FALSE,NULL,'',7,2);
-INSERT INTO customers VALUES (3,'Chris','Rock','2017-02-01','2017-02-28','2017-02-18',10,'M5V2J2','',TRUE,FALSE,NULL,'',8,1);
-INSERT INTO customers VALUES (4,'Mark','Zuckerberg','2017-02-01','2017-02-28','2017-02-19',20,'M5V2J2','',TRUE,FALSE,NULL,'',9,2);
-INSERT INTO customers VALUES (5,'Thomas','Muller','2017-02-01','2017-02-28','2017-02-20',20,'M5V2J2','',TRUE,FALSE,NULL,'',10,2);
+INSERT INTO customers VALUES (1,'Christmas','Carter','2017-02-01','2017-02-28','2017-02-16',10,'M5V2J2','','active',FALSE,NULL,'',6,1);
+INSERT INTO customers VALUES (2,'Joe','Soto','2017-02-01','2017-02-28','2017-02-17',20,'M5V2J2','','active',FALSE,NULL,'',7,2);
+INSERT INTO customers VALUES (3,'Chris','Rock','2017-02-01','2017-02-28','2017-02-18',10,'M5V2J2','','active',FALSE,NULL,'',8,1);
+INSERT INTO customers VALUES (4,'Mark','Zuckerberg','2017-02-01','2017-02-28','2017-02-19',20,'M5V2J2','','active',FALSE,NULL,'',9,2);
+INSERT INTO customers VALUES (5,'Thomas','Muller','2017-02-01','2017-02-28','2017-02-20',20,'M5V2J2','','active',FALSE,NULL,'',10,2);
 
 
 INSERT INTO invoices VALUES (1,'2017-02-01','paid',8.0,60.0,'',1);
@@ -86,4 +86,3 @@ SELECT setval('orders_id_seq', (SELECT MAX(id) from "orders"));
 SELECT setval('feedbacks_id_seq', (SELECT MAX(id) from "feedbacks"));
 SELECT setval('payment_plans_id_seq', (SELECT MAX(id) from "payment_plans"));
 SELECT setval('pickup_times_id_seq', (SELECT MAX(id) from "pickup_times"));
-COMMIT;

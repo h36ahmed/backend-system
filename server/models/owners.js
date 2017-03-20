@@ -11,6 +11,7 @@ Attributes:
 -> Date Joined
 -> Phone Number
 -> Profile Image
+-> Status
 -> Restaurant ID
 -> User ID
 
@@ -38,6 +39,14 @@ module.exports = function(sequelize, DataTypes) {
         },
         profile_image: {
             type: DataTypes.STRING
+        },
+        status: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'inactive',
+            validate: {
+                isIn: ['active', 'inactive']
+            }
         }
     }, {
         timestamps: false,

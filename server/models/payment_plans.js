@@ -10,6 +10,8 @@ Attributes:
 -> Description
 -> Image
 -> Price
+-> Meals
+-> Status
 
 Use Cases:
 
@@ -36,7 +38,21 @@ module.exports = function(sequelize, DataTypes) {
             validate: {
                 min: 0
             }
-        }
+        },
+        num_meals: {
+            type: DataTypes.INTEGER,
+            validate: {
+                min: 0
+            }
+        },
+        status: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'inactive',
+            validate: {
+                isIn: ['active', 'inactive']
+            }
+        },
     }, {
         timestamps: false,
         underscored: true

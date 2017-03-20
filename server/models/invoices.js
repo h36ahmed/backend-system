@@ -6,10 +6,11 @@ Description:
 
 Attributes:
 -> Invoice ID
--> Payment
--> Charged?
--> Note
 -> Invoice Date
+-> Status
+-> Tax Amount
+-> Total Payment Before Tax
+-> Note
 -> Customer ID
 
 Use Cases:
@@ -27,7 +28,7 @@ module.exports = function(sequelize, DataTypes) {
         status: {
             type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: true,
+            defaultValue: 'created',
             validate: {
                 isIn: ['created', 'declined', 'paid', 'disputed', 'incorrect']
             }

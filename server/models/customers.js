@@ -8,17 +8,13 @@ Attributes:
 -> Customer ID
 -> First Name
 -> Last Name
--> Age
--> Gender
 -> Cycle Start Date
 -> Cycle End Date
 -> Date Joined
 -> Meals Remaining
--> Phone Number
--> City
--> Country
+-> Postal Code
 -> Profile Image
--> Active?
+-> Status
 -> Reminder Emails?
 -> Payment Plan ID
 -> User ID
@@ -71,10 +67,13 @@ module.exports = function(sequelize, DataTypes) {
         profile_image: {
             type: DataTypes.STRING
         },
-        active: {
-            type: DataTypes.BOOLEAN,
+        status: {
+            type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: true
+            defaultValue: 'inactive',
+            validate: {
+                isIn: ['active', 'inactive']
+            }
         },
         reminder_emails: {
             type: DataTypes.BOOLEAN,

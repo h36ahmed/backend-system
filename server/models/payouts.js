@@ -6,10 +6,12 @@ Description:
 
 Attributes:
 -> Payout ID
--> Payment
--> Charged?
+-> Payout Date
+-> Total Meals
+-> Status
+-> Tax Amount
+-> Total Payment Before Tax
 -> Note
--> Invoice Date
 -> Restaurant ID
 
 Use Cases:
@@ -24,10 +26,16 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.DATEONLY,
             defaultValue: DataTypes.NOW
         },
+        total_meals: {
+            type: DataTypes.INTEGER,
+            validate: {
+                min: 0
+            }
+        },
         status: {
             type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: true,
+            defaultValue: 'created',
             validate: {
                 isIn: ['created', 'declined', 'paid', 'disputed', 'incorrect']
             }
