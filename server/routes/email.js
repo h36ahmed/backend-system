@@ -1,23 +1,20 @@
 var _ = require('underscore');
-var Mailgun = require('mailgun-js');
+var postmark = require("postmark");
 var EmailTemplate = require('email-templates').EmailTemplate;
 var path = require('path');
 var fs = require('fs');
 var Handlebars = require('handlebars');
 
-//Your api key, from Mailgun’s Control Panel
-var api_key = 'key-7c6af0a83116bdc97b7c498d9f4d33bb';
+//Your api key
+var api_key = '32b29fd6-338e-49a4-98be-25a4c21458d3';
 
-//Your domain, from the Mailgun Control Panel
+//Your domain
 var domain = 'www.lunchsociety.ca';
 
 //Your sending email address
-var from_who = 'daniel@lunchsociety.ca';
+var from_who = 'Lunch Society <admin@lunchsociety.ca>';
 
-var mailgun = new Mailgun({
-    apiKey: api_key,
-    domain: domain
-});
+var client = new postmark.Client(api_key);
 
 var templatesDir = path.resolve(__dirname, '..', 'email-templates');
 
@@ -49,19 +46,22 @@ function send(locals, cb) {
         }
 
         data = {
-            from: locals.from,
-            to: locals.email,
-            subject: locals.subject,
-            html: results.html,
-            text: results.text
+            From: locals.from,
+            To: locals.email,
+            Subject: locals.subject,
+            HtmlBody: results.html,
+            TextBody: results.text
         };
 
-        mailgun.messages().send(data, function(err, body) {
+        client.sendEmail(data, function(err, response) {
             if (err) {
-                return cb(err);
+                console.error(err.status)
+                console.error(err.message)
+                return
             }
-            cb(null);
+            console.log(response);
         });
+
     });
 }
 
@@ -198,31 +198,62 @@ exports.sendROEmail = function(req, res) {
 
     var roEmail = new EmailTemplate(path.join(templatesDir, 'restaurant-orders'));
 
-    // Magic Needs to Happen Here.
-
-    Promise.all(_.map(restaurants, function(restaurant) {
-            return template.render(restaurant)
-                .then(function(results) {
-                    const todayDate = formatDate(new Date());
-                    return {
-                        from: from_who,
-                        to: restaurant.email,
-                        subject: 'LUNCH SOCIETY: Orders for: ' + todayDate,
-                        html: results.html
-                    }
-                })
-        }))
-        .then(function(messages) {
-            /*mailgun.messages().send(data, function(err, body) {
-                if (err) {
-                    res.status(500).send();
-                    console.log("got an error: ", err);
-                } else {
-                    res.status(200).send();
-                    console.log(body);
-                }
-            });*/
-        });
+    models.restaurants.findAll({
+        attributes: ['id', 'name'],
+        include: [{
+            attributes: ['name', 'id'],
+            model: models.meals,
+            include: [{
+                attributes: ['id'],
+                model: models.offers,
+                include: [{
+                    model: models.orders,
+                    where: where,
+                    order: [
+                        ['pickup_time']
+                    ],
+                    include: [{
+                        model: models.customers,
+                        attributes: ['first_name', 'last_name']
+                    }, {
+                        model: models.pickup_times,
+                        attributes: ['pickup_time']
+                    }]
+                }]
+            }]
+        }, {
+            attributes: ['first_name', 'last_name', 'phone_number'],
+            model: models.owners,
+            include: [{
+                model: models.users,
+                attributes: ['email']
+            }]
+        }]
+    }).then(function(restaurants) {
+        Promise.all(_.map(restaurants, function(restaurant) {
+                return template.render(restaurant)
+                    .then(function(results) {
+                        const todayDate = formatDate(new Date());
+                        return {
+                            From: from_who,
+                            To: restaurant.owner.user.email,
+                            Subject: 'LUNCH SOCIETY: Orders for: ' + todayDate,
+                            HtmlBody: results.html,
+                            TextBody: results.text
+                        }
+                    })
+            }))
+            .then(function(messages) {
+                client.sendEmailBatch(messages, function(err, batchResults) {
+                    // Throwing inside a promise will just reject the promise
+                    // not stop your server
+                    if (err) throw err
+                    console.info('Messages sent to postmark');
+                });
+            });
+    }, function(e) {
+        res.status(500).json(e);
+    });
 };
 
 // POST /api/v1/sendEmail
