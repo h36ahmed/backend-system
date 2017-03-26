@@ -109,6 +109,11 @@ exports.update = function(req, res) {
 
     if (body.hasOwnProperty('status')) {
         attributes.status = body.status;
+        if(attributes.status) {
+            attributes.status = 'active';
+        } else {
+            attributes.status = 'inactive';
+        }
     }
 
     if (body.hasOwnProperty('payout_rate')) {
