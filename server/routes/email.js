@@ -60,6 +60,7 @@ function send(locals, cb) {
                 return
             }
             console.log(response);
+            cb();
         });
 
     });
