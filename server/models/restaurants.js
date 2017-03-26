@@ -64,10 +64,7 @@ module.exports = function(sequelize, DataTypes) {
         status: {
             type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: 'inactive',
-            validate: {
-                isIn: ['active', 'inactive']
-            }
+            defaultValue: 'inactive'
         },
         longitude: {
             type: DataTypes.FLOAT
