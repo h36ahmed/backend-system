@@ -107,9 +107,14 @@ exports.update = function(req, res) {
         attributes.logo = body.logo;
     }
 
-    if (body.hasOwnProperty('visible')) {
-        attributes.visible = body.visible;
+    if (body.hasOwnProperty('status')) {
+        attributes.status = body.status;
     }
+
+    if (body.hasOwnProperty('payout_rate')) {
+        attributes.payout_rate = body.payout_rate;
+    }
+
     if (body.hasOwnProperty('owner_id')) {
         attributes.owner_id = parseInt(body.owner_id, 10);
     }
