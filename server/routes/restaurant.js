@@ -13,7 +13,6 @@ var geocoder = NodeGeocoder(options);
 // GET /api/v1/restaurants
 exports.list = function(req, res) {
     models.restaurants.findAll({
-        attributes: ['id', 'name', 'street_address', 'city', 'state', 'country', 'postal_code', 'phone_number', 'logo', 'visible', 'owner_id'],
         include: [{
             attributes: ['name', 'id', 'price', 'meal_image', 'ingredients'],
             model: models.meals
@@ -48,7 +47,7 @@ exports.view = function(req, res) {
 
 // POST /api/v1/restaurant
 exports.create = function(req, res) {
-    var restaurantDetails = _.pick(req.body, 'name', 'street_address', 'city', 'state', 'country', 'postal_code', 'phone_number', 'logo', 'visible', 'owner_id');
+    var restaurantDetails = _.pick(req.body, 'name', 'street_address', 'city', 'state', 'country', 'postal_code', 'phone_number', 'logo', 'status', 'owner_id', 'payout_rate');
 
     geocoder.geocode({
         address: restaurantDetails.street_address,
@@ -73,7 +72,7 @@ exports.create = function(req, res) {
 // PUT /api/v1/restaurant/:id
 exports.update = function(req, res) {
     var restaurantID = parseInt(req.params.id, 10);
-    var body = _.pick(req.body, 'name', 'street_address', 'city', 'state', 'country', 'postal_code', 'phone_number', 'logo', 'visible', 'owner_id');
+    var body = _.pick(req.body, 'name', 'street_address', 'city', 'state', 'country', 'postal_code', 'phone_number', 'logo', 'visible', 'owner_id', 'payout_rate');
     var attributes = {};
 
     if (body.hasOwnProperty('name')) {

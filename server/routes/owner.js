@@ -58,7 +58,6 @@ exports.list = function(req, res) {
     }
 
     models.owners.findAll({
-        attributes: ['id', 'first_name', 'last_name', 'phone_number', 'date_joined', 'profile_image'],
         where: where,
         include: include
     }).then(function(owners) {
@@ -106,7 +105,7 @@ exports.create = function(req, res) {
 // PUT /api/v1/owner/:id
 exports.update = function(req, res) {
     var ownerID = parseInt(req.params.id, 10);
-    var body = _.pick(req.body, 'first_name', 'last_name', 'phone_number', 'profile_image', 'user_id');
+    var body = _.pick(req.body, 'first_name', 'last_name', 'phone_number', 'profile_image', 'user_id', 'status');
 
     var attributes = {};
 
@@ -128,6 +127,10 @@ exports.update = function(req, res) {
 
     if (body.hasOwnProperty('user_id')) {
         attributes.user_id = parseInt(body.user_id, 10);
+    }
+
+    if (body.hasOwnProperty('status')) {
+        attributes.status = parseInt(body.status, 10);
     }
 
 

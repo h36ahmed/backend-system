@@ -43,7 +43,7 @@ module.exports = function(sequelize, DataTypes) {
         status: {
             type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: 'inactive',
+            defaultValue: 'active',
             validate: {
                 isIn: ['active', 'inactive']
             }
