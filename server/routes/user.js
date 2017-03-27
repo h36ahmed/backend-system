@@ -89,7 +89,7 @@ exports.view = function(req, res) {
 // POST /api/v1/user
 exports.create = function(req, res) {
     var body = _.pick(req.body, 'email', 'password', 'type');
-
+    body.email = body.email.toLowerCase();
     models.users.create(body).then(function(user) {
         if(body.type == "customer") {
             var data = {
@@ -114,6 +114,7 @@ exports.create = function(req, res) {
 // POST /api/v1/users/login
 exports.login = function(req, res) {
     var body = _.pick(req.body, 'email', 'password');
+    body.email = body.email.toLowerCase();
     var userInstance;
     models.users.authenticate(body).then(function(user) {
         var token = user.generateToken('authentication');
@@ -138,6 +139,7 @@ exports.update = function(req, res) {
     var attributes = {};
 
     if (body.hasOwnProperty('email')) {
+        body.email = body.email.toLowerCase();
         attributes.email = body.email;
     }
 
@@ -149,7 +151,7 @@ exports.update = function(req, res) {
         attributes.confirmed_email = body.confirmed_email;
     }
 
-  models.users.findById(userID).then(function(user) {
+    models.users.findById(userID).then(function(user) {
         if (user) {
             user.update(attributes).then(function(user) {
                 res.json(user.toPublicJSON());
