@@ -73,6 +73,10 @@ db.invoices.belongsTo(db.customers);
 db.restaurants.hasMany(db.payouts);
 db.payouts.belongsTo(db.restaurants);
 
+// Weeks & Payouts W:P -> 1:M
+db.weeks.hasMany(db.payouts);
+db.payouts.belongsTo(db.weeks);
+
 // Meals & Offers M:O -> 1:M
 db.meals.hasMany(db.offers);
 db.offers.belongsTo(db.meals);

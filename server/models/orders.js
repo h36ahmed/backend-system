@@ -7,8 +7,7 @@ Description:
 Attributes:
 -> Order ID
 -> Order Date
--> Cancelled?
--> Active?
+-> Status
 -> Pick Up Time ID
 -> Offer ID
 -> Customer ID

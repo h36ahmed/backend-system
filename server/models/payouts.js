@@ -13,6 +13,7 @@ Attributes:
 -> Total Payment Before Tax
 -> Note
 -> Restaurant ID
+-> Week ID
 
 Use Cases:
 

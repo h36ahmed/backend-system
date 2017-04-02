@@ -12,7 +12,6 @@ Attributes:
 -> Phone Number
 -> Profile Image
 -> Status
--> Restaurant ID
 -> User ID
 
 Use Cases:
