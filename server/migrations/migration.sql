@@ -116,3 +116,4 @@ SELECT setval('orders_id_seq', (SELECT MAX(id) from "orders"));
 SELECT setval('feedbacks_id_seq', (SELECT MAX(id) from "feedbacks"));
 SELECT setval('payment_plans_id_seq', (SELECT MAX(id) from "payment_plans"));
 SELECT setval('pickup_times_id_seq', (SELECT MAX(id) from "pickup_times"));
+SELECT setval('weeks_id_seq', (SELECT MAX(id) from "weeks"));
