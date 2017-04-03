@@ -55,6 +55,7 @@ router.delete('/api/v1/owner/:id', middleware.requireAuthentication, owner.delet
 // Customers
 router.get('/api/v1/customers', middleware.requireAuthentication, customer.list);
 router.get('/api/v1/customers/:id', middleware.requireAuthentication, customer.view);
+router.put('/api/v1/customer/:id', middleware.requireAuthentication, customer.update);
 router.post('/api/v1/customer', middleware.requireAuthentication, customer.create);
 // router.delete('/api/v1/customer/:id', middleware.requireAuthentication, customer.delete);
 

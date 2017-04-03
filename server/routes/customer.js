@@ -75,9 +75,84 @@ exports.secure = function(req, res) {
     });
 };
 
+
+// PUT /api/v1/customer/:id
+exports.update = function(req, res) {
+    var customerID = parseInt(req.params.id, 10);
+    var body = _.pick(req.body,  'first_name', 'last_name', 'date_joined', 'profile_image', 'meals_remaining', 'postal_code', 'reminder_emails', 'payment_plan_id', 'stripe_token', 'referral_code_used', 'status', 'cycle_start_date', 'cycle_end_date');
+
+    var attributes = {};
+
+    if (body.hasOwnProperty('first_name')) {
+        attributes.first_name = body.first_name;
+    }
+
+    if (body.hasOwnProperty('last_name')) {
+        attributes.last_name = body.last_name;
+    }
+
+    if (body.hasOwnProperty('date_joined')) {
+        attributes.date_joined = body.date_joined;
+    }
+
+    if (body.hasOwnProperty('profile_image')) {
+        attributes.profile_image = body.profile_image;
+    }
+
+    if (body.hasOwnProperty('meals_remaining')) {
+        attributes.meals_remaining = body.meals_remaining;
+    }
+
+    if (body.hasOwnProperty('postal_code')) {
+        attributes.postal_code = body.postal_code;
+    }
+
+    if (body.hasOwnProperty('reminder_emails')) {
+        attributes.reminder_emails = body.reminder_emails;
+    }
+
+    if (body.hasOwnProperty('payment_plan_id')) {
+        attributes.payment_plan_id = body.payment_plan_id;
+    }
+
+    if (body.hasOwnProperty('referral_code_used')) {
+        attributes.referral_code_used = body.referral_code_used;
+    }
+
+    if (body.hasOwnProperty('stripe_token')) {
+        attributes.stripe_token = body.stripe_token;
+    }
+
+    if (body.hasOwnProperty('status')) {
+        attributes.status = body.status;
+    }
+
+    if (body.hasOwnProperty('cycle_start_date')) {
+        attributes.cycle_start_date = body.cycle_start_date;
+    }
+
+    if (body.hasOwnProperty('cycle_end_date')) {
+        attributes.cycle_end_date = body.cycle_end_date;
+    }
+
+    models.customers.findById(customerID).then(function(customer) {
+        if (customer) {
+            customer.update(attributes).then(function(customer) {
+                res.json(customer);
+            }, function(e) {
+                res.status(400).json(e);
+            });
+        } else {
+            res.status(404).send();
+        }
+    }, function() {
+        res.status(500).send();
+    });
+};
+
 // POST /api/v1/customer
 exports.create = function(req, res) {
-    var customerDetails = _.pick(req.body, 'id', 'first_name', 'last_name', 'date_joined', 'profile_image', 'meals_remaining', 'postal_code', 'profile_image', 'reminder_emails', 'payment_plan_id', 'stripe_token', 'referral_code_used');
+    var customerDetails = _.pick(req.body, 'user_id', 'first_name', 'last_name', 'date_joined', 'profile_image', 'meals_remaining', 'postal_code', 'reminder_emails', 'payment_plan_id', 'stripe_token', 'referral_code_used', 'status', 'cycle_start_date', 'cycle_end_date');
 
     models.customers.create(customerDetails).then(function(customer) {
         res.json(customer.toPublicJSON());

@@ -70,10 +70,7 @@ module.exports = function(sequelize, DataTypes) {
         status: {
             type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: 'inactive',
-            validate: {
-                isIn: ['active', 'inactive']
-            }
+            defaultValue: 'active'
         },
         reminder_emails: {
             type: DataTypes.BOOLEAN,
