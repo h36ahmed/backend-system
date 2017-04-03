@@ -17,6 +17,8 @@ var invoice = require('./invoice');
 var feedback = require('./feedback');
 var aws = require('./aws');
 var email = require('./email');
+var week = require('./week');
+var payout = require('./payout');
 
 
 router.use(function(req, res, next) {
@@ -108,5 +110,12 @@ router.post('/api/v1/signing', middleware.requireAuthentication, aws.signing);
 // Email
 router.post('/api/v1/sendEmail', middleware.requireAuthentication, email.sendEmail);
 router.post('/api/v1/sendROEmail', middleware.requireAuthentication, email.sendROEmail);
+
+// Payouts
+router.get('/api/v1/payouts', middleware.requireAuthentication, payout.list);
+router.post('/api/v1/payout', middleware.requireAuthentication, payout.create);
+
+// Weeks
+router.get('/api/v1/week/:id', middleware.requireAuthentication, week.view);
 
 module.exports = router;

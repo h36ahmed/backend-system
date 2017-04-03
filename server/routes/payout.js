@@ -29,7 +29,7 @@ exports.list = function(req, res) {
 
 // POST /api/v1/payout
 exports.create = function(req, res) {
-    var payoutDetails = _.pick(req.body, 'payout_date', 'status', 'tax_amount', 'total_payment_before_tax', 'notes', 'restaurant_id', 'total_meals');
+    var payoutDetails = _.pick(req.body, 'payout_date', 'status', 'tax_amount', 'total_payment_before_tax', 'notes', 'restaurant_id', 'total_meals', 'week_id');
     models.payouts.create(payoutDetails).then(function(payout) {
         res.json(payout);
     }, function(e) {
