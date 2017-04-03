@@ -27,7 +27,7 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.DATEONLY
         },
         year: {
-            type: DataTypes.STRING
+            type: DataTypes.INTEGER
         }
     }, {
         underscored: true,
