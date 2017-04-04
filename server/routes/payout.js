@@ -38,7 +38,7 @@ exports.create = function(req, res) {
         var weekDetails = week.toJSON();
         models.restaurants.findAll({
             where: where,
-            attributes: ['name'],
+            attributes: ['id'],
             include: [{
                 model: models.meals,
                 attributes: ['name', 'price'],
@@ -57,13 +57,14 @@ exports.create = function(req, res) {
             var payouts = [];
             _.each(restuarants, function(restaurant) {
                 var payout = {
-                    restaurant: '',
+                    restaurant_id: 0,
                     total_meals: 0,
                     total_payment_before_tax: 0,
                     tax_amount: 0,
-                    total_amount: 0
+                    total_amount: 0,
+                    week_id: weekID
                 };
-                payout.restaurant = restaurant.name;
+                payout.restaurant = restaurant.id;
                 _.each(restaurant.meals, function(meal) {
                     _.each(meal.offers, function(offer) {
                         var totalPlatesServed = offer.plates_assigned - offer.plates_left;
