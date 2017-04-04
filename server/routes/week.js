@@ -39,8 +39,7 @@ exports.view = function(req, res) {
                 }]
             }]
         }).then(function(restuarants) {
-            res.json(restuarants);
-            /*var payouts = [];
+            var payouts = [];
             _.each(restuarants, function(restaurant) {
                 var payout = {
                     restaurant: '',
@@ -61,7 +60,7 @@ exports.view = function(req, res) {
                 payout.total_amount = payout.total_payment_before_tax + payout.tax_amount;
                 payouts.push(payout);
             });
-            res.json(payouts);*/
+            res.json(payouts);
         }, function(e) {
             res.status(500).send();
         });
