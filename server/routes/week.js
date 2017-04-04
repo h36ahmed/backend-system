@@ -7,7 +7,6 @@ exports.list = function(req, res) {
     var where = {};
 
     models.weeks.findAll({
-        attributes: ['name', 'id'],
         where: where
     }).then(function(weeks) {
         res.json(weeks);
