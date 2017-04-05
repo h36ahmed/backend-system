@@ -19,6 +19,8 @@ exports.list = function(req, res) {
                 }]
 
             }]
+        }, {
+            model: models.weeks
         }]
     }).then(function(payouts) {
         res.json(payouts);
