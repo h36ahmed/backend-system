@@ -64,7 +64,8 @@ exports.create = function(req, res) {
                     total_payment_before_tax: 0,
                     tax_amount: 0,
                     total_amount: 0,
-                    week_id: weekID
+                    week_id: weekID,
+                    status: 'paid'
                 };
                 _.each(restaurant.meals, function(meal) {
                     _.each(meal.offers, function(offer) {
