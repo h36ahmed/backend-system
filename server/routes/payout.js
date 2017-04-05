@@ -76,11 +76,12 @@ exports.create = function(req, res) {
                 payout.total_amount = payout.total_payment_before_tax + payout.tax_amount;
                 payouts.push(payout);
             });
-            models.payouts.bulkCreate(payouts).then(function(bulk) {
-                res.status(204).send();
-            }, function(err) {
-                res.status(500).send();
-            });
+            res.json(payouts);
+//            models.payouts.bulkCreate(payouts).then(function(bulk) {
+//                res.status(204).send();
+//            }, function(err) {
+//                res.status(500).send();
+//            });
         }, function(e) {
             res.status(500).send();
         });
