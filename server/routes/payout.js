@@ -57,14 +57,13 @@ exports.create = function(req, res) {
             var payouts = [];
             _.each(restuarants, function(restaurant) {
                 var payout = {
-                    restaurant_id: 0,
+                    restaurant_id: restaurant.id,
                     total_meals: 0,
                     total_payment_before_tax: 0,
                     tax_amount: 0,
                     total_amount: 0,
                     week_id: weekID
                 };
-                payout.restaurant = restaurant.id;
                 _.each(restaurant.meals, function(meal) {
                     _.each(meal.offers, function(offer) {
                         var totalPlatesServed = offer.plates_assigned - offer.plates_left;
@@ -76,12 +75,11 @@ exports.create = function(req, res) {
                 payout.total_amount = payout.total_payment_before_tax + payout.tax_amount;
                 payouts.push(payout);
             });
-            res.json(payouts);
-//            models.payouts.bulkCreate(payouts).then(function(bulk) {
-//                res.status(204).send();
-//            }, function(err) {
-//                res.status(500).send();
-//            });
+            models.payouts.bulkCreate(payouts).then(function(bulk) {
+                res.status(204).send();
+            }, function(err) {
+                res.status(500).send();
+            });
         }, function(e) {
             res.status(500).send();
         });
