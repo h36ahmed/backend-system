@@ -79,7 +79,7 @@ exports.secure = function(req, res) {
 // PUT /api/v1/customer/:id
 exports.update = function(req, res) {
     var customerID = parseInt(req.params.id, 10);
-    var body = _.pick(req.body,  'first_name', 'last_name', 'date_joined', 'profile_image', 'meals_remaining', 'postal_code', 'reminder_emails', 'payment_plan_id', 'stripe_token', 'referral_code_used', 'status', 'cycle_start_date', 'cycle_end_date');
+    var body = _.pick(req.body,  'first_name', 'last_name', 'profile_image', 'meals_remaining', 'postal_code', 'reminder_emails', 'payment_plan_id', 'stripe_token', 'referral_code_used', 'status', 'cycle_start_date', 'cycle_end_date');
 
     var attributes = {};
 
@@ -89,10 +89,6 @@ exports.update = function(req, res) {
 
     if (body.hasOwnProperty('last_name')) {
         attributes.last_name = body.last_name;
-    }
-
-    if (body.hasOwnProperty('date_joined')) {
-        attributes.date_joined = body.date_joined;
     }
 
     if (body.hasOwnProperty('profile_image')) {
