@@ -19,6 +19,7 @@ var aws = require('./aws');
 var email = require('./email');
 var week = require('./week');
 var payout = require('./payout');
+var pickUpTime = require('./pickUpTime');
 
 
 router.use(function(req, res, next) {
@@ -119,5 +120,8 @@ router.post('/api/v1/payout', middleware.requireAuthentication, payout.create);
 // Weeks
 router.get('/api/v1/weeks', middleware.requireAuthentication, week.list);
 router.get('/api/v1/week/:id', middleware.requireAuthentication, week.view);
+
+// Pickup Times
+router.get('/api/v1/pickup-times', middleware.requireAuthentication, pickUpTime.list);
 
 module.exports = router;
