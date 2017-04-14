@@ -12,22 +12,30 @@ exports.list = function(req, res) {
         where.order_date =  query.order_date;
     }
 
-    /*models.orders.findAll({
-        include: [{
-            model: models.meals,
-            attributes: ['name', 'ingredients'],
-            include: [{
-                model: models.restaurants,
-                attributes: ['name'],
+    if (query.hasOwnProperty('customer_id') && query.customer_id.length > 0) {
+        where.customer_id =  query.customer_id;
+    }
 
+    models.orders.findAll({
+        where: where,
+        include: [{
+            model: models.offers,
+            include: [{
+                model: models.meals,
+                attributes: ['name', 'ingredients'],
+                include: [{
+                    model: models.restaurants,
+                    attributes: ['name']
+                }]
             }]
+        }, {
+            model: models.feedbacks
         }]
     }).then(function(orders) {
         res.json(orders);
     }, function(e) {
         res.status(500).send();
     });
-*/
 };
 
 // POST /api/v1/order
