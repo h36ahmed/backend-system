@@ -2,49 +2,66 @@ var _ = require('underscore');
 var models = require('../db.js');
 
 // GET /api/v1/offers
-exports.list = function(req, res) {
+exports.list = function (req, res) {
     var query = req.query;
     var where = {};
+
+    var include = [{
+        attributes: ['id', 'name'],
+        model: models.meals,
+        include: [{
+            model: models.restaurants,
+            attributes: ['id', 'name', 'longitude', 'latitude']
+            }]
+        }];
 
     if (query.hasOwnProperty('offer_date') && query.offer_date.length > 0) {
         where.offer_date = query.offer_date
     }
 
+    if (query.hasOwnProperty('getOrders') && query.getOrders.length > 0) {
+        include.push({
+            model: models.orders,
+            where: where,
+            order: [['pickup_time']],
+            include: [{
+                model: models.customers,
+                attributes: ['first_name', 'last_name']
+            }, {
+                model: models.pickup_times,
+                attributes: ['pickup_time']
+            }]
+        });
+    }
+
     models.offers.findAll({
         where: where,
-        include: [{
-            attributes: ['id', 'name'],
-            model: models.meals,
-            include: [{
-                model: models.restaurants,
-                attributes: ['id', 'name', 'longitude', 'latitude']
-            }]
-        }]
-    }).then(function(offers) {
+        include: include
+    }).then(function (offers) {
         res.json(offers);
-    }, function(e) {
+    }, function (e) {
         res.status(500).send();
     });
 };
 
 // POST /api/v1/offer
-exports.create = function(req, res) {
+exports.create = function (req, res) {
     var offerDetails = _.pick(req.body, 'meal_id', 'offer_date', 'plates_assigned', 'plates_left');
-    models.offers.create(offerDetails).then(function(offer) {
+    models.offers.create(offerDetails).then(function (offer) {
         res.json(offer);
-    }, function(e) {
+    }, function (e) {
         res.status(400).json(e);
     });
 };
 
 // DELETE /api/v1/offer/:id
-exports.delete = function(req, res) {
+exports.delete = function (req, res) {
     var offerID = parseInt(req.params.id, 10);
     models.offers.destroy({
         where: {
             id: offerID
         }
-    }).then(function(rowsDeleted) {
+    }).then(function (rowsDeleted) {
         if (rowsDeleted === 0) {
             res.status(404).json({
                 error: 'No offer found'
@@ -52,7 +69,7 @@ exports.delete = function(req, res) {
         } else {
             res.status(204).send();
         }
-    }, function() {
+    }, function () {
         res.status(500).send();
     });
 };

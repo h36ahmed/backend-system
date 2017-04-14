@@ -16,7 +16,7 @@ exports.list = function(req, res) {
         where.status =  query.status;
     }
 
-    models.offers.findAll({
+    /*models.orders.findAll({
         include: [{
             model: models.meals,
             attributes: ['name', 'ingredients'],
@@ -25,24 +25,13 @@ exports.list = function(req, res) {
                 attributes: ['name'],
 
             }]
-        }, {
-            model: models.orders,
-            where: where,
-            order: [['pickup_time']],
-            include: [{
-                model: models.customers,
-                attributes: ['first_name', 'last_name']
-            }, {
-                model: models.pickup_times,
-                attributes: ['pickup_time']
-            }]
         }]
     }).then(function(orders) {
         res.json(orders);
     }, function(e) {
         res.status(500).send();
     });
-
+*/
 };
 
 // POST /api/v1/order
