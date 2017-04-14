@@ -5,6 +5,7 @@ var models = require('../db.js');
 exports.list = function (req, res) {
     var query = req.query;
     var where = {};
+    var ordersWhere = {};
 
     var include = [{
         attributes: ['id', 'name'],
@@ -16,13 +17,21 @@ exports.list = function (req, res) {
         }];
 
     if (query.hasOwnProperty('offer_date') && query.offer_date.length > 0) {
-        where.offer_date = query.offer_date
+        where.offer_date = query.offer_date;
+    }
+
+    if (query.hasOwnProperty('order_date') && query.order_date.length > 0) {
+        ordersWhere.order_date =  query.order_date;
+    }
+
+    if (query.hasOwnProperty('status') && query.status.length > 0) {
+        ordersWhere.status =  query.status;
     }
 
     if (query.hasOwnProperty('getOrders') && query.getOrders.length > 0) {
         include.push({
             model: models.orders,
-            where: where,
+            where: ordersWhere,
             order: [['pickup_time']],
             include: [{
                 model: models.customers,

@@ -12,10 +12,6 @@ exports.list = function(req, res) {
         where.order_date =  query.order_date;
     }
 
-    if (query.hasOwnProperty('status') && query.status.length > 0) {
-        where.status =  query.status;
-    }
-
     /*models.orders.findAll({
         include: [{
             model: models.meals,
