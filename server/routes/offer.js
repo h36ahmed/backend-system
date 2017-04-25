@@ -9,9 +9,10 @@ exports.list = function (req, res) {
 
     var include = [{
         attributes: ['id', 'name', 'meal_image', 'description', 'tagline', 'ingredients'],
+        model: models.meals,
         include: [{
             model: models.restaurants,
-            attributes: ['id', 'name', 'longitude', 'latitude','street_address']
+            attributes: ['id', 'name', 'longitude', 'latitude', 'street_address']
             }]
         }];
 
