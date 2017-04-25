@@ -8,11 +8,11 @@ exports.list = function (req, res) {
     var ordersWhere = {};
 
     var include = [{
-        attributes: ['id', 'name'],
+        attributes: ['id', 'name', 'meal_image', 'ingredients', 'description'],
         model: models.meals,
         include: [{
             model: models.restaurants,
-            attributes: ['id', 'name', 'longitude', 'latitude']
+            attributes: ['id', 'name', 'longitude', 'latitude', 'address']
             }]
         }];
 
