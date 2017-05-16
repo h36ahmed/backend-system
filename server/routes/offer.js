@@ -4,6 +4,7 @@ var models = require('../db.js');
 // GET /api/v1/offers
 exports.list = function (req, res) {
     var query = req.query;
+    console.log(query)
     var where = {};
     var ordersWhere = {};
 
@@ -82,3 +83,33 @@ exports.delete = function (req, res) {
         res.status(500).send();
     });
 };
+
+// UPDATE /api/v1/offer/:id
+exports.update = (req, res) => {
+    const offerId = parseInt(req.params.id, 10)
+    const attributesToUpdate = {}
+
+    models.offers.findById(offerId)
+        .then((offer) => {
+            if (offer) {
+                if (offer.dataValues.plates_left > 0) {
+                    attributesToUpdate.plates_left = offer.dataValues.plates_left - 1
+                }
+
+                if (offer.dataValues.plates_assigned > 0) {
+                    attributesToUpdate.plates_assigned = offer.dataValues.plates_assigned - 1
+                }
+
+                offer.update(attributesToUpdate)
+                    .then(offer => {
+                        res.json(offer)
+                    }, e => {
+                        res.status(400).json(e)
+                    })
+            } else {
+                res.status(404).send()
+            }
+        }, () => {
+            res.status(500).send()
+        })
+}
