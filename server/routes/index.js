@@ -82,6 +82,7 @@ router.delete('/api/v1/offer/:id', middleware.requireAuthentication, offer.delet
 // Orders
 router.get('/api/v1/orders', middleware.requireAuthentication, order.list);
 router.post('/api/v1/order', middleware.requireAuthentication, order.create);
+router.get('/api/v1/orders/:id', middleware.requireAuthentication, order.view);
 //router.delete('/api/v1/order/:id', middleware.requireAuthentication, order.delete);
 
 // Payment Plans

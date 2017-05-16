@@ -25,7 +25,7 @@ exports.list = function(req, res) {
                 attributes: ['name', 'ingredients'],
                 include: [{
                     model: models.restaurants,
-                    attributes: ['name']
+                    attributes: ['name'],
                 }]
             }]
         }, {
@@ -37,6 +37,54 @@ exports.list = function(req, res) {
         res.status(500).send();
     });
 };
+
+// GET /api/v1/orders/:id
+exports.view = function(req, res) {
+    const orderId = parseInt(req.params.id, 10)
+    const query = req.query
+    const where = {}
+
+    if (query.hasOwnProperty('order_date') && query.order_date.length > 0) {
+        where.order_date = query.order_date
+    }
+
+    if (query.hasOwnProperty('customer_id') && query.customer_id.length > 0) {
+        where.customer_id =  query.customer_id;
+    }
+
+    models.orders.findById(orderId, {
+        include: [{
+            model: models.pickup_times,
+            attributes: ['pickup_time']
+        }, {
+            model: models.offers,
+            include: [{
+                model: models.meals,
+                attributes: ['name', 'description', 'ingredients'],
+                include: [{
+                    model: models.restaurants,
+                    attributes: ['name', 'street_address', 'city', 'state', 'country', 'postal_code', 'longitude', 'latitude'],
+                }]
+            }]
+        }]
+        // include: [{
+        //     model: models.pickup_times,
+        // }, {
+        //     model: models.customers
+        // }, {
+        //     model: models.offers
+        //     include: [{
+        //         model: models.meals,
+        //         attributes: ['name', 'description', 'ingredients'],
+        //     }]
+        // }]
+    })
+    .then(function(order) {
+        res.json(order);
+    }, function(e) {
+        res.status(400).json(e);
+    })
+}
 
 // POST /api/v1/order
 exports.create = function(req, res) {
