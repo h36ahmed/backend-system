@@ -105,14 +105,38 @@ exports.update = (req, res) => {
             if (order) {
                 if (order.dataValues.hasOwnProperty('status') && order.dataValues.status !== 'cancelled') {
                     attributesToUpdate.status = 'cancelled'
-                    console.log('triggerd')
                 }
-                console.log(attributesToUpdate)
                 order.update(attributesToUpdate)
                     .then(order => {
-                        res.json(order)
-                    }, e => {
-                        res.status(400).json(e)
+                        // find the offer id from the order
+                        models.offers.findById(order.offer_id)
+                            .then(offer => {
+                                // this checks to make sure there is a property called 'plates_left' and that it is greater than 0
+                                if (offer.dataValues.hasOwnProperty('plates_left') && offer.dataValues.plates_left > 0) {
+                                    attributesToUpdate.plates_left = offer.dataValues.plates_left - 1
+                                }
+
+                                // updates the offers plates_left
+                                models.offers.update({"plates_left": attributesToUpdate.plates_left}, {where: {id: order.offer_id}})
+                                    .then(() => {
+                                        // find the customer id from the order
+                                        models.customers.findById(order.customer_id)
+                                            .then(customer => {
+                                                // checks to make sure there is a property called 'meals_remaining' and that it is greater than 0
+                                                if (customer.dataValues.hasOwnProperty('meals_remaining') && customer.dataValues.meals_remaining > 0) {
+                                                    attributesToUpdate.meals_remaining = customer.dataValues.meals_remaining - 1
+                                                }
+
+                                                //updates the customer db with how many meals are remaining
+                                                models.customers.update({"meals_remaining": attributesToUpdate.meals_remaining}, {where: {id: order.customer_id}})
+                                                    .then(message => {
+                                                        res.status(200).json(order).send()
+                                                    }, e => {
+                                                        res.status(400).json(e)
+                                                    })
+                                            })
+                                    })
+                            })
                     })
             } else {
                 res.status(404).send()
