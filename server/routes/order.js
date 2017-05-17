@@ -94,3 +94,30 @@ exports.delete = function(req, res) {
         res.status(500).send();
     });
 };
+
+// UPDATE /api/v1/order/:id
+exports.update = (req, res) => {
+    const orderId = parseInt(req.params.id, 10)
+    const attributesToUpdate = {}
+
+    models.orders.findById(orderId)
+        .then(order => {
+            if (order) {
+                if (order.dataValues.hasOwnProperty('status') && order.dataValues.status !== 'cancelled') {
+                    attributesToUpdate.status = 'cancelled'
+                    console.log('triggerd')
+                }
+                console.log(attributesToUpdate)
+                order.update(attributesToUpdate)
+                    .then(order => {
+                        res.json(order)
+                    }, e => {
+                        res.status(400).json(e)
+                    })
+            } else {
+                res.status(404).send()
+            }
+        }, () => {
+            res.status(500).send()
+        })
+}

@@ -85,19 +85,32 @@ exports.delete = function (req, res) {
 };
 
 // UPDATE /api/v1/offer/:id
+// need to send a type to check for from the front end
+    // put it into a switch statement after
+// can i add the customer update here or should i do it on the front end?
 exports.update = (req, res) => {
     const offerId = parseInt(req.params.id, 10)
     const attributesToUpdate = {}
 
+    console.log('triggered')
+
     models.offers.findById(offerId)
         .then((offer) => {
             if (offer) {
-                if (offer.dataValues.plates_left > 0) {
-                    attributesToUpdate.plates_left = offer.dataValues.plates_left - 1
+                // if (offer.dataValues.hasOwnProperty('plates_left') && offer.dataValues.plates_left > 0) {
+                //     attributesToUpdate.plates_left = offer.dataValues.plates_left - 1
+                // }
+
+                // if (offer.dataValues.hasOwnProperty('plates_assigned') && offer.dataValues.plates_assigned > 0) {
+                //     attributesToUpdate.plates_assigned = offer.dataValues.plates_assigned - 1
+                // }
+
+                if (offer.dataValues.hasOwnProperty('plates_left')) {
+                    attributesToUpdate.plates_left = offer.dataValues.plates_left + 1
                 }
 
-                if (offer.dataValues.plates_assigned > 0) {
-                    attributesToUpdate.plates_assigned = offer.dataValues.plates_assigned - 1
+                if (offer.dataValues.hasOwnProperty('plates_assigned')) {
+                    attributesToUpdate.plates_assigned = offer.dataValues.plates_assigned + 1
                 }
 
                 offer.update(attributesToUpdate)
