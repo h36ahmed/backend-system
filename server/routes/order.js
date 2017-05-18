@@ -100,11 +100,11 @@ exports.delete = function(req, res) {
 exports.update = (req, res) => {
   const orderId = parseInt(req.params.id, 10)
   const attributesToUpdate = {}
-  // console.log('outside')
+
   models.orders.findById(orderId)
     .then(order => {
       if (order) {
-        // console.log(order)
+
         order.dataValues.hasOwnProperty('status') && order.dataValues.status !== 'cancelled' ?
           attributesToUpdate.status = 'cancelled' :
           attributesToUpdate.status = 'active'
