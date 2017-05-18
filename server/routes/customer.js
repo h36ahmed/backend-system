@@ -80,7 +80,6 @@ exports.secure = function(req, res) {
 exports.update = function(req, res) {
     var customerID = parseInt(req.params.id, 10);
     var body = _.pick(req.body,  'first_name', 'last_name', 'profile_image', 'meals_remaining', 'postal_code', 'reminder_emails', 'payment_plan_id', 'stripe_token', 'referral_code_used', 'status', 'cycle_start_date', 'cycle_end_date');
-
     var attributes = {};
 
     if (body.hasOwnProperty('first_name')) {
