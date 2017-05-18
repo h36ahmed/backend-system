@@ -1,5 +1,6 @@
 var _ = require('underscore');
 var models = require('../db.js');
+const email = require('./email')
 
 // GET /api/v1/orders
 exports.list = function(req, res) {
@@ -145,9 +146,14 @@ exports.update = (req, res) => {
                           }
                       })
                       .then(message => {
-                        res.status(200).json(order).send()
-                      }, e => {
-                        res.status(400).json(e)
+                        models.users.findById(customer.user_id)
+                          .then(user => {
+                            attributesToUpdate.status === 'cancelled' ?
+                            email.sendCOEmail({ email: user.dataValues.email, type: 'cancel-order' }) :
+                            email.sendOrderEmail({ email: user.dataValues.email, type: 'order' })
+                          }, e => {
+                            res.status(400).json(e)
+                          })
                       })
                   })
                 })
