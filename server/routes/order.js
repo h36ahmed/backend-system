@@ -17,8 +17,10 @@ exports.list = function(req, res) {
         where.customer_id =  query.customer_id;
     }
 
+    // order: [['order_date', 'DESC']] should order the date by latest first
     models.orders.findAll({
         where: where,
+        order: [['id', 'DESC']],
         include: [{
             model: models.offers,
             include: [{
