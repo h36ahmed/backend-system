@@ -1,5 +1,6 @@
 var _ = require('underscore');
 var models = require('../db.js');
+const email = require('./email')
 
 // GET /api/v1/feedbacks
 exports.list = function(req, res) {
@@ -42,6 +43,8 @@ exports.list = function(req, res) {
 exports.create = function(req, res) {
     var feedbackDetails = _.pick(req.body, 'comments', 'flavour', 'portion_size', 'overall', 'order_id');
     models.feedbacks.create(feedbackDetails).then(function(feedback) {
+        email.sendFeedbackEmail({ email: req.body.email, type: 'feedback' })
+        email.sendFeedbackEmail({ email: 'Daniel@lunchsociety.ca', type: 'feedback' })
         res.json(feedback);
     }, function(e) {
         res.status(400).json(e);
