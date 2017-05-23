@@ -41,10 +41,11 @@ exports.list = function(req, res) {
 
 // POST /api/v1/feedback
 exports.create = function(req, res) {
+    console.log(req.body)
     var feedbackDetails = _.pick(req.body, 'comments', 'flavour', 'portion_size', 'overall', 'order_id');
     models.feedbacks.create(feedbackDetails).then(function(feedback) {
-        email.sendFeedbackEmail({ email: req.body.email, type: 'feedback' })
-        email.sendFeedbackEmail({ email: 'Daniel@lunchsociety.ca', type: 'feedback' })
+        email.sendFeedbackEmail({ email: req.body.email, type: 'feedback', data: feedbackDetails })
+        email.sendFeedbackEmail({ email: 'Daniel@lunchsociety.ca', type: 'feedback', data: feedbackDetails })
         res.json(feedback);
     }, function(e) {
         res.status(400).json(e);
