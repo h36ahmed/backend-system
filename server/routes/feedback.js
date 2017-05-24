@@ -4,6 +4,7 @@ const email = require('./email')
 
 // GET /api/v1/feedbacks
 exports.list = function(req, res) {
+
     var query = req.query;
     var where = {};
 
@@ -14,10 +15,10 @@ exports.list = function(req, res) {
             model: models.orders,
             include: [{
                 model: models.customers,
-                attributes: ['id', 'first_name', 'last_name'],
+                attributes: ['id', 'first_name', 'last_name', 'status'],
                 include: [{
                     model: models.users,
-                    attributes: ['email']
+                    attributes: ['id', 'email']
                 }]
             }, {
                 model: models.offers,
