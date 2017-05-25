@@ -11,14 +11,16 @@ exports.list = function(req, res) {
     models.feedbacks.findAll({
         where: where,
         include: [{
-            attributes: ['order_date', 'id'],
+            attributes: ['order_date', 'id', 'status'],
             model: models.orders,
+            where: req.query.status ? { status: req.query.status } : {},
             include: [{
                 model: models.customers,
-                attributes: ['id', 'first_name', 'last_name', 'status'],
+                attributes: ['id', 'first_name', 'last_name'],
                 include: [{
                     model: models.users,
-                    attributes: ['id', 'email']
+                    attributes: ['id', 'email'],
+                    where: req.query.user_id ? { id: req.query.user_id } : {},
                 }]
             }, {
                 model: models.offers,
