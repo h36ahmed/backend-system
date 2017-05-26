@@ -4,20 +4,23 @@ const email = require('./email')
 
 // GET /api/v1/feedbacks
 exports.list = function(req, res) {
+
     var query = req.query;
     var where = {};
 
     models.feedbacks.findAll({
         where: where,
         include: [{
-            attributes: ['order_date', 'id'],
+            attributes: ['order_date', 'id', 'status'],
             model: models.orders,
+            where: req.query.status ? { status: req.query.status } : {},
             include: [{
                 model: models.customers,
                 attributes: ['id', 'first_name', 'last_name'],
                 include: [{
                     model: models.users,
-                    attributes: ['email']
+                    attributes: ['id', 'email'],
+                    where: req.query.user_id ? { id: req.query.user_id } : {},
                 }]
             }, {
                 model: models.offers,
@@ -41,10 +44,11 @@ exports.list = function(req, res) {
 
 // POST /api/v1/feedback
 exports.create = function(req, res) {
+    console.log(req.body)
     var feedbackDetails = _.pick(req.body, 'comments', 'flavour', 'portion_size', 'overall', 'order_id');
     models.feedbacks.create(feedbackDetails).then(function(feedback) {
-        email.sendFeedbackEmail({ email: req.body.email, type: 'feedback' })
-        email.sendFeedbackEmail({ email: 'Daniel@lunchsociety.ca', type: 'feedback' })
+        email.sendFeedbackEmail({ email: req.body.email, type: 'feedback', data: feedbackDetails })
+        email.sendFeedbackEmail({ email: 'Daniel@lunchsociety.ca', type: 'feedback', data: feedbackDetails })
         res.json(feedback);
     }, function(e) {
         res.status(400).json(e);

@@ -59,6 +59,12 @@ exports.view = function(req, res) {
                     attributes: ['name', 'street_address', 'city', 'state', 'country', 'postal_code', 'longitude', 'latitude'],
                 }]
             }]
+        }, {
+          model: models.customers,
+          include: [{
+            model: models.users,
+            attributes: ['email'],
+          }]
         }]
     })
     .then(function(order) {
