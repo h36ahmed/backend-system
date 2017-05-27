@@ -3,7 +3,7 @@ var models = require('../db.js');
 
 var stripe = require("stripe")("pk_test_UnmAg8y934vAlD1EXAMsYC3V");
 
-// GET /api/v1/createSubscription
+// POST /api/v1/createSubscription
 exports.createSubscription = function (req, res) {
     var paymentDetails = _.pick(req.body, 'email', 'stripe_token', 'plan', 'first_name', 'last_name', 'postal_code');
 
