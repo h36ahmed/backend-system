@@ -1,7 +1,7 @@
 var _ = require('underscore');
 var models = require('../db.js');
 
-var stripe = require("stripe")("pk_test_UnmAg8y934vAlD1EXAMsYC3V");
+var stripe = require("stripe")("sk_test_shNAbxyQyXRm3LCZLmladgez");
 
 // POST /api/v1/createSubscription
 exports.createSubscription = function (req, res) {
@@ -20,7 +20,7 @@ exports.createSubscription = function (req, res) {
           if (err) {
               res.status(400);
           } else {
-              res.json(subscription.toJSON());
+              res.json(subscription);
           }
         });
     });
