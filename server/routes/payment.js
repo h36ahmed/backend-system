@@ -23,30 +23,24 @@ exports.createSubscription = function (req, res) {
             if (err) {
                 res.status(400).send(err);
             } else {
-                models.customers.findById(paymentDetails.customer_id).then(function(customer) {
-                    if (customer) {
-                        var attributes = {
-                            first_name: paymentDetails.first_name,
-                            last_name: paymentDetails.last_name,
-                            meals_remaining: paymentDetails.plan.meals,
-                            postal_code: paymentDetails.plan.postal_code,
-                            stripe_token: paymentDetails.customer_id,
-                            cycle_start_date: moment().format(),
-                            cycle_end_date: moment().add(30, 'days').format(),
-                            payment_plan_id: paymentDetails.plan.id
-                        };
-                        customer.update(attributes).then(function(customer) {
-                            customer.routeToCreateProfile = false;
-                            res.json(customer);
-                        }, function(e) {
-                            res.status(400).json(e);
-                        });
-                    } else {
-                        res.status(404).send();
-                    }
-                }, function() {
-                    res.status(500).send();
+                var attributes = {
+                    first_name: paymentDetails.first_name,
+                    last_name: paymentDetails.last_name,
+                    meals_remaining: paymentDetails.plan.meals,
+                    postal_code: paymentDetails.plan.postal_code,
+                    stripe_token: customerStripeID,
+                    cycle_start_date: moment().format(),
+                    cycle_end_date: moment().add(30, 'days').format(),
+                    payment_plan_id: paymentDetails.plan.id,
+                    user_id: paymentDetails.user_id
+                };
+                models.customers.create(attributes).then(function (customer) {
+                    customer.routeToCreateProfile = false;
+                    res.json(customer);
+                }, function (e) {
+                    res.status(400).json(e);
                 });
+
             }
         });
     });
