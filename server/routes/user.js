@@ -105,6 +105,8 @@ exports.create = function(req, res) {
                 password: body.password
             }
             email.sendWelcomeEmail(data, res);
+        } else {
+            res.json(user);
         }
     }, function(e) {
         res.status(400).json(e);
@@ -125,10 +127,10 @@ exports.login = function(req, res) {
 
     }).then(function(tokenInstance) {
         var token = tokenInstance.get('token');
-
+        console.log('yes');
         models.users.findById(userInstance.id).then(function(user) {
             var userDetails = _.pick(user.toPublicJSON(token), 'type', 'id');
-            var userSend;
+            var userSend = {};
             if (userDetails.type == 'customer') {
                 models.customers.findOne({
                     attributes: ['payment_plan_id', 'id', 'user_id'],
@@ -172,7 +174,7 @@ exports.login = function(req, res) {
                 userSend.type = "admin";
                 res.header('Auth', token).json(userSend);
             }
-        }
+        });
     }).catch(function() {
         res.status(401).send();
     });
