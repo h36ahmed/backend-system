@@ -129,6 +129,6 @@ router.get('/api/v1/week/:id', middleware.requireAuthentication, week.view);
 router.get('/api/v1/pickup-times', middleware.requireAuthentication, pickUpTime.list);
 
 // Payments
-router.post('/api/v1/createSubscription', middleware.requireAuthentication, payment.createSubscription);
+router.post('/api/v1/create-subscription', middleware.requireAuthentication, payment.createSubscription);
 
 module.exports = router;

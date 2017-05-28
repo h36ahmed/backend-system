@@ -6,7 +6,7 @@ moment.tz.setDefault("America/Toronto");
 
 var stripe = require("stripe")("sk_test_shNAbxyQyXRm3LCZLmladgez");
 
-// POST /api/v1/createSubscription
+// POST /api/v1/create-subscription
 exports.createSubscription = function (req, res) {
 
     var paymentDetails = _.pick(req.body, 'email', 'stripe_token', 'plan', 'first_name', 'last_name', 'postal_code', 'customer_id');
