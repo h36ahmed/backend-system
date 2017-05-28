@@ -127,10 +127,10 @@ exports.login = function(req, res) {
 
     }).then(function(tokenInstance) {
         var token = tokenInstance.get('token');
-        console.log('yes');
         models.users.findById(userInstance.id).then(function(user) {
             var userDetails = _.pick(user.toPublicJSON(token), 'type', 'id');
             var userSend = {};
+            userSend.token = token;
             if (userDetails.type == 'customer') {
                 models.customers.findOne({
                     attributes: ['payment_plan_id', 'id', 'user_id'],
@@ -172,6 +172,7 @@ exports.login = function(req, res) {
             } else if (userDetails.type == 'admin') {
                 userSend.user_id = userInstance.id;
                 userSend.type = "admin";
+
                 res.header('Auth', token).json(userSend);
             }
         });
