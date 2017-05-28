@@ -167,6 +167,10 @@ exports.login = function(req, res) {
                 }, function(e) {
                     res.status(500).send();
                 });
+            } else if (userDetails.type == 'admin') {
+                userSend.user_id = userInstance.id;
+                userSend.type = "admin";
+                res.header('Auth', token).json(userSend);
             }
         }
     }).catch(function() {
