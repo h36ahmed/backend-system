@@ -20,6 +20,13 @@ exports.list = function (req, res) {
         where.offer_date = query.offer_date;
     }
 
+    if (query.hasOwnProperty('from') && query.hasOwnProperty('to')) {
+        where.offer_date = {
+            $gte: query.from,
+            $lte: query.to
+        }
+    }
+
     if (query.hasOwnProperty('order_date') && query.order_date.length > 0) {
         ordersWhere.order_date =  query.order_date;
     }
