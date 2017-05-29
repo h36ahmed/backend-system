@@ -50,7 +50,7 @@ function send(locals, cb) {
             To: locals.email,
             Subject: locals.subject,
             HtmlBody: results.html,
-            TextBody: results.text
+            TextBody: results.text,
         };
 
         client.sendEmail(data, function(err, response) {
@@ -91,8 +91,7 @@ var sendWelcomeEmail = function(data, res) {
 };
 
 var sendOrderEmail = function(data, res) {
-    console.log('data', data)
-    console.log('res', res)
+
     var locals = {
         email: data.email,
         from: from_who,
@@ -129,7 +128,7 @@ var sendCOEmail = function(data, res) {
 };
 
 var sendFeedbackEmail = function(data, res) {
-
+    console.log(data)
     var locals = {
         email: data.email,
         from: from_who,
