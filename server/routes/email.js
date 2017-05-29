@@ -128,13 +128,11 @@ var sendCOEmail = function(data, res) {
 };
 
 var sendFeedbackEmail = function(data, res) {
-    console.log(data)
+
     var locals = {
         email: data.email,
         from: from_who,
-        data: {
-            name: 'Hassan Ahmed'
-        },
+        data: data.data,
         template: 'feedback',
         subject: 'Thank You For Providing Feedback!'
     }
