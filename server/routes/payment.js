@@ -1,42 +1,48 @@
 var _ = require('underscore');
 var models = require('../db.js');
+var moment = require('moment');
 
-var stripe = require("stripe")("pk_test_UnmAg8y934vAlD1EXAMsYC3V");
+moment.tz.setDefault("America/Toronto");
 
-// GET /api/v1/createProfile
-exports.createProfile = function (req, res) {
-    var query = req.query;
-    var where = {};
+var stripe = require("stripe")("sk_test_shNAbxyQyXRm3LCZLmladgez");
 
-    var paymentDetails = _.pick(req.body, 'email', 'stripeToken', 'chargeAmount', 'overall', 'order_id');
+// POST /api/v1/create-subscription
+exports.createSubscription = function (req, res) {
 
-    var email = req.body.email;
-    var token = req.body.stripeToken;
-    var chargeAmount = req.body.chargeAmount;
-    var plan = req.body.plan;
+    var paymentDetails = _.pick(req.body, 'email', 'stripe_token', 'plan', 'first_name', 'last_name', 'postal_code', 'customer_id');
 
-    var customerStripeID;
-
-    // Create a Customer:
     stripe.customers.create({
-        email: "paying.user@example.com",
-        source: token,
+        email: paymentDetails.email,
+        source: paymentDetails.token
     }).then(function (customer) {
         customerStripeID = customer.id;
-        return stripe.charges.create({
-            amount: chargeAmount,
-            currency: "cad",
-            customer: customer.id,
-        });
-    }).then(function (charge) {
-
         stripe.subscriptions.create({
-            customer: customer.id,
-            plan: plan,
+            customer: customerStripeID,
+            plan: paymentDetails.plan.stripe_id,
         }, function (err, subscription) {
+            if (err) {
+                res.status(400).send(err);
+            } else {
+                var attributes = {
+                    first_name: paymentDetails.first_name,
+                    last_name: paymentDetails.last_name,
+                    meals_remaining: paymentDetails.plan.meals,
+                    postal_code: paymentDetails.plan.postal_code,
+                    stripe_token: customerStripeID,
+                    cycle_start_date: moment().format(),
+                    cycle_end_date: moment().add(30, 'days').format(),
+                    payment_plan_id: paymentDetails.plan.id,
+                    user_id: paymentDetails.user_id
+                };
+                models.customers.create(attributes).then(function (customer) {
+                    customer.routeToCreateProfile = false;
+                    res.json(customer);
+                }, function (e) {
+                    res.status(400).json(e);
+                });
 
+            }
         });
-
     });
 
 };

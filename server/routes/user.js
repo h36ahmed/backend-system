@@ -105,6 +105,8 @@ exports.create = function(req, res) {
                 password: body.password
             }
             email.sendWelcomeEmail(data, res);
+        } else {
+            res.json(user);
         }
     }, function(e) {
         res.status(400).json(e);
@@ -125,7 +127,55 @@ exports.login = function(req, res) {
 
     }).then(function(tokenInstance) {
         var token = tokenInstance.get('token');
-        res.header('Auth', token).json(userInstance.toPublicJSON(token));
+        models.users.findById(userInstance.id).then(function(user) {
+            var userDetails = _.pick(user.toPublicJSON(token), 'type', 'id');
+            var userSend = {};
+            userSend.token = token;
+            if (userDetails.type == 'customer') {
+                models.customers.findOne({
+                    attributes: ['payment_plan_id', 'id', 'user_id'],
+                    where: {
+                        user_id: userDetails.id
+                    }
+                }).then(function(customer) {
+                    if (customer.payment_plan_id == null) {
+                        userSend.routeToCreateProfile = true;
+                    } else {
+                        userSend.routeToCreateProfile = false;
+                    }
+                    userSend.user_id = customer.user_id;
+                    userSend.customer_id = customer.id;
+                    userSend.type = "customer";
+                    res.header('Auth', token).json(userSend);
+                }, function(e) {
+                    res.status(500).send();
+                });
+            } else if (userDetails.type == 'restaurant') {
+                models.owners.findOne({
+                    attributes: ['id'],
+                    where: {
+                        user_id: userDetails.id
+                    },
+                    include: [{
+                        attributes: ['id'],
+                        model: models.restaurants
+                    }]
+                }).then(function(owner) {
+                    userSend.type = "restaurant";
+                    userSend.user_id = owner.user_id;
+                    userSend.owner_id = owner.id;
+                    userSend.restaurant_id = owner.restaurant.id;
+                    res.header('Auth', token).json(userSend);
+                }, function(e) {
+                    res.status(500).send();
+                });
+            } else if (userDetails.type == 'admin') {
+                userSend.user_id = userInstance.id;
+                userSend.type = "admin";
+
+                res.header('Auth', token).json(userSend);
+            }
+        });
     }).catch(function() {
         res.status(401).send();
     });

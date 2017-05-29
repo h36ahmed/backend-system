@@ -17,7 +17,7 @@ exports.list = function(req, res) {
 
 // POST /api/v1/payment-plan
 exports.create = function(req, res) {
-    var paymentPlanDetails = _.pick(req.body, 'name', 'description', 'image', 'price', 'num_meals');
+    var paymentPlanDetails = _.pick(req.body, 'name', 'description', 'image', 'price', 'num_meals', 'stripe_id');
     models.payment_plans.create(paymentPlanDetails).then(function(paymentPlan) {
         res.json(paymentPlan);
     }, function(e) {
@@ -40,7 +40,7 @@ exports.view = function(req, res) {
 exports.update = function(req, res) {
     var paymentPlanID = parseInt(req.params.id, 10);
 
-    var body = _.pick(req.body, 'name', 'description', 'image', 'price', 'num_meals', 'status');
+    var body = _.pick(req.body, 'name', 'description', 'image', 'price', 'num_meals', 'status', 'stripe_id');
 
     var attributes = {};
 
@@ -66,6 +66,10 @@ exports.update = function(req, res) {
 
     if (body.hasOwnProperty('status')) {
         attributes.status = body.status;
+    }
+
+    if (body.hasOwnProperty('stripe_id')) {
+        attributes.stripe_id = body.stripe_id;
     }
 
     models.payment_plans.findById(paymentPlanID).then(function(paymentPlan) {

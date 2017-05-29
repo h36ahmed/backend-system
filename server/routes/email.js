@@ -91,7 +91,8 @@ var sendWelcomeEmail = function(data, res) {
 };
 
 var sendOrderEmail = function(data, res) {
-
+    console.log('data', data)
+    console.log('res', res)
     var locals = {
         email: data.email,
         from: from_who,
