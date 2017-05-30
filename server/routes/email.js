@@ -114,9 +114,7 @@ var sendCOEmail = function(data, res) {
     var locals = {
         email: data.email,
         from: from_who,
-        data: {
-            name: 'Hassan Ahmed'
-        },
+        data: data.emailData,
         template: 'cancel-order',
         subject: 'CANCELLED: Order Status Update'
     }
@@ -132,7 +130,7 @@ var sendFeedbackEmail = function(data, res) {
     var locals = {
         email: data.email,
         from: from_who,
-        data: data.data,
+        data: data.emailData,
         template: 'feedback',
         subject: 'Thank You For Providing Feedback!'
     }

@@ -54,10 +54,10 @@ exports.create = function(req, res) {
                 }]
             })
             .then(data => {
-                feedbackDetails.customer_name = `${data.customer.first_name} ${data.customer.last_name}`
+                feedbackDetails.customer_name = data.customer.first_name
 
-                email.sendFeedbackEmail({ email: req.body.email, type: 'feedback', data: feedbackDetails })
-                email.sendFeedbackEmail({ email: 'Daniel@lunchsociety.ca', type: 'feedback', data: feedbackDetails })
+                email.sendFeedbackEmail({ email: req.body.email, type: 'feedback', emailData: feedbackDetails })
+                email.sendFeedbackEmail({ email: 'Daniel@lunchsociety.ca', type: 'feedback', emailData: feedbackDetails })
                 res.json(data);
             }, function(e) {
                 res.status(400).json(e)
