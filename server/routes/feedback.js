@@ -44,15 +44,28 @@ exports.list = function(req, res) {
 
 // POST /api/v1/feedback
 exports.create = function(req, res) {
-    console.log(req.body)
-    var feedbackDetails = _.pick(req.body, 'comments', 'flavour', 'portion_size', 'overall', 'order_id');
-    models.feedbacks.create(feedbackDetails).then(function(feedback) {
-        email.sendFeedbackEmail({ email: req.body.email, type: 'feedback', data: feedbackDetails })
-        email.sendFeedbackEmail({ email: 'Daniel@lunchsociety.ca', type: 'feedback', data: feedbackDetails })
-        res.json(feedback);
-    }, function(e) {
-        res.status(400).json(e);
-    });
+    const feedbackDetails = _.pick(req.body, 'comments', 'flavour', 'portion_size', 'overall', 'order');
+    models.feedbacks.create(feedbackDetails)
+        .then(() => {
+            models.orders.findById(feedbackDetails.order, {
+                include: [{
+                    model: models.customers,
+                    attributes: ['first_name', 'last_name'],
+                }]
+            })
+            .then(data => {
+                feedbackDetails.customer_name = data.customer.first_name
+
+                email.sendFeedbackEmail({ email: req.body.email, type: 'feedback', emailData: feedbackDetails })
+                // email.sendFeedbackEmail({ email: 'Daniel@lunchsociety.ca', type: 'feedback', emailData: feedbackDetails })
+                models.orders.update({ 'status': 'completed' }, {
+                    where: { id: feedbackDetails.order }
+                })
+                res.json(data);
+            }, function(e) {
+                res.status(400).json(e)
+            })
+        })
 };
 
 // DELETE /api/v1/feedback/:id

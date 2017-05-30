@@ -70,7 +70,7 @@
                                     </tr>
                                     <tr>
                                         <td class="content-block ls-body">
-                                            Hi {{name}},
+                                            Hi {{data.customer_name}},
                                         </td>
                                     </tr>
                                     <tr class="">
@@ -85,10 +85,10 @@
                                     </tr>
                                     <tr>
                                         <td class="content-block aligncenter">
-                                            <strong>Date:</strong> December 16, 2016 <br>
-                                            <strong>Meal:</strong> Chocolate Milkshake <br>
-                                            <strong>Restaurant:</strong> PAI <br>
-                                            <strong>Address:</strong> 324 Yonge St, Toronto, Ontario
+                                            <strong>Date:</strong> {{data.order_date}} <br>
+                                            <strong>Meal:</strong> {{data.meal_name}} <br>
+                                            <strong>Restaurant:</strong> {{data.restaurant_name}} <br>
+                                            <strong>Address:</strong> {{data.restaurant_address}}
                                         </td>
                                     </tr>
                                     <tr class="">
@@ -98,7 +98,7 @@
                                     </tr>
                                     <tr class="">
                                         <td class="content-block aligncenter">
-                                             12:30 pm - 12:45 pm
+                                             {{data.pickup_time}}
                                         </td>
                                     </tr>
                                     <tr>

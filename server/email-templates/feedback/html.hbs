@@ -70,21 +70,21 @@
                                     </tr>
                                     <tr>
                                         <td class="content-block ls-body">
-                                            Hi {{name}},
+                                            Hi {{data.customer_name}},
                                         </td>
                                     </tr>
                                     <tr class="">
                                         <td class="content-block">
-                                            Thank you for providing us feedback for your order #1231. We will be in touch with you within 24 hours. Thank you for your patience.
+                                            Thank you for providing us feedback for your order #{{data.order}}. We will be in touch with you within 24 hours. Thank you for your patience.
                                         </td>
                                     </tr>
                                     <tr class="">
                                         <td class="content-block">
                                             Here is what you have provided us with: <br>
-                                            <strong>Portion Size: </strong> 4 <br>
-                                            <strong>Flavour: </strong> 3<br>
-                                            <strong>Overall: </strong> 3 <br>
-                                            <strong>Comments: </strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus officia, laudantium qui! Optio debitis inventore officiis neque, soluta, accusantium veniam ullam necessitatibus voluptatibus nulla dolor maxime pariatur earum deserunt. Illum.
+                                            <strong>Portion Size: </strong> {{data.portion_size}} <br>
+                                            <strong>Flavour: </strong> {{data.flavour}} <br>
+                                            <strong>Overall: </strong> {{data.overall}} <br>
+                                            <strong>Comments: </strong> {{data.comments}}
                                         </td>
                                     </tr>
                                     <tr>
