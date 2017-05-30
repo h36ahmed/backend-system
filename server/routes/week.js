@@ -78,8 +78,8 @@ exports.view = function(req, res) {
                     attributes: ['plates_assigned', 'plates_left', 'offer_date'],
                     where: {
                         offer_date: {
-                            $gte: formatNumberDate(weekDetails.from_date),
-                            $lte: formatNumberDate(weekDetails.to_date)
+                            $gte: weekDetails.from_date,
+                            $lte: weekDetails.to_date
                         }
                     }
                 }]
