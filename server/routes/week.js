@@ -85,7 +85,8 @@ exports.view = function(req, res) {
                 }]
             }]
         }).then(function(restuarants) {
-            if (req.query.type === 'admin-payout') {
+            // console.log(restuarants)
+            // if (req.query.type === 'admin-payout') {
                 var payouts = [];
                 _.each(restuarants, function(restaurant) {
                     var payout = {
@@ -108,9 +109,9 @@ exports.view = function(req, res) {
                     payouts.push(payout);
                 });
                 res.json(payouts);
-            } else if (req.query.type === 'restaurant-payout') {
-                res.json(restuarants)
-            }
+            // } else if (req.query.type === 'restaurant-payout') {
+            //     res.json(restuarants)
+            // }
         }, function(e) {
             res.status(500).send();
         });
