@@ -2,6 +2,7 @@ var _ = require('underscore');
 var models = require('../db.js');
 var moment = require('moment');
 var email = require('./email');
+var cryptojs = require('crypto-js');
 
 moment.tz.setDefault("America/Toronto");
 
@@ -19,23 +20,23 @@ exports.createSubscription = function (req, res) {
     }
 
     if (paymentDetails.user_id == null || typeof paymentDetails.user_id === 'undefined') {
-
+        console.log(userAttributes);
         models.users.create(userAttributes).then(function(user) {
             paymentDetails.user_id = user.id;
             userAttributes.name = 'Lunch Society Member';
-            createCustomer(paymentDetails, userAttributes)
+            createCustomer(paymentDetails, userAttributes, res)
         }, function(e) {
             res.status(400).json(e);
         });
 
     } else {
-        createCustomer(paymentDetails)
+        createCustomer(paymentDetails, userAttributes, res)
     }
 
 
 };
 
-function createCustomer(paymentDetails, userAttributes) {
+function createCustomer(paymentDetails, userAttributes, res) {
     stripe.customers.create({
         email: paymentDetails.email,
         source: paymentDetails.token
