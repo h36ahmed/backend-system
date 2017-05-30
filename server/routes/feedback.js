@@ -57,7 +57,10 @@ exports.create = function(req, res) {
                 feedbackDetails.customer_name = data.customer.first_name
 
                 email.sendFeedbackEmail({ email: req.body.email, type: 'feedback', emailData: feedbackDetails })
-                email.sendFeedbackEmail({ email: 'Daniel@lunchsociety.ca', type: 'feedback', emailData: feedbackDetails })
+                // email.sendFeedbackEmail({ email: 'Daniel@lunchsociety.ca', type: 'feedback', emailData: feedbackDetails })
+                models.orders.update({ 'status': 'completed' }, {
+                    where: { id: feedbackDetails.order }
+                })
                 res.json(data);
             }, function(e) {
                 res.status(400).json(e)

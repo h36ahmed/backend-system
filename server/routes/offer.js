@@ -94,36 +94,36 @@ exports.delete = function (req, res) {
 exports.update = (req, res) => {
     const offerId = parseInt(req.params.id, 10)
     const attributesToUpdate = {}
+    console.log(req.body)
+    // models.offers.findById(offerId)
+    //     .then(offer => {
+    //         if (offer) {
 
-    models.offers.findById(offerId)
-        .then((offer) => {
-            if (offer) {
+    //             switch(req.body.type) {
+    //                 case 'ordered':
+    //                     if (offer.dataValues.hasOwnProperty('plates_left') && offer.dataValues.plates_left > 0) {
+    //                         attributesToUpdate.plates_left = offer.dataValues.plates_left - 1
+    //                     }
+    //                     break
+    //                 case 'cancelled':
+    //                     if (offer.dataValues.hasOwnProperty('plates_left')) {
+    //                         attributesToUpdate.plates_left = offer.dataValues.plates_left + 1
+    //                     }
+    //                     break
+    //                 default:
+    //                     break
+    //             }
 
-                switch(req.body.type) {
-                    case 'ordered':
-                        if (offer.dataValues.hasOwnProperty('plates_left') && offer.dataValues.plates_left > 0) {
-                            attributesToUpdate.plates_left = offer.dataValues.plates_left - 1
-                        }
-                        break
-                    case 'cancelled':
-                        if (offer.dataValues.hasOwnProperty('plates_left')) {
-                            attributesToUpdate.plates_left = offer.dataValues.plates_left + 1
-                        }
-                        break
-                    default:
-                        break
-                }
-
-                offer.update(attributesToUpdate)
-                    .then(offer => {
-                        res.json(offer)
-                    }, e => {
-                        res.status(400).json(e)
-                    })
-            } else {
-                res.status(404).send()
-            }
-        }, () => {
-            res.status(500).send()
-        })
+    //             offer.update(attributesToUpdate)
+    //                 .then(offer => {
+    //                     res.json(offer)
+    //                 }, e => {
+    //                     res.status(400).json(e)
+    //                 })
+    //         } else {
+    //             res.status(404).send()
+    //         }
+    //     }, () => {
+    //         res.status(500).send()
+    //     })
 }

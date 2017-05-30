@@ -95,9 +95,7 @@ var sendOrderEmail = function(data, res) {
     var locals = {
         email: data.email,
         from: from_who,
-        data: {
-            name: 'Hassan Ahmed'
-        },
+        data: data.emailData,
         template: 'order',
         subject: 'Order Information'
     }

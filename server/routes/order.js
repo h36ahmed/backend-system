@@ -91,13 +91,19 @@ exports.view = function(req, res) {
 // POST /api/v1/order
 exports.create = function(req, res) {
     var orderDetails = _.pick(req.body, 'order_date', 'pickup_time_id', 'offer_id', 'customer_id');
-    models.orders.create(orderDetails).then(function(order) {
-        res.json(order);
+    models.orders.create(orderDetails)
+      .then(order => {
+        models.offers.findById(order.offer_id)
+          .then(offer => {
+            models.offers.update({ 'plates_left': offer.plates_left - 1 }, {
+              where: { id: order.offer_id }
+            })
+              res.json(offer);
+            })
+          })
     }, function(e) {
         res.status(400).json(e);
-    });
-};
-
+    };
 // DELETE /api/v1/order/:id
 exports.delete = function(req, res) {
     var orderID = parseInt(req.params.id, 10);
@@ -130,7 +136,7 @@ exports.update = (req, res) => {
 
         order.dataValues.hasOwnProperty('status') && order.dataValues.status !== 'cancelled' ?
           attributesToUpdate.status = 'cancelled' :
-          attributesToUpdate.status = 'active'
+          null
 
         order.update(attributesToUpdate)
           .then(order => {
@@ -140,27 +146,21 @@ exports.update = (req, res) => {
 
             models.offers.findById(order.offer_id)
               .then(offer => {
-              // this checks to make sure there is a property called 'plates_left' and that it is greater than 0
-                if (offer.dataValues.hasOwnProperty('plates_left') && offer.dataValues.plates_left > 0) {
-                  attributesToUpdate.plates_left = offer.dataValues.plates_left - 1
-                }
 
                 attributesToUpdate.status === 'cancelled' ?
                   attributesToUpdate.plates_left = offer.dataValues.plates_left + 1 :
-                  attributesToUpdate.plates_left = offer.dataValues.plates_left - 1
+                  null
 
                 // updates the offers plates_left
                 models.offers.update({"plates_left": attributesToUpdate.plates_left}, {
-                  where: {
-                    id: order.offer_id
-                  }
+                  where: { id: order.offer_id }
                 })
                 .then(() => {
                   models.meals.findById(offer.meal_id)
                     .then(meal => {
-                    // find the customer id from the order
                     emailData.meal_name = meal.name;
 
+                    // find the customer id from the order
                     models.restaurants.findById(meal.restaurant_id)
                       .then(restaurant => {
                         emailData.restaurant_name = restaurant.name
@@ -173,13 +173,11 @@ exports.update = (req, res) => {
 
                             attributesToUpdate.status === 'cancelled' ?
                               attributesToUpdate.meals_remaining = customer.dataValues.meals_remaining + 1 :
-                              attributesToUpdate.meals_remaining = customer.dataValues.meals_remaining - 1
+                              null
 
                             //updates the customer db with how many meals are remaining
                               models.customers.update({"meals_remaining": attributesToUpdate.meals_remaining}, {
-                                where: {
-                                  id: order.dataValues.customer_id
-                                }
+                                where: { id: order.dataValues.customer_id }
                               })
                               .then(() => {
                                 models.users.findById(customer.user_id)
@@ -187,7 +185,8 @@ exports.update = (req, res) => {
 
                                     attributesToUpdate.status === 'cancelled' ?
                                     email.sendCOEmail({ email: user.dataValues.email, type: 'cancel-order', emailData: emailData }) :
-                                    email.sendOrderEmail({ email: user.dataValues.email, type: 'order' })
+                                    null
+
                                   }, e => {
                                     res.status(400).json(e)
                                   })
