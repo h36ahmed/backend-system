@@ -132,20 +132,20 @@ exports.login = function(req, res) {
             var userSend = {};
             userSend.token = token;
             if (userDetails.type == 'customer') {
+                 // Need to check orders of customer that is active
                 models.customers.findOne({
                     attributes: ['payment_plan_id', 'id', 'user_id'],
                     where: {
                         user_id: userDetails.id
                     }
                 }).then(function(customer) {
-                    if (customer.payment_plan_id == null) {
-                        userSend.routeToCreateProfile = true;
-                    } else {
-                        userSend.routeToCreateProfile = false;
-                    }
+                    // Need to check feedback table for order_id
+                    // If there is no active order, no need to check for feedback table
+                    // If there is, check feedback table
                     userSend.user_id = customer.user_id;
                     userSend.customer_id = customer.id;
                     userSend.type = "customer";
+                    userSend.needFeedback = true;
                     res.header('Auth', token).json(userSend);
                 }, function(e) {
                     res.status(500).send();
