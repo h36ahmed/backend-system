@@ -201,6 +201,10 @@ exports.update = function(req, res) {
         attributes.confirmed_email = body.confirmed_email;
     }
 
+    if (body.hasOwnProperty('type')) {
+        attributes.type = body.type
+    }
+
     models.users.findById(userID).then(function(user) {
         if (user) {
             user.update(attributes).then(function(user) {
