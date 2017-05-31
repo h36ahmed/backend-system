@@ -13,30 +13,6 @@ exports.createSubscription = function (req, res) {
 
     var paymentDetails = _.pick(req.body, 'email', 'stripe_token', 'plan', 'first_name', 'last_name', 'postal_code', 'customer_id', 'user_id', 'password');
 
-    var userAttributes = {
-        email: paymentDetails.email.toLowerCase(),
-        password: paymentDetails.password,
-        type: 'customer'
-    }
-
-    if (paymentDetails.user_id == null || typeof paymentDetails.user_id === 'undefined') {
-        console.log(userAttributes);
-        models.users.create(userAttributes).then(function(user) {
-            paymentDetails.user_id = user.id;
-            userAttributes.name = 'Lunch Society Member';
-            createCustomer(paymentDetails, userAttributes, res)
-        }, function(e) {
-            res.status(400).json(e);
-        });
-
-    } else {
-        createCustomer(paymentDetails, userAttributes, res)
-    }
-
-
-};
-
-function createCustomer(paymentDetails, userAttributes, res) {
     stripe.customers.create({
         email: paymentDetails.email,
         source: paymentDetails.stripe_token
@@ -50,25 +26,39 @@ function createCustomer(paymentDetails, userAttributes, res) {
             if (err) {
                 res.status(400).send(err);
             } else {
-                var attributes = {
-                    first_name: paymentDetails.first_name,
-                    last_name: paymentDetails.last_name,
-                    meals_remaining: paymentDetails.plan.meals,
-                    postal_code: paymentDetails.postal_code,
-                    stripe_token: customerStripeID,
-                    cycle_start_date: moment().format(),
-                    cycle_end_date: moment().add(30, 'days').format(),
-                    payment_plan_id: paymentDetails.plan.id,
-                    user_id: paymentDetails.user_id
-                };
-                models.customers.create(attributes).then(function (customer) {
-                    customer.success = true;
-                    res.json(customer);
-                    //email.sendWelcomeEmail(userAttributes, res);
+                var userAttributes = {
+                    email: paymentDetails.email.toLowerCase(),
+                    password: paymentDetails.password,
+                    type: 'customer'
+                }
+                models.users.create(userAttributes).then(function (user) {
+                    paymentDetails.user_id = user.id;
+                    userAttributes.name = 'Lunch Society Member';
+                    var attributes = {
+                        first_name: paymentDetails.first_name,
+                        last_name: paymentDetails.last_name,
+                        meals_remaining: paymentDetails.plan.meals,
+                        postal_code: paymentDetails.postal_code,
+                        stripe_token: customerStripeID,
+                        cycle_start_date: moment().format(),
+                        cycle_end_date: moment().add(30, 'days').format(),
+                        payment_plan_id: paymentDetails.plan.id,
+                        user_id: paymentDetails.user_id
+                    };
+                    models.customers.create(attributes).then(function (customer) {
+                        customer.success = true;
+                        res.json(customer);
+                        //email.sendWelcomeEmail(userAttributes, res);
+                    }, function (e) {
+                        res.status(400).json(e);
+                    });
                 }, function (e) {
                     res.status(400).json(e);
                 });
+
             }
         });
     });
-}
+
+};
+
