@@ -51,10 +51,35 @@ exports.list = function(req, res) {
     var query = req.query;
     var where = {};
 
+    req.query.hasOwnProperty('id') ? where.id = query.id : null
+
     models.weeks.findAll({
-        where: where
+        where: {}
     }).then(function(weeks) {
-        res.json(weeks);
+        const weekDetails = weeks[0].toJSON()
+        models.restaurants.findAll({
+            // where: where,
+            attributes: ['name'],
+            include: [{
+                model: models.meals,
+                attributes: ['name', 'price'],
+                include: [{
+                    model: models.offers,
+                    attributes: ['plates_assigned', 'plates_left', 'offer_date'],
+                    where: {
+                        offer_date: {
+                            $gte: formatNumberDate(weekDetails.from_date),
+                            $lte: formatNumberDate(weekDetails.to_date)
+                        }
+                    }
+                }]
+            }]
+        })
+        .then(restaurants => {
+
+        res.json(restaurants);
+
+        })
     }, function(e) {
         res.status(500).send();
     });
