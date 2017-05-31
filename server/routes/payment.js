@@ -39,7 +39,7 @@ exports.createSubscription = function (req, res) {
 function createCustomer(paymentDetails, userAttributes, res) {
     stripe.customers.create({
         email: paymentDetails.email,
-        source: paymentDetails.token
+        source: paymentDetails.stripe_token
     }).then(function (customer) {
         customerStripeID = customer.id;
         stripe.subscriptions.create({
