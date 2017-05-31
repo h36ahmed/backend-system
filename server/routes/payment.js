@@ -62,8 +62,9 @@ function createCustomer(paymentDetails, userAttributes, res) {
                     user_id: paymentDetails.user_id
                 };
                 models.customers.create(attributes).then(function (customer) {
-                    customer.routeToCreateProfile = false;
-                    email.sendWelcomeEmail(userAttributes, res);
+                    customer.success = true;
+                    res.json(customer);
+                    //email.sendWelcomeEmail(userAttributes, res);
                 }, function (e) {
                     res.status(400).json(e);
                 });
