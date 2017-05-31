@@ -51,10 +51,10 @@ exports.list = function(req, res) {
     var query = req.query;
     var where = {};
 
-    req.query.hasOwnProperty('id') ? where.id = query.id : null
+    req.query.hasOwnProperty('id') ? where.id = req.query.id : null
 
     models.weeks.findAll({
-        where: {}
+        where: where
     }).then(function(weeks) {
         const weekDetails = weeks[0].toJSON()
         models.restaurants.findAll({
