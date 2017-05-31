@@ -185,7 +185,7 @@ exports.login = function(req, res) {
 // PUT /api/v1/user/:id
 exports.update = function(req, res) {
     var userID = parseInt(req.params.id, 10);
-    var body = _.pick(req.body, 'email', 'password', 'confirmed_email');
+    var body = _.pick(req.body, 'email', 'password', 'confirmed_email', 'type');
     var attributes = {};
 
     if (body.hasOwnProperty('email')) {
