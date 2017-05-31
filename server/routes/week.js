@@ -2,8 +2,8 @@ var _ = require('underscore');
 var models = require('../db.js');
 
 const formatNumberDate = (date) => {
-    const splitDate = date.split('-')
-    let month
+    const splitDate = date.split('-');
+    var month = '';
     switch(splitDate[1]) {
         case 'Jan':
             month = '01'
