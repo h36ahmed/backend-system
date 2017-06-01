@@ -46,7 +46,6 @@ exports.createSubscription = function (req, res) {
                         user_id: paymentDetails.user_id
                     };
                     models.customers.create(attributes).then(function (customer) {
-                        customer.success = true;
                         res.json(customer);
                         //email.sendWelcomeEmail(userAttributes, res);
                     }, function (e) {
