@@ -76,7 +76,7 @@ exports.list = function(req, res) {
 exports.view = function(req, res) {
     var userID = parseInt(req.params.id, 10);
     models.users.findById(userID).then(function(user) {
-        if (user == null) {
+        if (user === null) {
             res.status(404);
         } else {
             res.json(user.toPublicJSON());
@@ -91,14 +91,14 @@ exports.create = function(req, res) {
     var body = _.pick(req.body, 'email', 'password', 'type');
     body.email = body.email.toLowerCase();
     models.users.create(body).then(function(user) {
-        if(body.type == "customer") {
+        if (body.type === "customer") {
             var data = {
                 name: 'Customer',
                 email: user.email,
                 password: body.password
             }
             email.sendWelcomeEmail(data, res);
-        } else if (body.type == "owner") {
+        } else if (body.type === "owner") {
             var data = {
                 name: 'Restaurant Owner',
                 email: user.email,
@@ -131,7 +131,7 @@ exports.login = function(req, res) {
             var userDetails = _.pick(user.toPublicJSON(token), 'type', 'id');
             var userSend = {};
             userSend.token = token;
-            if (userDetails.type == 'customer') {
+            if (userDetails.type === 'customer') {
                  // Need to check orders of customer that is active
                 models.customers.findOne({
                     attributes: ['payment_plan_id', 'id', 'user_id'],
@@ -150,7 +150,7 @@ exports.login = function(req, res) {
                 }, function(e) {
                     res.status(500).send();
                 });
-            } else if (userDetails.type == 'restaurant') {
+            } else if (userDetails.type === 'restaurant') {
                 models.owners.findOne({
                     attributes: ['id'],
                     where: {
@@ -169,7 +169,7 @@ exports.login = function(req, res) {
                 }, function(e) {
                     res.status(500).send();
                 });
-            } else if (userDetails.type == 'admin') {
+            } else if (userDetails.type === 'admin') {
                 userSend.user_id = userInstance.id;
                 userSend.type = "admin";
 
@@ -185,7 +185,7 @@ exports.login = function(req, res) {
 // PUT /api/v1/user/:id
 exports.update = function(req, res) {
     var userID = parseInt(req.params.id, 10);
-    var body = _.pick(req.body, 'email', 'password', 'confirmed_email');
+    var body = _.pick(req.body, 'email', 'password', 'confirmed_email', 'type');
     var attributes = {};
 
     if (body.hasOwnProperty('email')) {
@@ -199,6 +199,10 @@ exports.update = function(req, res) {
 
     if (body.hasOwnProperty('confirmed_email')) {
         attributes.confirmed_email = body.confirmed_email;
+    }
+
+    if (body.hasOwnProperty('type')) {
+        attributes.type = body.type
     }
 
     models.users.findById(userID).then(function(user) {

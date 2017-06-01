@@ -43,10 +43,13 @@ exports.list = function(req, res) {
                 include: [{
                     model: models.restaurants,
                     attributes: ['name'],
-                }]
+                }],
             }]
         }, {
-            model: models.feedbacks
+            model: models.feedbacks,
+            model: models.pickup_times,
+        }, {
+          model: models.customers
         }]
     }).then(function(orders) {
         res.json(orders);
