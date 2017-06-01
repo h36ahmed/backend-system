@@ -79,7 +79,7 @@ exports.view = function(req, res) {
     // When presenting a list option make option value user id and display value emails.
     models.owners.findById(ownerID, {
         include: [{
-            attributes: ['name', 'id', 'phone_number', 'logo'],
+            attributes: ['name', 'id', 'phone_number', 'logo', 'street_address', 'city', 'state', 'country', 'postal_code'],
             model: models.restaurants
         }, {
             attributes: ['email', 'confirmed_email'],

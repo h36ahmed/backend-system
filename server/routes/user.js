@@ -142,6 +142,22 @@ exports.login = function(req, res) {
                     // Need to check feedback table for order_id
                     // If there is no active order, no need to check for feedback table
                     // If there is, check feedback table
+                    models.orders.findAll({where: {
+                        status: 'active',
+                        customer_id: customer.id,
+                    }})
+                    .then(order => {
+                        if (order.length > 0) {
+                            models.feedbacks.find({
+                                where: {
+                                    order_id: order[0].toJSON().id
+                                }
+                            })
+                            .then(feedback => {
+                                // console.log(feedback)
+                            })
+                        }
+                    })
                     userSend.user_id = customer.user_id;
                     userSend.customer_id = customer.id;
                     userSend.type = "customer";

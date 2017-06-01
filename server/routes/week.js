@@ -37,8 +37,10 @@ const formatNumberDate = (date) => {
             break
         case 'Nov':
             month = '11'
+            break
         case 'Dec':
             month = '12'
+            break
         default:
             break
     }
@@ -52,7 +54,6 @@ exports.list = function(req, res) {
     var where = {};
 
     req.query.hasOwnProperty('id') ? where.id = req.query.id : null
-
     models.weeks.findAll({
         where: where
     }).then(function(weeks) {
@@ -110,8 +111,6 @@ exports.view = function(req, res) {
                 }]
             }]
         }).then(function(restuarants) {
-            // console.log(restuarants)
-            // if (req.query.type === 'admin-payout') {
                 var payouts = [];
                 _.each(restuarants, function(restaurant) {
                     var payout = {
@@ -134,9 +133,6 @@ exports.view = function(req, res) {
                     payouts.push(payout);
                 });
                 res.json(payouts);
-            // } else if (req.query.type === 'restaurant-payout') {
-            //     res.json(restuarants)
-            // }
         }, function(e) {
             res.status(500).send();
         });
