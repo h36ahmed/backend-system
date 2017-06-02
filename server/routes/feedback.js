@@ -47,7 +47,7 @@ exports.create = function(req, res) {
     const feedbackDetails = _.pick(req.body, 'comments', 'flavour', 'portion_size', 'overall', 'order_id');
     models.feedbacks.create(feedbackDetails)
         .then(() => {
-            models.orders.findById(feedbackDetails.order, {
+            models.orders.findById(feedbackDetails.order_id, {
                 include: [{
                     model: models.customers,
                     attributes: ['first_name', 'last_name'],
