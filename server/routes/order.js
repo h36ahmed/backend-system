@@ -46,12 +46,14 @@ exports.list = function(req, res) {
                 }],
             }]
         }, {
-            model: models.feedbacks,
             model: models.pickup_times,
         }, {
-          model: models.customers
+            model: models.customers
+        }, {
+            model: models.feedbacks
         }]
     }).then(function(orders) {
+
         res.json(orders);
     }, function(e) {
         res.status(500).send();

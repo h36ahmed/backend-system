@@ -68,8 +68,6 @@ exports.view = function(req, res) {
     var type = req.query.type
     var where = {};
 
-    req.query.restaurantID ? where.id = req.query.restaurantID : null
-
     models.weeks.findById(weekID).then(function(week) {
         var weekDetails = week.toJSON();
 

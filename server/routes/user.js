@@ -128,6 +128,7 @@ exports.login = function(req, res) {
         var token = tokenInstance.get('token');
         models.users.findById(userInstance.id).then(function(user) {
             var userDetails = _.pick(user.toPublicJSON(token), 'type', 'id');
+            // console.log(userDetails)
             var userSend = {};
             userSend.token = token;
             if (userDetails.type === 'customer') {
@@ -146,14 +147,15 @@ exports.login = function(req, res) {
                         customer_id: customer.id,
                     }})
                     .then(order => {
+                        console.log(order)
                         if (order.length > 0) {
                             models.feedbacks.find({
                                 where: {
-                                    order_id: order[0].toJSON().id
+                                    order_id: order.toJSON().id
                                 }
                             })
                             .then(feedback => {
-                                // console.log(feedback)
+                                console.log(feedback)
                             })
                         }
                     })
