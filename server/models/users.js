@@ -69,7 +69,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                isIn: [['owner', 'customer', 'admin', 'restaurant']]
+                isIn: [['owner', 'customer', 'admin']]
             }
         },
         confirmed_email: {

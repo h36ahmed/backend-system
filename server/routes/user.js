@@ -176,7 +176,7 @@ exports.login = function(req, res) {
                         model: models.restaurants
                     }]
                 }).then(function(owner) {
-                    userSend.type = "restaurant";
+                    userSend.type = "owner";
                     userSend.user_id = owner.user_id;
                     userSend.owner_id = owner.id;
                     userSend.restaurant_id = owner.restaurant.id;
