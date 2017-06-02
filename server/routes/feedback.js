@@ -44,7 +44,7 @@ exports.list = function(req, res) {
 
 // POST /api/v1/feedback
 exports.create = function(req, res) {
-    const feedbackDetails = _.pick(req.body, 'comments', 'flavour', 'portion_size', 'overall', 'order');
+    const feedbackDetails = _.pick(req.body, 'comments', 'flavour', 'portion_size', 'overall', 'order_id');
     models.feedbacks.create(feedbackDetails)
         .then(() => {
             models.orders.findById(feedbackDetails.order, {
