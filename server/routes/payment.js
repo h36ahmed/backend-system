@@ -58,6 +58,8 @@ exports.createSubscription = function (req, res) {
 
             }
         });
+    }, function(e){
+        res.status(400).json(e);
     });
 
 };
