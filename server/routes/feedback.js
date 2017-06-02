@@ -59,7 +59,7 @@ exports.create = function(req, res) {
                 email.sendFeedbackEmail({ email: req.body.email, type: 'feedback', emailData: feedbackDetails })
                 // email.sendFeedbackEmail({ email: 'Daniel@lunchsociety.ca', type: 'feedback', emailData: feedbackDetails })
                 models.orders.update({ 'status': 'completed' }, {
-                    where: { id: feedbackDetails.order }
+                    where: { id: feedbackDetails.order_id }
                 })
                 res.json(data);
             }, function(e) {
