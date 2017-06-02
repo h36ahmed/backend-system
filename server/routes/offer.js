@@ -39,7 +39,7 @@ exports.list = function (req, res) {
         include.push({
             model: models.orders,
             where: ordersWhere,
-            order: [['pickup_time']],
+            order: [['order_date', 'pickup_time_id']],
             include: [{
                 model: models.customers,
                 attributes: ['first_name', 'last_name']
@@ -52,7 +52,7 @@ exports.list = function (req, res) {
 
     models.offers.findAll({
         where: where,
-        include: include
+        include: include,
     }).then(function (offers) {
         res.json(offers);
     }, function (e) {

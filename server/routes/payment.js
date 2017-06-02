@@ -12,7 +12,7 @@ var stripe = require("stripe")("sk_live_TZpALEAqujGW2Td9rpEod8fu");
 // POST /api/v1/create-subscription
 exports.createSubscription = function (req, res) {
 
-    var paymentDetails = _.pick(req.body, 'email', 'stripe_token', 'plan', 'first_name', 'last_name', 'postal_code', 'customer_id', 'user_id', 'password');
+    var paymentDetails = _.pick(req.body, 'email', 'stripe_token', 'plan', 'first_name', 'last_name', 'postal_code', 'password');
 
     stripe.customers.create({
         email: paymentDetails.email,
