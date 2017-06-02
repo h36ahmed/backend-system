@@ -124,7 +124,6 @@ exports.login = function(req, res) {
         return models.tokens.create({
             token: token
         });
-
     }).then(function(tokenInstance) {
         var token = tokenInstance.get('token');
         models.users.findById(userInstance.id).then(function(user) {
@@ -166,7 +165,7 @@ exports.login = function(req, res) {
                 }, function(e) {
                     res.status(500).send();
                 });
-            } else if (userDetails.type === 'restaurant') {
+            } else if (userDetails.type === 'owner') {
                 models.owners.findOne({
                     attributes: ['id'],
                     where: {
