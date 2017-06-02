@@ -54,6 +54,7 @@ exports.list = function(req, res) {
     var where = {};
 
     req.query.hasOwnProperty('id') ? where.id = req.query.id : null
+
     models.weeks.findAll({
         where: where
     }).then(function(weeks) {
@@ -89,6 +90,7 @@ exports.list = function(req, res) {
 // GET /api/v1/week/:id
 exports.view = function(req, res) {
     var weekID = parseInt(req.params.id, 10);
+    var type = req.query.type
     var where = {};
 
     models.weeks.findById(weekID).then(function(week) {
@@ -111,6 +113,7 @@ exports.view = function(req, res) {
                 }]
             }]
         }).then(function(restuarants) {
+
                 var payouts = [];
                 _.each(restuarants, function(restaurant) {
                     var payout = {
@@ -132,7 +135,7 @@ exports.view = function(req, res) {
                     payout.total_amount = payout.total_payment_before_tax + payout.tax_amount;
                     payouts.push(payout);
                 });
-                res.json(payouts);
+                type === 'resMealOffer' ? res.json(restuarants) : res.json(payouts)
         }, function(e) {
             res.status(500).send();
         });
