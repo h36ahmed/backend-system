@@ -128,7 +128,6 @@ exports.login = function(req, res) {
         var token = tokenInstance.get('token');
         models.users.findById(userInstance.id).then(function(user) {
             var userDetails = _.pick(user.toPublicJSON(token), 'type', 'id');
-            // console.log(userDetails)
             var userSend = {};
             userSend.token = token;
             if (userDetails.type === 'customer') {
@@ -147,25 +146,16 @@ exports.login = function(req, res) {
                         customer_id: customer.id,
                     }})
                     .then(order => {
-                        console.log(order)
                         if (order.length > 0) {
-                            models.feedbacks.find({
-                                where: {
-                                    order_id: order.toJSON().id
-                                }
-                            })
-                            .then(feedback => {
-                                console.log(feedback)
-                            })
+                            userSend.needOrderFeedback = order[0].id
                         }
+                        userSend.user_id = customer.user_id;
+                        userSend.customer_id = customer.id;
+                        userSend.type = "customer";
+                        res.header('Auth', token).json(userSend);
+                    }, function(e) {
+                        res.status(500).send()
                     })
-                    userSend.user_id = customer.user_id;
-                    userSend.customer_id = customer.id;
-                    userSend.type = "customer";
-                    userSend.needFeedback = true;
-                    res.header('Auth', token).json(userSend);
-                }, function(e) {
-                    res.status(500).send();
                 });
             } else if (userDetails.type === 'owner') {
                 models.owners.findOne({
