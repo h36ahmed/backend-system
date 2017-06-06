@@ -1,6 +1,6 @@
 var _ = require('underscore');
 var models = require('../db.js');
-const email = require('./email')
+
 
 // GET /api/v1/feedbacks
 exports.list = function(req, res) {
@@ -55,9 +55,6 @@ exports.create = function(req, res) {
             })
             .then(data => {
                 feedbackDetails.customer_name = data.customer.first_name
-
-                email.sendFeedbackEmail({ email: req.body.email, type: 'feedback', emailData: feedbackDetails })
-                // email.sendFeedbackEmail({ email: 'Daniel@lunchsociety.ca', type: 'feedback', emailData: feedbackDetails })
                 models.orders.update({ 'status': 'completed' }, {
                     where: { id: feedbackDetails.order }
                 })
