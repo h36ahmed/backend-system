@@ -44,10 +44,10 @@ exports.list = function(req, res) {
 
 // POST /api/v1/feedback
 exports.create = function(req, res) {
-    const feedbackDetails = _.pick(req.body, 'comments', 'flavour', 'portion_size', 'overall', 'order');
+    const feedbackDetails = _.pick(req.body, 'comments', 'flavour', 'portion_size', 'overall', 'order_id');
     models.feedbacks.create(feedbackDetails)
         .then(() => {
-            models.orders.findById(feedbackDetails.order, {
+            models.orders.findById(feedbackDetails.order_id, {
                 include: [{
                     model: models.customers,
                     attributes: ['first_name', 'last_name'],
@@ -56,7 +56,7 @@ exports.create = function(req, res) {
             .then(data => {
                 feedbackDetails.customer_name = data.customer.first_name
                 models.orders.update({ 'status': 'completed' }, {
-                    where: { id: feedbackDetails.order }
+                    where: { id: feedbackDetails.order_id }
                 })
                 res.json(data);
             }, function(e) {

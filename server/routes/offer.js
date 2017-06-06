@@ -94,7 +94,6 @@ exports.delete = function (req, res) {
 exports.update = (req, res) => {
     const offerId = parseInt(req.params.id, 10)
     const attributesToUpdate = {}
-    console.log(req.body)
     // models.offers.findById(offerId)
     //     .then(offer => {
     //         if (offer) {

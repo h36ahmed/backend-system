@@ -131,39 +131,27 @@ exports.login = function(req, res) {
             var userSend = {};
             userSend.token = token;
             if (userDetails.type === 'customer') {
-                 // Need to check orders of customer that is active
                 models.customers.findOne({
                     attributes: ['payment_plan_id', 'id', 'user_id'],
                     where: {
                         user_id: userDetails.id
                     }
                 }).then(function(customer) {
-                    // Need to check feedback table for order_id
-                    // If there is no active order, no need to check for feedback table
-                    // If there is, check feedback table
                     models.orders.findAll({where: {
                         status: 'active',
                         customer_id: customer.id,
                     }})
                     .then(order => {
                         if (order.length > 0) {
-                            models.feedbacks.find({
-                                where: {
-                                    order_id: order[0].toJSON().id
-                                }
-                            })
-                            .then(feedback => {
-                                // console.log(feedback)
-                            })
+                            userSend.needOrderFeedback = order[0].id
                         }
+                        userSend.user_id = customer.user_id;
+                        userSend.customer_id = customer.id;
+                        userSend.type = "customer";
+                        res.header('Auth', token).json(userSend);
+                    }, function(e) {
+                        res.status(500).send()
                     })
-                    userSend.user_id = customer.user_id;
-                    userSend.customer_id = customer.id;
-                    userSend.type = "customer";
-                    userSend.needFeedback = true;
-                    res.header('Auth', token).json(userSend);
-                }, function(e) {
-                    res.status(500).send();
                 });
             } else if (userDetails.type === 'owner') {
                 models.owners.findOne({
