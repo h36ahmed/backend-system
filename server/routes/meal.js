@@ -43,7 +43,7 @@ exports.view = function(req, res) {
 
 // POST /api/v1/meal
 exports.create = function(req, res) {
-    var body = _.pick(req.body, 'name', 'description', 'tagline', 'ingredients', 'price', 'meal_image', 'restaurant_id');
+    var body = _.pick(req.body, 'name', 'description', 'ingredients', 'price', 'meal_image', 'restaurant_id');
 
     models.meals.create(body).then(function(meal) {
         res.json(meal.toJSON());
