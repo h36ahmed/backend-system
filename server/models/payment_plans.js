@@ -50,7 +50,7 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             defaultValue: 'inactive'
         },
-        stripe_id: {
+        stripe_plan_id: {
             type: DataTypes.STRING,
             allowNull: false
         }

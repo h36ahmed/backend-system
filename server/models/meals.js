@@ -33,10 +33,6 @@ module.exports = function(sequelize, DataTypes) {
         description: {
             type: DataTypes.STRING
         },
-        tagline: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
         ingredients: {
             type: DataTypes.STRING,
             allowNull: false

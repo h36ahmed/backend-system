@@ -12,7 +12,7 @@ exports.list = function(req, res) {
     }
 
     models.meals.findAll({
-        attributes: ['id', 'name', 'description', 'tagline', 'ingredients', 'price', 'meal_image'],
+        attributes: ['id', 'name', 'description', 'ingredients', 'price', 'meal_image'],
         where: where,
         include: [{
             attributes: ['name', 'id'],
@@ -55,7 +55,7 @@ exports.create = function(req, res) {
 // PUT /api/v1/meal/:id
 exports.update = function(req, res) {
     var mealID = parseInt(req.params.id, 10);
-    var body = _.pick(req.body, 'name', 'description', 'tagline', 'ingredients', 'price', 'meal_image', 'restaurant_id');
+    var body = _.pick(req.body, 'name', 'description', 'ingredients', 'price', 'meal_image', 'restaurant_id');
 
     var attributes = {};
 
@@ -65,10 +65,6 @@ exports.update = function(req, res) {
 
     if (body.hasOwnProperty('description')) {
         attributes.description = body.description;
-    }
-
-    if (body.hasOwnProperty('tagline')) {
-        attributes.tagline = body.tagline;
     }
 
     if (body.hasOwnProperty('ingredients')) {

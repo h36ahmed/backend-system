@@ -76,7 +76,7 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.FLOAT,
             allowNull: false
         },
-        stripe_token: {
+        stripe_res_id: {
             type: DataTypes.STRING,
             allowNull: true
         }

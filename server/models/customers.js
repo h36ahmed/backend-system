@@ -85,7 +85,11 @@ module.exports = function(sequelize, DataTypes) {
                 key: 'referral_code'
             }
         },
-        stripe_token: {
+        stripe_customer_id: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+        stripe_subscription_id: {
             type: DataTypes.STRING,
             allowNull: true
         }
@@ -95,11 +99,11 @@ module.exports = function(sequelize, DataTypes) {
         instanceMethods: {
             toPublicJSON: function() {
                 var json = this.toJSON();
-                return _.omit(json, 'stripe_token', 'referral_code_used');
+                return _.omit(json, 'stripe_customer_id', 'referral_code_used', 'stripe_subscription_id');
             },
             getStripeToken: function() {
                 var json = this.toJSON();
-                return _.pick(json, 'id', 'first_name', 'last_name', 'stripe_token');
+                return _.pick(json, 'id', 'first_name', 'last_name', 'stripe_customer_id', 'stripe_subscription_id');
             }
         }
     });

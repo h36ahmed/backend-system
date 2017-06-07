@@ -79,7 +79,7 @@ exports.secure = function(req, res) {
 // PUT /api/v1/customer/:id
 exports.update = function(req, res) {
     var customerID = parseInt(req.params.id, 10);
-    var body = _.pick(req.body,  'first_name', 'last_name', 'profile_image', 'meals_remaining', 'postal_code', 'reminder_emails', 'payment_plan_id', 'stripe_token', 'referral_code_used', 'status', 'cycle_start_date', 'cycle_end_date');
+    var body = _.pick(req.body,  'first_name', 'last_name', 'profile_image', 'meals_remaining', 'postal_code', 'reminder_emails', 'payment_plan_id', 'stripe_customer_id', 'stripe_subscription_id', 'referral_code_used', 'status', 'cycle_start_date', 'cycle_end_date');
     var attributes = {};
 
     if (body.hasOwnProperty('first_name')) {
@@ -114,8 +114,12 @@ exports.update = function(req, res) {
         attributes.referral_code_used = body.referral_code_used;
     }
 
-    if (body.hasOwnProperty('stripe_token')) {
-        attributes.stripe_token = body.stripe_token;
+    if (body.hasOwnProperty('stripe_customer_id')) {
+        attributes.stripe_customer_id = body.stripe_customer_id;
+    }
+
+    if (body.hasOwnProperty('stripe_subscription_id')) {
+        attributes.stripe_subscription_id = body.stripe_subscription_id;
     }
 
     if (body.hasOwnProperty('status')) {
@@ -147,7 +151,7 @@ exports.update = function(req, res) {
 
 // POST /api/v1/customer
 exports.create = function(req, res) {
-    var customerDetails = _.pick(req.body, 'user_id', 'first_name', 'last_name', 'date_joined', 'profile_image', 'meals_remaining', 'postal_code', 'reminder_emails', 'payment_plan_id', 'stripe_token', 'referral_code_used', 'status', 'cycle_start_date', 'cycle_end_date');
+    var customerDetails = _.pick(req.body, 'user_id', 'first_name', 'last_name', 'date_joined', 'profile_image', 'meals_remaining', 'postal_code', 'reminder_emails', 'payment_plan_id', 'stripe_customer_id', 'stripe_subscription_id', 'referral_code_used', 'status', 'cycle_start_date', 'cycle_end_date');
 
     models.customers.create(customerDetails).then(function(customer) {
         res.json(customer.toPublicJSON());

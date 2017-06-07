@@ -21,7 +21,7 @@ INSERT INTO restaurants VALUES (3,'Richmond Station','1 Richmond Street W','Toro
 INSERT INTO restaurants VALUES (4,'PAI','18 Duncan Street','Toronto','Ontario','Canada','M5H3G6',4169014724,'','active',NULL,NULL,5.00,NULL,4);
 
 
-INSERT INTO meals VALUES (1,'Chocolate Milkshake','Amazing','Amazingly Good','Chocolate, Milk, Sugar',5.0,'',1);
+INSERT INTO meals VALUES (1,'Chocolate Milkshake','Amazingly Good','Chocolate, Milk, Sugar',5.0,'',1);
 INSERT INTO meals VALUES (2,'Pizza Panini','Amazing','You gotta have this one','Veggies, Tomato, Chicken',8.0,'',1);
 INSERT INTO meals VALUES (3,'Malaysian Fried Sambal Udon','Udon noodles stir-fried with homemade sambal sauce, onion, fish balls, and chicken','Creative fusion dishes!','Sambal sauce, Onions, Fish Balls, Chicken',9.0,'',2);
 INSERT INTO meals VALUES (4,'Crispy Pepper Chicken','Stir-fried crispy chicken seasoned with freshly ground black pepper','Creative fusion dishes!','Veggies, Chicken, Black Pepper',9.0,'',2);
