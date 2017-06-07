@@ -21,25 +21,24 @@ INSERT INTO restaurants VALUES (3,'Richmond Station','1 Richmond Street W','Toro
 INSERT INTO restaurants VALUES (4,'PAI','18 Duncan Street','Toronto','Ontario','Canada','M5H3G6',4169014724,'','active',NULL,NULL,5.00,NULL,4);
 
 
-INSERT INTO meals VALUES (1,'Chocolate Milkshake','Amazing','Amazingly Good','Chocolate, Milk, Sugar',5.0,'',1);
-INSERT INTO meals VALUES (2,'Pizza Panini','Amazing','You gotta have this one','Veggies, Tomato, Chicken',8.0,'',1);
-INSERT INTO meals VALUES (3,'Malaysian Fried Sambal Udon','Udon noodles stir-fried with homemade sambal sauce, onion, fish balls, and chicken','Creative fusion dishes!','Sambal sauce, Onions, Fish Balls, Chicken',9.0,'',2);
-INSERT INTO meals VALUES (4,'Crispy Pepper Chicken','Stir-fried crispy chicken seasoned with freshly ground black pepper','Creative fusion dishes!','Veggies, Chicken, Black Pepper',9.0,'',2);
-INSERT INTO meals VALUES (5,'Grilled Cornish Hen','Hen stirred in potato sauce.','You are kidding me!','rutabaga puree, potato pave, truffled celery, carrots, white wine jus, watercress',26.0,'',3);
-INSERT INTO meals VALUES (6,'Station Burger','Burger that is in a station.','The final burger you will ever have!','lettuce, beet chutney, aged cheddar, milk bun, rosemary fries, dill pickle, garlic aioli',21.0,'',3);
-INSERT INTO meals VALUES (7,'Khao Soi with braised beef','Fresh egg noodles in a golden curry topped with crispy noodles, coriander, green onions and braised beef (contains shrimp paste)','Braising Beef All Day','shrimp paste, beef, noodles, coriander, green onions',13.0,'',4);
-INSERT INTO meals VALUES (8,'Fried Fish with Green Curry sauce and Rice','Crispy Basa Fillet with crispy shallots served with green curry sauce and rice. (contains oyster sauce)','I see Green Fish All Day!','fish, shallots, green curry sauce, rice, oyster sauce',13.0,'',4);
+INSERT INTO meals VALUES (1,'Chocolate Milkshake','Amazingly Good','Chocolate, Milk, Sugar',5.0,'',1);
+INSERT INTO meals VALUES (2,'Pizza Panini','You gotta have this one','Veggies, Tomato, Chicken',8.0,'',1);
+INSERT INTO meals VALUES (3,'Malaysian Fried Sambal Udon','Udon noodles stir-fried with homemade sambal sauce, onion, fish balls, and chicken','Sambal sauce, Onions, Fish Balls, Chicken',9.0,'',2);
+INSERT INTO meals VALUES (4,'Crispy Pepper Chicken','Stir-fried crispy chicken seasoned with freshly ground black pepper', 'Veggies, Chicken, Black Pepper',9.0,'',2);
+INSERT INTO meals VALUES (5,'Grilled Cornish Hen','Hen stirred in potato sauce.','rutabaga puree, potato pave, truffled celery, carrots, white wine jus, watercress',26.0,'',3);
+INSERT INTO meals VALUES (6,'Station Burger','Burger that is in a station.','lettuce, beet chutney, aged cheddar, milk bun, rosemary fries, dill pickle, garlic aioli',21.0,'',3);
+INSERT INTO meals VALUES (7,'Khao Soi with braised beef','Fresh egg noodles in a golden curry topped with crispy noodles, coriander, green onions and braised beef (contains shrimp paste)','shrimp paste, beef, noodles, coriander, green onions',13.0,'',4);
+INSERT INTO meals VALUES (8,'Fried Fish with Green Curry sauce and Rice','Crispy Basa Fillet with crispy shallots served with green curry sauce and rice. (contains oyster sauce)', 'fish, shallots, green curry sauce, rice, oyster sauce',13.0,'',4);
 
-INSERT INTO payment_plans VALUES (1,'Lunch A Bunch','You get 10 Meals. $6/ meal.','',60.0, 12, 'active');
-INSERT INTO payment_plans VALUES (2,'Lunch A Lot','You get 20 Meals. $6/ meal.','',120.0, 20, 'active');
+INSERT INTO payment_plans VALUES (1,'The 12','Its simple.. You get 12 meals.','',8.25, 12, 'active','the-12');
+INSERT INTO payment_plans VALUES (2,'The 20','And for this one, you get 20!','',7.45, 20, 'active', 'the-20');
+INSERT INTO payment_plans VALUES (3,'The 5','5 Lunches to try out our society!','',8, 20, 'active', 'the-5');
 
-
-INSERT INTO customers VALUES (1,'Christmas','Carter','2017-02-01','2017-02-28','2017-02-16',10,'M5V2J2','','active',0,NULL,'',6,1);
-INSERT INTO customers VALUES (2,'Joe','Soto','2017-02-01','2017-02-28','2017-02-17',20,'M5V2J2','','active',0,NULL,'',7,2);
-INSERT INTO customers VALUES (3,'Chris','Rock','2017-02-01','2017-02-28','2017-02-18',10,'M5V2J2','','active',0,NULL,'',8,1);
-INSERT INTO customers VALUES (4,'Mark','Zuckerberg','2017-02-01','2017-02-28','2017-02-19',20,'M5V2J2','','active',0,NULL,'',9,2);
-INSERT INTO customers VALUES (5,'Thomas','Muller','2017-02-01','2017-02-28','2017-02-20',20,'M5V2J2','','active',0,NULL,'',10,2);
-
+INSERT INTO customers VALUES (1,'Christmas','Carter','2017-02-01','2017-02-28','2017-02-16',10,'M5V2J2','','active',0,NULL,'','',6,1);
+INSERT INTO customers VALUES (2,'Joe','Soto','2017-02-01','2017-02-28','2017-02-17',20,'M5V2J2','','active',0,NULL,'','',7,2);
+INSERT INTO customers VALUES (3,'Chris','Rock','2017-02-01','2017-02-28','2017-02-18',10,'M5V2J2','','active',0,NULL,'','',8,1);
+INSERT INTO customers VALUES (4,'Mark','Zuckerberg','2017-02-01','2017-02-28','2017-02-19',20,'M5V2J2','','active',0,NULL,'','',9,2);
+INSERT INTO customers VALUES (5,'Thomas','Muller','2017-02-01','2017-02-28','2017-02-20',20,'M5V2J2','','active',0,NULL,'','',10,2);
 
 INSERT INTO invoices VALUES (1,'2017-02-01','paid',8.0,60.0,'',1);
 INSERT INTO invoices VALUES (2,'2017-02-01','paid',15.0,120.0,'',2);
@@ -103,16 +102,3 @@ INSERT INTO weeks VALUES (26,'Week 51 - 52','18-Dec-17','31-Dec-17',2017);
 INSERT INTO payouts VALUES (1,'2017-02-27',2,'created',2.0,16.0,NULL,1,4);
 INSERT INTO payouts VALUES (2,'2017-02-27',3,'created',3.0,27.0,NULL,2,4);
 
-SELECT setval('users_id_seq', (SELECT MAX(id) from "users"));
-SELECT setval('owners_id_seq', (SELECT MAX(id) from "owners"));
-
-SELECT setval('restaurants_id_seq', (SELECT MAX(id) from "restaurants"));
-SELECT setval('meals_id_seq', (SELECT MAX(id) from "meals"));
-SELECT setval('customers_id_seq', (SELECT MAX(id) from "customers"));
-SELECT setval('invoices_id_seq', (SELECT MAX(id) from "invoices"));
-
-SELECT setval('offers_id_seq', (SELECT MAX(id) from "offers"));
-SELECT setval('orders_id_seq', (SELECT MAX(id) from "orders"));
-SELECT setval('feedbacks_id_seq', (SELECT MAX(id) from "feedbacks"));
-SELECT setval('payment_plans_id_seq', (SELECT MAX(id) from "payment_plans"));
-SELECT setval('pickup_times_id_seq', (SELECT MAX(id) from "pickup_times"));
