@@ -85,7 +85,7 @@ exports.delete = function (req, res) {
 
 // GET /api/v1/offers-report
 exports.offers = function (req, res) {
-    var offerDetails = _.pick(req.body, 'week_id', 'restaurant_id');
+    var offerDetails = _.pick(req.query, 'week_id', 'restaurant_id');
     var weekID = parseInt(offerDetails.week_id, 10);
     var restaurantID = parseInt(offerDetails.restaurant_id, 10);
     var where = {};
