@@ -59,9 +59,40 @@ exports.createSubscription = function (req, res) {
 
             }
         });
-    }, function(e){
+    }, function (e) {
         res.status(400).json(e);
     });
 
 };
 
+var updateSubscription = function (customerID, res) {
+
+    models.customers.findById(customerID).then(function (customer) {
+        if (customer) {
+            stripe.subscriptions.update(customer.stripe_subscription_id, {
+                plan: "the-12",
+            }, function (err, subscription) {
+                if (err) {
+                    res.status(400).send(err);
+                } else {
+                    var attributes = {
+                        payment_plan_id: 1,
+                        meals_remaining: 12
+                    };
+                    customer.update(attributes).then(function (customer) {
+                        res.json(customer.toPublicJSON());
+                    }, function (e) {
+                        res.status(400).json(e);
+                    });
+                }
+            });
+        } else {
+            res.status(404).send();
+        }
+    }, function () {
+        res.status(500).send();
+    });
+
+};
+
+exports.updateSubscription = updateSubscription;
