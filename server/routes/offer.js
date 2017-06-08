@@ -20,13 +20,6 @@ exports.list = function (req, res) {
         where.offer_date = query.offer_date;
     }
 
-    if (query.hasOwnProperty('from') && query.hasOwnProperty('to')) {
-        where.offer_date = {
-            $gte: query.from,
-            $lte: query.to
-        }
-    }
-
     if (query.hasOwnProperty('order_date') && query.order_date.length > 0) {
         ordersWhere.order_date =  query.order_date;
     }
@@ -89,6 +82,40 @@ exports.delete = function (req, res) {
         res.status(500).send();
     });
 };
+
+// GET /api/v1/offers-report
+exports.offers = function (req, res) {
+    var offerDetails= _.pick(req.body, 'week_id', 'restaurant_id');
+    var weekID = parseInt(payoutDetails.week_id, 10);
+    var restaurantID = parseInt(payoutDetails.restaurant_id, 10);
+    var where = {};
+
+    models.weeks.findById(weekID).then(function(week) {
+        var weekDetails = week.toJSON();
+        models.offers.findAll({
+            where: {
+                offer_date: {
+                    $gt: weekDetails.from_date,
+                    $lte: weekDetails.to_date
+                }
+            },
+            include: [{
+                attributes: ['id', 'name', 'ingredients'],
+                model: models.meals,
+                where: {
+                    restaurant_id: restaurantID
+                }
+            }]
+        }).then(function(offers) {
+            res.json(offers)
+        }, function(e) {
+            res.status(500).send();
+        });
+    }, function(e) {
+        res.status(404).json(e);
+    });
+};
+
 
 // UPDATE /api/v1/offer/:id
 exports.update = (req, res) => {

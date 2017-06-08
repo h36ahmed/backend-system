@@ -77,6 +77,7 @@ router.delete('/api/v1/meal/:id', middleware.requireAuthentication, meal.delete)
 
 // Meal Offers
 router.get('/api/v1/offers', middleware.requireAuthentication, offer.list);
+router.get('/api/v1/offers-report', middleware.requireAuthentication, offer.offers);
 router.post('/api/v1/offer', middleware.requireAuthentication, offer.create);
 router.delete('/api/v1/offer/:id', middleware.requireAuthentication, offer.delete);
 router.put('/api/v1/offer/:id', middleware.requireAuthentication, offer.update)
