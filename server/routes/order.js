@@ -1,6 +1,7 @@
 var _ = require('underscore');
 var models = require('../db.js');
 const email = require('./email')
+const payment = require('./payment.js')
 
 const formatShortDate = (date) => {
   const monthNames = [
@@ -8,7 +9,7 @@ const formatShortDate = (date) => {
     "May", "June", "July", "August",
     "September", "October", "November", "December"
   ];
-  const splitDate = date.split('-')
+  const splitDate = date.indexOf('T') === -1 ? date.split('-') : date.split('T')[0].split('-')
   const day = splitDate[2]
   const month = monthNames[parseInt(splitDate[1], 10) - 1]
   const year = splitDate[0]
@@ -31,7 +32,6 @@ exports.list = function(req, res) {
         where.customer_id =  query.customer_id;
     }
 
-    // order: [['order_date', 'DESC']] should order the date by latest first
     models.orders.findAll({
         where: where,
         order: [['id', 'DESC']],
@@ -96,14 +96,55 @@ exports.view = function(req, res) {
 // POST /api/v1/order
 exports.create = function(req, res) {
     var orderDetails = _.pick(req.body, 'order_date', 'pickup_time_id', 'offer_id', 'customer_id');
+    const emailData = {}
     models.orders.create(orderDetails)
       .then(order => {
-        models.offers.findById(order.offer_id)
+        emailData.date = formatShortDate(order.order_date)
+        models.offers.findById(order.offer_id, {
+          include: [{
+            model: models.meals,
+            attributes: ['name'],
+            include: [{
+              model: models.restaurants,
+              attributes: ['name', 'street_address', 'city']
+            }]
+          }]
+        })
           .then(offer => {
+            emailData.meal = { name: offer.meal.name }
+            emailData.restaurant = {
+              name: offer.meal.restaurant.name,
+              street_address: offer.meal.restaurant.street_address,
+              city: offer.meal.restaurant.city
+            }
             models.offers.update({ 'plates_left': offer.plates_left - 1 }, {
               where: { id: order.offer_id }
             })
-              res.json(offer);
+            .then(() => {
+              models.customers.findById(order.customer_id, {
+                include: [{
+                  model: models.users,
+                  attributes: ['email']
+                }]
+              })
+                .then(customer => {
+                  emailData.name = customer.first_name
+                  emailData.email = customer.user.email
+                  models.customers.update({ 'meals_remaining': customer.meals_remaining - 1 }, {
+                    where: { id: customer.id }
+                  })
+                  .then(() => {
+                    // if (customer.meals_remaining - 1 === 0 && customer.payment_plan_id === 3) {
+                    //   payment.updateSubscription(customer.id, res)
+                    // }
+                    models.pickup_times.findById(order.pickup_time_id)
+                      .then(pickup_time => {
+                        emailData.pick_up_time = pickup_time.pickup_time
+                        // email.sendOrderEmail(emailData, res)
+                      })
+                  })
+                })
+              })
             })
           })
     }, function(e) {
@@ -139,22 +180,20 @@ exports.update = (req, res) => {
     .then(order => {
       if (order) {
 
-        order.dataValues.hasOwnProperty('status') && order.dataValues.status !== 'cancelled' ?
-          attributesToUpdate.status = 'cancelled' :
-          null
+        if (order.dataValues.hasOwnProperty('status') && order.dataValues.status !== 'cancelled') {
+          attributesToUpdate.status = 'cancelled'
+        }
 
         order.update(attributesToUpdate)
           .then(order => {
           // find the offer id from the order
-          emailData.order_id = order.id
-          emailData.order_date = formatShortDate(order.order_date)
-
+          emailData.date = formatShortDate(order.order_date)
+            // console.log('order', order)
             models.offers.findById(order.offer_id)
               .then(offer => {
-
-                attributesToUpdate.status === 'cancelled' ?
-                  attributesToUpdate.plates_left = offer.dataValues.plates_left + 1 :
-                  null
+                if (attributesToUpdate.status === 'cancelled') {
+                  attributesToUpdate.plates_left = offer.dataValues.plates_left + 1
+                }
 
                 // updates the offers plates_left
                 models.offers.update({"plates_left": attributesToUpdate.plates_left}, {
@@ -163,22 +202,25 @@ exports.update = (req, res) => {
                 .then(() => {
                   models.meals.findById(offer.meal_id)
                     .then(meal => {
-                    emailData.meal_name = meal.name;
+                    emailData.meal = { name: meal.name }
 
                     // find the customer id from the order
                     models.restaurants.findById(meal.restaurant_id)
                       .then(restaurant => {
-                        emailData.restaurant_name = restaurant.name
-                        emailData.restaurant_address = `${restaurant.address}, ${restaurant.city}, ${restaurant.state}`
+                        emailData.restaurant = {
+                          name: restaurant.name,
+                          street_address: restaurant.street_address,
+                          city: restaurant.city
+                        }
 
                         models.customers.findById(order.dataValues.customer_id)
                           .then(customer => {
-                            emailData.customer_name = customer.first_name
+                            emailData.name = customer.first_name
                             // checks to make sure there is a property called 'meals_remaining' and that it is greater than 0
 
-                            attributesToUpdate.status === 'cancelled' ?
-                              attributesToUpdate.meals_remaining = customer.dataValues.meals_remaining + 1 :
-                              null
+                            if (attributesToUpdate.status === 'cancelled') {
+                              attributesToUpdate.meals_remaining = customer.dataValues.meals_remaining + 1
+                            }
 
                             //updates the customer db with how many meals are remaining
                               models.customers.update({"meals_remaining": attributesToUpdate.meals_remaining}, {
@@ -187,11 +229,15 @@ exports.update = (req, res) => {
                               .then(() => {
                                 models.users.findById(customer.user_id)
                                   .then(user => {
+                                    emailData.email = user.dataValues.email
 
-                                    attributesToUpdate.status === 'cancelled' ?
-                                    email.sendCOEmail({ email: user.dataValues.email, type: 'cancel-order', emailData: emailData }) :
-                                    null
-
+                                    models.pickup_times.findById(order.pickup_time_id)
+                                      .then(pickup_time => {
+                                        emailData.pick_up_time = pickup_time.pickup_time
+                                        if (attributesToUpdate.status === 'cancelled') {
+                                          // email.sendCOEmail(emailData, res)
+                                        }
+                                      })
                                   }, e => {
                                     res.status(400).json(e)
                                   })

@@ -88,7 +88,7 @@ exports.view = function(req, res) {
 
 // POST /api/v1/user
 exports.create = function(req, res) {
-    var body = _.pick(req.body, 'email', 'password', 'type');
+    var body = _.pick(req.body, 'email', 'password', 'type', 'id');
     body.email = body.email.toLowerCase();
     models.users.create(body).then(function(user) {
         if (body.type === "customer") {
@@ -97,14 +97,14 @@ exports.create = function(req, res) {
                 email: user.email,
                 password: body.password
             }
-            email.sendWelcomeEmail(data, res);
+            // email.sendWelcomeEmail(data, res);
         } else if (body.type === "owner") {
             var data = {
                 name: 'Restaurant Owner',
                 email: user.email,
                 password: body.password
             }
-            email.sendWelcomeEmail(data, res);
+            // email.sendWelcomeEmail(data, res);
         } else {
             res.json(user);
         }
@@ -127,16 +127,19 @@ exports.login = function(req, res) {
     }).then(function(tokenInstance) {
         var token = tokenInstance.get('token');
         models.users.findById(userInstance.id).then(function(user) {
+            // console.log(user)
             var userDetails = _.pick(user.toPublicJSON(token), 'type', 'id');
+            console.log('userdetails', userDetails.id)
             var userSend = {};
             userSend.token = token;
             if (userDetails.type === 'customer') {
-                models.customers.findOne({
+                models.customers.findAll({
                     attributes: ['payment_plan_id', 'id', 'user_id'],
                     where: {
-                        user_id: userDetails.id
+                        id: userDetails.id
                     }
                 }).then(function(customer) {
+                    console.log(customer)
                     models.orders.findAll({where: {
                         status: 'active',
                         customer_id: customer.id,
