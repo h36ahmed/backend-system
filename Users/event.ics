@@ -1,0 +1,32 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+CALSCALE:GREGORIAN
+PRODID:-//Adam Gibbons//agibbons.com//ICS: iCalendar Generator
+BEGIN:VEVENT
+UID:57b9b340-4d5b-11e7-a5eb-872d896462db
+DTSTAMP:20170609T213356Z
+DTSTART:20160530T065000
+DTEND:20160530T150000
+SUMMARY:Bolder Boulder
+DESCRIPTION:Annual 10-kilometer run in Boulder, Colorado
+LOCATION:Folsom Field, University of Colorado (finish line)
+URL:http://www.bolderboulder.com/
+STATUS:tentative
+GEO:40.0095;105.2669
+ATTENDEE;CN=Adam Gibbons:mailto:adam@example.com
+ATTENDEE;CN=Brittany Seaton:mailto:brittany@example2.org
+ORGANIZER;CN=Jeffrey Chang:mailto:jeffreycj.chang@gmail.com
+CATEGORIES:10k races,Memorial Day Weekend,Boulder CO
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT24H
+DESCRIPTION:Reminder
+REPEAT:1
+DURATION:PT15M
+END:VALARM
+BEGIN:VALARM
+ACTION:AUDIO
+TRIGGER:-PT30M
+END:VALARM
+END:VEVENT
+END:VCALENDAR
