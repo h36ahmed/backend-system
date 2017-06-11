@@ -3,19 +3,17 @@ VERSION:2.0
 CALSCALE:GREGORIAN
 PRODID:-//Adam Gibbons//agibbons.com//ICS: iCalendar Generator
 BEGIN:VEVENT
-UID:57b9b340-4d5b-11e7-a5eb-872d896462db
-DTSTAMP:20170609T213356Z
-DTSTART:20160530T065000
-DTEND:20160530T150000
-SUMMARY:Bolder Boulder
-DESCRIPTION:Annual 10-kilometer run in Boulder, Colorado
-LOCATION:Folsom Field, University of Colorado (finish line)
-URL:http://www.bolderboulder.com/
+UID:6d40e850-4e50-11e7-b93c-0d66b6937608
+DTSTAMP:20170611T024819Z
+DTSTART:20170608T065000Z
+DTEND:20170608T150000
+SUMMARY:Meal Reserved for June 08, 2017
+DESCRIPTION:Your meal, Malaysian Fried Sambal Udon, is reserved at Kaiju at 384 Yonge Street
+LOCATION:384 Yonge Street, Toronto, M5B241
 STATUS:tentative
-GEO:40.0095;105.2669
-ATTENDEE;CN=Adam Gibbons:mailto:adam@example.com
-ATTENDEE;CN=Brittany Seaton:mailto:brittany@example2.org
-ORGANIZER;CN=Jeffrey Chang:mailto:jeffreycj.chang@gmail.com
+GEO:56.130366;-106.346771
+ATTENDEE;CN=test:mailto:test@test.com
+ATTENDEE;CN=Jeffrey:mailto:jeffreycj.chang@gmail.com
 CATEGORIES:10k races,Memorial Day Weekend,Boulder CO
 BEGIN:VALARM
 ACTION:DISPLAY

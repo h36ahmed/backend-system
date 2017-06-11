@@ -2,6 +2,7 @@ var _ = require('underscore');
 var models = require('../db.js');
 const email = require('./email')
 const payment = require('./payment.js')
+const ics = require('../ics-generator.js')
 
 const formatShortDate = (date) => {
   const monthNames = [
@@ -100,13 +101,15 @@ exports.create = function(req, res) {
     models.orders.create(orderDetails)
       .then(order => {
         emailData.date = formatShortDate(order.order_date)
+        emailData.ICSDate = order.order_date.split('T')[0]
+
         models.offers.findById(order.offer_id, {
           include: [{
             model: models.meals,
             attributes: ['name'],
             include: [{
               model: models.restaurants,
-              attributes: ['name', 'street_address', 'city']
+              attributes: ['name', 'street_address', 'city', 'state', 'country', 'postal_code', 'longitude', 'latitude']
             }]
           }]
         })
@@ -115,8 +118,12 @@ exports.create = function(req, res) {
             emailData.restaurant = {
               name: offer.meal.restaurant.name,
               street_address: offer.meal.restaurant.street_address,
-              city: offer.meal.restaurant.city
+              city: offer.meal.restaurant.city,
+              postal_code: offer.meal.restaurant.postal_code,
+              longitude: offer.meal.restaurant.longitude,
+              latitude: offer.meal.restaurant.latitude
             }
+
             models.offers.update({ 'plates_left': offer.plates_left - 1 }, {
               where: { id: order.offer_id }
             })
@@ -130,6 +137,8 @@ exports.create = function(req, res) {
                 .then(customer => {
                   emailData.name = customer.first_name
                   emailData.email = customer.user.email
+                  emailData.last_name = customer.last_name
+
                   models.customers.update({ 'meals_remaining': customer.meals_remaining - 1 }, {
                     where: { id: customer.id }
                   })
@@ -141,6 +150,8 @@ exports.create = function(req, res) {
                       .then(pickup_time => {
                         emailData.pick_up_time = pickup_time.pickup_time
                         // email.sendOrderEmail(emailData, res)
+                        console.log('emailData', emailData)
+                        ics.generateICS(emailData)
                       })
                   })
                 })

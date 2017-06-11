@@ -119,8 +119,26 @@ exports.offers = function (req, res) {
 
 // UPDATE /api/v1/offer/:id
 exports.update = (req, res) => {
-    const offerId = parseInt(req.params.id, 10)
+    const offerDetails = _.pick(req.body, 'meal_id', 'offer_date', 'plates_assigned', 'plates_left');
+    const offerId = parseInt(req.params.id)
     const attributesToUpdate = {}
+
+    models.offers.findById(offerId)
+        .then(offer => {
+            console.log(offer)
+            if (offer) {
+                offer.update({ 'plates_left': offerDetails.plates_left })
+                .then(offer => {
+                    res.json(offer)
+                }, e => {
+                    res.status(400).json(e)
+                })
+            } else {
+                res.status(404).send()
+            }
+        }, () => {
+            res.status(500).send()
+        })
     // models.offers.findById(offerId)
     //     .then(offer => {
     //         if (offer) {
