@@ -150,7 +150,6 @@ exports.create = function(req, res) {
                       .then(pickup_time => {
                         emailData.pick_up_time = pickup_time.pickup_time
                         // email.sendOrderEmail(emailData, res)
-                        console.log('emailData', emailData)
                         ics.generateICS(emailData)
                       })
                   })
@@ -199,7 +198,6 @@ exports.update = (req, res) => {
           .then(order => {
           // find the offer id from the order
           emailData.date = formatShortDate(order.order_date)
-            // console.log('order', order)
             models.offers.findById(order.offer_id)
               .then(offer => {
                 if (attributesToUpdate.status === 'cancelled') {

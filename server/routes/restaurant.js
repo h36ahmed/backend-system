@@ -123,7 +123,6 @@ exports.update = function(req, res) {
     if (body.hasOwnProperty('owner_id')) {
         attributes.owner_id = parseInt(body.owner_id, 10);
     }
-    console.log(attributes);
     geocoder.geocode({
         address: attributes.street_address,
         postal_code: attributes.postal_code,

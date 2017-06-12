@@ -125,7 +125,6 @@ exports.update = (req, res) => {
 
     models.offers.findById(offerId)
         .then(offer => {
-            console.log(offer)
             if (offer) {
                 offer.update({ 'plates_left': offerDetails.plates_left })
                 .then(offer => {
@@ -139,35 +138,4 @@ exports.update = (req, res) => {
         }, () => {
             res.status(500).send()
         })
-    // models.offers.findById(offerId)
-    //     .then(offer => {
-    //         if (offer) {
-
-    //             switch(req.body.type) {
-    //                 case 'ordered':
-    //                     if (offer.dataValues.hasOwnProperty('plates_left') && offer.dataValues.plates_left > 0) {
-    //                         attributesToUpdate.plates_left = offer.dataValues.plates_left - 1
-    //                     }
-    //                     break
-    //                 case 'cancelled':
-    //                     if (offer.dataValues.hasOwnProperty('plates_left')) {
-    //                         attributesToUpdate.plates_left = offer.dataValues.plates_left + 1
-    //                     }
-    //                     break
-    //                 default:
-    //                     break
-    //             }
-
-    //             offer.update(attributesToUpdate)
-    //                 .then(offer => {
-    //                     res.json(offer)
-    //                 }, e => {
-    //                     res.status(400).json(e)
-    //                 })
-    //         } else {
-    //             res.status(404).send()
-    //         }
-    //     }, () => {
-    //         res.status(500).send()
-    //     })
 }
