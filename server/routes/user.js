@@ -127,29 +127,26 @@ exports.login = function(req, res) {
     }).then(function(tokenInstance) {
         var token = tokenInstance.get('token');
         models.users.findById(userInstance.id).then(function(user) {
-            // console.log(user)
             var userDetails = _.pick(user.toPublicJSON(token), 'type', 'id');
-            console.log('userdetails', userDetails.id)
             var userSend = {};
             userSend.token = token;
             if (userDetails.type === 'customer') {
                 models.customers.findAll({
-                    attributes: ['payment_plan_id', 'id', 'user_id'],
                     where: {
-                        id: userDetails.id
-                    }
+                        user_id: userDetails.id
+                    },
+                    attributes: ['payment_plan_id', 'id', 'user_id'],
                 }).then(function(customer) {
-                    console.log(customer)
                     models.orders.findAll({where: {
                         status: 'active',
-                        customer_id: customer.id,
+                        customer_id: customer[0].id
                     }})
                     .then(order => {
                         if (order.length > 0) {
                             userSend.needOrderFeedback = order[0].id
                         }
-                        userSend.user_id = customer.user_id;
-                        userSend.customer_id = customer.id;
+                        userSend.user_id = customer[0].user_id;
+                        userSend.customer_id = customer[0].id;
                         userSend.type = "customer";
                         res.header('Auth', token).json(userSend);
                     }, function(e) {
