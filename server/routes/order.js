@@ -96,7 +96,7 @@ exports.view = function(req, res) {
 
 // POST /api/v1/order
 exports.create = function(req, res) {
-    var orderDetails = _.pick(req.body, 'order_date', 'pickup_time_id', 'offer_id', 'customer_id');
+    var orderDetails = _.pick(req.body, 'order_date', 'pickup_time_id', 'offer_id', 'customer_id', 'status');
     const emailData = {}
     models.orders.create(orderDetails)
       .then(order => {
