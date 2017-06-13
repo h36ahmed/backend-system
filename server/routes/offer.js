@@ -12,9 +12,12 @@ exports.list = function (req, res) {
         model: models.meals,
         include: [{
             model: models.restaurants,
+            where: req.query.restaurant ? {id: req.query.restaurant} : {},
             attributes: ['id', 'name', 'longitude', 'latitude', 'street_address']
             }]
         }];
+
+        console.log(include)
 
     if (query.hasOwnProperty('offer_date') && query.offer_date.length > 0) {
         where.offer_date = query.offer_date;
