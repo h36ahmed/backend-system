@@ -17,8 +17,6 @@ exports.list = function (req, res) {
             }]
         }];
 
-        console.log(include)
-
     if (query.hasOwnProperty('offer_date') && query.offer_date.length > 0) {
         where.offer_date = query.offer_date;
     }
