@@ -152,6 +152,7 @@ exports.create = function(req, res) {
                         emailData.pick_up_time = pickup_time.pickup_time
                         // email.sendOrderEmail(emailData, res)
                         ics.generateICS(emailData)
+                        res.json(emailData)
                       })
                   })
                 })
