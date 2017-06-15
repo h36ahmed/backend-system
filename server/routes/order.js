@@ -6,9 +6,9 @@ const ics = require('../ics-generator.js')
 
 const formatShortDate = (date) => {
   const monthNames = [
-    "January", "February", "March", "April",
-    "May", "June", "July", "August",
-    "September", "October", "November", "December"
+    'January', 'February', 'March', 'April',
+    'May', 'June', 'July', 'August',
+    'September', 'October', 'November', 'December'
   ];
   const splitDate = date.indexOf('T') === -1 ? date.split('-') : date.split('T')[0].split('-')
   const day = splitDate[2]
@@ -196,8 +196,8 @@ exports.update = (req, res) => {
 
         order.update(attributesToUpdate)
           .then(order => {
-          emailData.date = formatShortDate(order.order_date)
           const orderDetails = order.toJSON()
+          emailData.date = formatShortDate(order.order_date)
 
             models.offers.findById(orderDetails.offer_id)
               .then(offer => {
@@ -214,7 +214,7 @@ exports.update = (req, res) => {
                 .then(() => {
                   models.meals.findById(offerDetails.meal_id)
                     .then(meal => {
-                      const mealDetails = meal.toJSON()
+                    const mealDetails = meal.toJSON()
                     emailData.meal = { name: mealDetails.name }
 
                     models.restaurants.findById(mealDetails.restaurant_id)
@@ -231,10 +231,10 @@ exports.update = (req, res) => {
                             const customerDetails = customer.toJSON()
                             emailData.name = customerDetails.first_name
 
-                            attributesToUpdate.meals_remaining = customerDetailsmeals_remaining - 1
+                            attributesToUpdate.meals_remaining = customerDetails.meals_remaining - 1
 
                             if (attributesToUpdate.status === 'cancelled') {
-                              attributesToUpdate.meals_remaining = customerDetailsmeals_remaining + 1
+                              attributesToUpdate.meals_remaining = customerDetails.meals_remaining + 1
                             }
 
                               models.customers.update({"meals_remaining": attributesToUpdate.meals_remaining}, {
