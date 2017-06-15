@@ -103,7 +103,6 @@ exports.create = function(req, res) {
         emailData.date = formatShortDate(order.order_date)
         emailData.ICSDate = order.order_date.split('T')[0]
         // emailData.ICSDate = order.order_date
-
         models.offers.findById(order.offer_id, {
           include: [{
             model: models.meals,
@@ -151,8 +150,8 @@ exports.create = function(req, res) {
                       .then(pickup_time => {
                         emailData.pick_up_time = pickup_time.pickup_time
                         // email.sendOrderEmail(emailData, res)
+                        res.json(order)
                         ics.generateICS(emailData)
-                        res.json(emailData)
                       })
                   })
                 })
@@ -191,7 +190,6 @@ exports.update = (req, res) => {
   models.orders.findById(orderId)
     .then(order => {
       if (order) {
-
         if (order.dataValues.hasOwnProperty('status') && order.dataValues.status !== 'cancelled') {
           attributesToUpdate.status = 'cancelled'
         }
@@ -199,8 +197,11 @@ exports.update = (req, res) => {
         order.update(attributesToUpdate)
           .then(order => {
           emailData.date = formatShortDate(order.order_date)
+
             models.offers.findById(order.offer_id)
               .then(offer => {
+                attributesToUpdate.plates_left = offer.dataValues.plates_left - 1
+
                 if (attributesToUpdate.status === 'cancelled') {
                   attributesToUpdate.plates_left = offer.dataValues.plates_left + 1
                 }
@@ -225,6 +226,8 @@ exports.update = (req, res) => {
                           .then(customer => {
                             emailData.name = customer.first_name
 
+                            attributesToUpdate.meals_remaining = customer.dataValues.meals_remaining - 1
+
                             if (attributesToUpdate.status === 'cancelled') {
                               attributesToUpdate.meals_remaining = customer.dataValues.meals_remaining + 1
                             }
@@ -232,6 +235,7 @@ exports.update = (req, res) => {
                               models.customers.update({"meals_remaining": attributesToUpdate.meals_remaining}, {
                                 where: { id: order.dataValues.customer_id }
                               })
+
                               .then(() => {
                                 models.users.findById(customer.user_id)
                                   .then(user => {

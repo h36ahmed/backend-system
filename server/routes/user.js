@@ -155,7 +155,7 @@ exports.login = function(req, res) {
                 });
             } else if (userDetails.type === 'owner') {
                 models.owners.findOne({
-                    attributes: ['id'],
+                    attributes: ['id', 'user_id'],
                     where: {
                         user_id: userDetails.id
                     },
@@ -164,6 +164,7 @@ exports.login = function(req, res) {
                         model: models.restaurants
                     }]
                 }).then(function(owner) {
+                    console.log('owner', owner.toJSON())
                     userSend.type = "owner";
                     userSend.user_id = owner.user_id;
                     userSend.owner_id = owner.id;
