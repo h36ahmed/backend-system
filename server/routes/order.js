@@ -197,56 +197,64 @@ exports.update = (req, res) => {
         order.update(attributesToUpdate)
           .then(order => {
           emailData.date = formatShortDate(order.order_date)
+          const orderDetails = order.toJSON()
 
-            models.offers.findById(order.offer_id)
+            models.offers.findById(orderDetails.offer_id)
               .then(offer => {
-                attributesToUpdate.plates_left = offer.dataValues.plates_left - 1
+                const offerDetails = offer.toJSON()
+                attributesToUpdate.plates_left = offerDetails.plates_left - 1
 
                 if (attributesToUpdate.status === 'cancelled') {
-                  attributesToUpdate.plates_left = offer.dataValues.plates_left + 1
+                  attributesToUpdate.plates_left = offerDetails.plates_left + 1
                 }
 
                 models.offers.update({"plates_left": attributesToUpdate.plates_left}, {
-                  where: { id: order.offer_id }
+                  where: { id: orderDetails.offer_id }
                 })
                 .then(() => {
-                  models.meals.findById(offer.meal_id)
+                  models.meals.findById(offerDetails.meal_id)
                     .then(meal => {
-                    emailData.meal = { name: meal.name }
+                      const mealDetails = meal.toJSON()
+                    emailData.meal = { name: mealDetails.name }
 
-                    models.restaurants.findById(meal.restaurant_id)
+                    models.restaurants.findById(mealDetails.restaurant_id)
                       .then(restaurant => {
+                        const restaurantDetails = restaurant.toJSON()
                         emailData.restaurant = {
-                          name: restaurant.name,
-                          street_address: restaurant.street_address,
-                          city: restaurant.city
+                          name: restaurantDetails.name,
+                          street_address: restaurantDetails.street_address,
+                          city: restaurantDetails.city
                         }
 
-                        models.customers.findById(order.dataValues.customer_id)
+                        models.customers.findById(orderDetails.customer_id)
                           .then(customer => {
-                            emailData.name = customer.first_name
+                            const customerDetails = customer.toJSON()
+                            emailData.name = customerDetails.first_name
 
-                            attributesToUpdate.meals_remaining = customer.dataValues.meals_remaining - 1
+                            attributesToUpdate.meals_remaining = customerDetailsmeals_remaining - 1
 
                             if (attributesToUpdate.status === 'cancelled') {
-                              attributesToUpdate.meals_remaining = customer.dataValues.meals_remaining + 1
+                              attributesToUpdate.meals_remaining = customerDetailsmeals_remaining + 1
                             }
 
                               models.customers.update({"meals_remaining": attributesToUpdate.meals_remaining}, {
-                                where: { id: order.dataValues.customer_id }
+                                where: { id: orderDetails.customer_id }
                               })
 
                               .then(() => {
-                                models.users.findById(customer.user_id)
+                                models.users.findById(customerDetails.user_id)
                                   .then(user => {
-                                    emailData.email = user.dataValues.email
+                                    const userDetails
+                                    emailData.email = userDetails.email
 
-                                    models.pickup_times.findById(order.pickup_time_id)
+                                    models.pickup_times.findById(orderDetails.pickup_time_id)
                                       .then(pickup_time => {
-                                        emailData.pick_up_time = pickup_time.pickup_time
+                                        const pickupTimeDetails = pickup_time.toJSON()
+                                        emailData.pick_up_time = pickupTimeDetails.pickup_time
                                         if (attributesToUpdate.status === 'cancelled') {
                                           // email.sendCOEmail(emailData, res)
                                         }
+                                        res.json(order)
                                       })
                                   }, e => {
                                     res.status(400).json(e)
