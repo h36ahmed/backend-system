@@ -4,20 +4,6 @@ const email = require('./email')
 const payment = require('./payment.js')
 const ics = require('../ics-generator.js')
 
-const formatShortDate = (date) => {
-  const monthNames = [
-    'January', 'February', 'March', 'April',
-    'May', 'June', 'July', 'August',
-    'September', 'October', 'November', 'December'
-  ];
-  const splitDate = date.indexOf('T') === -1 ? date.split('-') : date.split('T')[0].split('-')
-  const day = splitDate[2]
-  const month = monthNames[parseInt(splitDate[1], 10) - 1]
-  const year = splitDate[0]
-
-  return `${month} ${day}, ${year}`
-}
-
 // GET /api/v1/orders
 exports.list = function(req, res) {
     var query = req.query;
@@ -100,7 +86,7 @@ exports.create = function(req, res) {
     const emailData = {}
     models.orders.create(orderDetails)
       .then(order => {
-        emailData.date = formatShortDate(order.order_date)
+        emailData.date = order.order_date
         emailData.ICSDate = order.order_date.split('T')[0]
         // emailData.ICSDate = order.order_date
         models.offers.findById(order.offer_id, {
