@@ -197,7 +197,7 @@ exports.update = (req, res) => {
         order.update(attributesToUpdate)
           .then(order => {
           const orderDetails = order.toJSON()
-          emailData.date = formatShortDate(order.order_date)
+          emailData.date = order.order_date
 
             models.offers.findById(orderDetails.offer_id)
               .then(offer => {
@@ -208,7 +208,7 @@ exports.update = (req, res) => {
                   attributesToUpdate.plates_left = offerDetails.plates_left + 1
                 }
 
-                models.offers.update({"plates_left": attributesToUpdate.plates_left}, {
+                models.offers.update({plates_left: attributesToUpdate.plates_left}, {
                   where: { id: orderDetails.offer_id }
                 })
                 .then(() => {
@@ -237,7 +237,7 @@ exports.update = (req, res) => {
                               attributesToUpdate.meals_remaining = customerDetails.meals_remaining + 1
                             }
 
-                              models.customers.update({"meals_remaining": attributesToUpdate.meals_remaining}, {
+                              models.customers.update({meals_remaining: attributesToUpdate.meals_remaining}, {
                                 where: { id: orderDetails.customer_id }
                               })
 
