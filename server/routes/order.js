@@ -244,7 +244,7 @@ exports.update = (req, res) => {
                               .then(() => {
                                 models.users.findById(customerDetails.user_id)
                                   .then(user => {
-                                    const userDetails
+                                    const userDetails = user.toJSON()
                                     emailData.email = userDetails.email
 
                                     models.pickup_times.findById(orderDetails.pickup_time_id)
