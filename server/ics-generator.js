@@ -25,10 +25,24 @@ const formatTime = (time) => {
   return `${hours}${minutes}`
 }
 
+const formatShortDate = (date) => {
+  const monthNames = [
+    'January', 'February', 'March', 'April',
+    'May', 'June', 'July', 'August',
+    'September', 'October', 'November', 'December'
+  ];
+  const splitDate = date.indexOf('T') === -1 ? date.split('-') : date.split('T')[0].split('-')
+  const day = splitDate[2]
+  const month = monthNames[parseInt(splitDate[1], 10) - 1]
+  const year = splitDate[0]
+
+  return `${month} ${day}, ${year}`
+}
+
 exports.generateICS = (attributes) => {
   const start_time = formatTime(attributes.pick_up_time.split(' to ')[0])
   const end_time = formatTime(attributes.pick_up_time.split(' to ')[1])
-  const date = attributes.ICSDate.split('-').join('')
+  const date = attributes.ICSDate.split('-').join('').split('T')[0]
 
   const icsData =
 `BEGIN:VCALENDAR
@@ -40,7 +54,7 @@ UID:${uuid.v1()}
 DTSTAMP:${moment().format('YYYYMMDDTHHmmss')}
 DTSTART:${date}T${start_time}00
 DTEND:${date}T${end_time}00
-SUMMARY:Meal reserved for ${attributes.date}
+SUMMARY:Meal reserved for ${formatShortDate(attributes.date)}
 DESCRIPTION:Your meal, ${attributes.meal.name}, is reserved at ${attributes.restaurant.name} at ${attributes.restaurant.street_address}
 LOCATION:${attributes.restaurant.name}, ${attributes.restaurant.street_address}, ${attributes.restaurant.city}, ${attributes.restaurant.postal_code}
 STATUS:tentative

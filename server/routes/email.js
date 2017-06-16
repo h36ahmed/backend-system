@@ -29,6 +29,20 @@ fs.readdirSync(templatesDir).forEach(function (file) {
     }
 });
 
+const formatShortDate = (date) => {
+  const monthNames = [
+    'January', 'February', 'March', 'April',
+    'May', 'June', 'July', 'August',
+    'September', 'October', 'November', 'December'
+  ];
+  const splitDate = date.indexOf('T') === -1 ? date.split('-') : date.split('T')[0].split('-')
+  const day = splitDate[2]
+  const month = monthNames[parseInt(splitDate[1], 10) - 1]
+  const year = splitDate[0]
+
+  return `${month} ${day}, ${year}`
+}
+
 function send(locals, cb) {
 
     client.sendEmailWithTemplate({
@@ -72,6 +86,7 @@ var sendWelcomeEmail = function (data, res) {
 };
 
 var sendOrderEmail = function (data, res) {
+    data.date = formatShortDate(data.date.split('T')[0])
 
     var locals = {
         from: from_who,
@@ -86,8 +101,9 @@ var sendOrderEmail = function (data, res) {
 
 // Cancel Order Email
 var sendCOEmail = function (data, res) {
+    data.date = formatShortDate(data.date.split('T')[0])
 
-   var locals = {
+    var locals = {
         from: from_who,
         data: data,
         templateID: 2068322
