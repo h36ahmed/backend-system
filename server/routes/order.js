@@ -87,7 +87,7 @@ exports.create = function(req, res) {
     models.orders.create(orderDetails)
       .then(order => {
         emailData.date = order.order_date
-        emailData.ICSDate = order.order_date.split('T')[0]
+        emailData.ICSDate = order.order_date
         // emailData.ICSDate = order.order_date
         models.offers.findById(order.offer_id, {
           include: [{
