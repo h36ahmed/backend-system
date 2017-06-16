@@ -25,7 +25,7 @@ exports.list = function (req, res) {
         ordersWhere.order_date =  query.order_date;
     }
 
-    if (query.hasOwnProperty('status') && query.status.length > 0) {,
+    if (query.hasOwnProperty('status') && query.status.length > 0) {
         ordersWhere.status =  query.status;
     }
 
@@ -54,10 +54,11 @@ exports.list = function (req, res) {
     });
 };
 
+// GET /api/v1/offers/:id
 exports.view = function (req, res) {
-    const offerID = parseInt(req.params.id, 10)
+    const offerId = parseInt(req.params.id, 10)
 
-    models.offers.findById(offerID)
+    models.offers.findById(offerId)
         .then(offer => {
             res.json(offer)
         }, e => {
