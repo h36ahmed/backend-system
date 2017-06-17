@@ -136,10 +136,15 @@ exports.update = (req, res) => {
     const offerId = parseInt(req.params.id)
     const attributesToUpdate = {}
 
+    if (offerDetails.meal_id) attributesToUpdate.meal_id = offerDetails.meal_id
+    if (offerDetails.offer_date) attributesToUpdate.offer_date = offerDetails.offer_date
+    if (offerDetails.plates_assigned) attributesToUpdate.plates_assigned = offerDetails.plates_assigned
+    if (offerDetails.plates_left) attributesToUpdate.plates_left = offerDetails.plates_left
+
     models.offers.findById(offerId)
         .then(offer => {
             if (offer) {
-                offer.update({ 'plates_left': offerDetails.plates_left })
+                offer.update(attributesToUpdate)
                 .then(offer => {
                     res.json(offer)
                 }, e => {
