@@ -4,6 +4,7 @@ var EmailTemplate = require('email-templates').EmailTemplate;
 var path = require('path');
 var fs = require('fs');
 var Handlebars = require('handlebars');
+const icsFile = path.resolve(__dirname, 'event.ics')
 
 //Your api key
 var api_key = '32b29fd6-338e-49a4-98be-25a4c21458d3';
@@ -44,12 +45,20 @@ const formatShortDate = (date) => {
 }
 
 function send(locals, cb) {
+    const icsData = fs.readFileSync(icsFile, { encoding: 'base64' })
 
     client.sendEmailWithTemplate({
         "From": locals.from,
         "To": locals.data.email,
         "TemplateId": locals.templateID,
         "TemplateModel": locals.data,
+        "Attachments": [
+            {
+                "Name": "meal.ics",
+                "Content": icsData,
+                "ContentType": "text/calendar"
+            }
+        ],
         "TrackOpens": true,
         "TrackLinks": "HtmlOnly"
     }, function (error, result) {

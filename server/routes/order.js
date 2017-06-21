@@ -3,6 +3,8 @@ var models = require('../db.js');
 const email = require('./email')
 const payment = require('./payment.js')
 const ics = require('../ics-generator.js')
+const fs = require('fs')
+
 
 // GET /api/v1/orders
 exports.list = function(req, res) {
@@ -136,9 +138,9 @@ exports.create = function(req, res) {
                     models.pickup_times.findById(order.pickup_time_id)
                       .then(pickup_time => {
                         emailData.pick_up_time = pickup_time.pickup_time
+                        ics.generateICS(emailData)
                         // email.sendOrderEmail(emailData, res)
                         res.json(order)
-                        ics.generateICS(emailData)
                       })
                   })
                 })

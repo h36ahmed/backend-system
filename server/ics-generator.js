@@ -39,6 +39,7 @@ const formatShortDate = (date) => {
   return `${month} ${day}, ${year}`
 }
 
+
 exports.generateICS = (attributes) => {
   const start_time = formatTime(attributes.pick_up_time.split(' to ')[0])
   const end_time = formatTime(attributes.pick_up_time.split(' to ')[1])
@@ -57,10 +58,10 @@ DTEND:${date}T${end_time}00
 SUMMARY:Meal reserved for ${formatShortDate(attributes.date)}
 DESCRIPTION:Your meal, ${attributes.meal.name}, is reserved at ${attributes.restaurant.name} at ${attributes.restaurant.street_address}
 LOCATION:${attributes.restaurant.name}, ${attributes.restaurant.street_address}, ${attributes.restaurant.city}, ${attributes.restaurant.postal_code}
-STATUS:tentative
+STATUS:confirmed
 GEO:${attributes.restaurant.latitude};${attributes.restaurant.longitude}
 ATTENDEE;CN=${attributes.name}:mailto:${attributes.email}
-ORGANIZER;CN=${attributes.restaurant.name}:mailto:${attributes.restaurant.email}
+ORGANIZER;CN=Lunch Society:mailto:admin@lunchsociety.ca
 CATEGORIES:10k races,Memorial Day Weekend,Boulder CO
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -77,5 +78,6 @@ END:VEVENT
 END:VCALENDAR`
 
 
-  fs.writeFile('./Users/event.ics', icsData, err => { console.log('error', err) })
+  fs.writeFileSync('./Users/event.ics', icsData)
+
 }
