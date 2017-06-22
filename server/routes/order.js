@@ -21,6 +21,10 @@ exports.list = function(req, res) {
         where.customer_id =  query.customer_id;
     }
 
+    if (query.hasOwnProperty('status') && query.status.length > 0) {
+      where.status = query.status
+    }
+
     models.orders.findAll({
         where: where,
         order: [['id', 'DESC']],
