@@ -26,7 +26,6 @@ exports.generateICS = (attributes) => {
   const start_time = formatTime(attributes.pick_up_time.split(' to ')[0])
   const end_time = formatTime(attributes.pick_up_time.split(' to ')[1])
   const date = moment(attributes.date).format('YYYYMMDD')
-  console.log(moment(attributes.date).format('MMMM DD, YYYY'))
 
   const icsData =
 `BEGIN:VCALENDAR
@@ -38,7 +37,7 @@ UID:${uuid.v1()}
 DTSTAMP:${moment().format('YYYYMMDDTHHmmss')}
 DTSTART:${date}T${start_time}00
 DTEND:${date}T${end_time}00
-SUMMARY:Meal reserved for ${formatShortDate(attributes.date)}
+SUMMARY:Meal reserved for ${moment(attributes.date).format('MMMM DD, YYYY')}
 DESCRIPTION:Your meal, ${attributes.meal.name}, is reserved at ${attributes.restaurant.name} at ${attributes.restaurant.street_address}
 LOCATION:${attributes.restaurant.name}, ${attributes.restaurant.street_address}, ${attributes.restaurant.city}, ${attributes.restaurant.postal_code}
 STATUS:confirmed
