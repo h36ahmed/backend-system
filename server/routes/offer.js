@@ -6,6 +6,7 @@ exports.list = function (req, res) {
     var query = req.query;
     var where = {};
     var ordersWhere = {};
+    console.log(req.query)
 
     var include = [{
         attributes: ['id', 'name', 'meal_image', 'description', 'ingredients'],
@@ -108,7 +109,7 @@ exports.offers = function (req, res) {
         models.offers.findAll({
             where: {
                 offer_date: {
-                    $gt: weekDetails.from_date,
+                    $gte: weekDetails.from_date,
                     $lte: weekDetails.to_date
                 }
             },
