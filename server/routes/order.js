@@ -94,7 +94,7 @@ exports.create = function(req, res) {
       .then(order => {
         emailData.date = order.order_date
         emailData.ICSDate = order.order_date
-        console.log(emailData.ICSDate)
+        console.log('emaildata', emailData.ICSDate)
 
         models.offers.findById(order.offer_id, {
           include: [{
