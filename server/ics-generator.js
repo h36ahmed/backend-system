@@ -26,6 +26,7 @@ exports.generateICS = (attributes) => {
   const start_time = formatTime(attributes.pick_up_time.split(' to ')[0])
   const end_time = formatTime(attributes.pick_up_time.split(' to ')[1])
   const date = moment(attributes.date).format('YYYYMMDD')
+  console.log(moment(attributes.date).format('MMMM DD, YYYY'))
 
   const icsData =
 `BEGIN:VCALENDAR
