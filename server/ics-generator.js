@@ -43,10 +43,12 @@ const formatShortDate = (date) => {
 exports.generateICS = (attributes) => {
   const start_time = formatTime(attributes.pick_up_time.split(' to ')[0])
   const end_time = formatTime(attributes.pick_up_time.split(' to ')[1])
-  console.log('attributes data', attributes.ICSDate.split('-'))
-  console.log('attributes data1', attributes.ICSDate.split('-').join(''))
-  console.log('attributes data2', attributes.ICSDate.split('-').join('').split('T'))
-  console.log('attributes data3', attributes.ICSDate.split('-').join('').split('T')[0])
+  console.log('attributes data', typeof attributes.ICSDate)
+  console.log('attributes data1', attributes.ICSDate)
+  console.log('attributes data2', attributes.ICSDate.split('-'))
+  console.log('attributes data3', attributes.ICSDate.split('-').join(''))
+  console.log('attributes data4', attributes.ICSDate.split('-').join('').split('T'))
+  console.log('attributes data5', attributes.ICSDate.split('-').join('').split('T')[0])
   const date = attributes.ICSDate.split('-').join('').split('T')[0]
 
   const icsData =
