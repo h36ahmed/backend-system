@@ -45,7 +45,7 @@ exports.generateICS = (attributes) => {
   const end_time = formatTime(attributes.pick_up_time.split(' to ')[1])
   console.log('attributes data', typeof attributes.ICSDate) //object?
   console.log('attributes data1', Object.prototype.toString.call(attributes.ICSDate))
-  console.log('attributes data3', attributes.ICSDate)
+  console.log('attributes data3', moment(attributes.ICSDate).format('YYYYMMDD'))
   console.log('attributes data4', attributes.ICSDate.split('-'))
   console.log('attributes data5', attributes.ICSDate.split('-').join(''))
   console.log('attributes data6', attributes.ICSDate.split('-').join('').split('T'))
