@@ -127,7 +127,7 @@ exports.login = function(req, res) {
         });
     }).then(function(tokenInstance) {
         var token = tokenInstance.get('token');
-        console.log('userinstance id', userInstance.id.toJSON())
+        console.log('userinstance id', userInstance.id
         models.users.findById(userInstance.id).then(function(user) {
             console.log('user', user.toJSON())
             var userDetails = _.pick(user.toPublicJSON(token), 'type', 'id');
