@@ -6,14 +6,13 @@ exports.list = function (req, res) {
     var query = req.query;
     var where = {};
     var ordersWhere = {};
-    console.log(req.query)
 
     var include = [{
         attributes: ['id', 'name', 'meal_image', 'description', 'ingredients'],
         model: models.meals,
         include: [{
             model: models.restaurants,
-            where: req.query.restaurant ? {id: req.query.restaurant} : {},
+            where: req.query.restaurant ? {id: parseInt(req.query.restaurant)} : {},
             attributes: ['id', 'name', 'longitude', 'latitude', 'street_address']
             }]
         }];
