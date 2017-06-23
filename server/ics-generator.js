@@ -1,9 +1,6 @@
-const ICS = require('ics');
 const fs = require('fs')
 const uuid = require('uuid')
 const moment = require('moment')
-
-const ics = new ICS();
 
 const formatTime = (time) => {
   let hours = parseInt(time.split(' ')[0].split(':')[0])
@@ -25,32 +22,10 @@ const formatTime = (time) => {
   return `${hours}${minutes}`
 }
 
-const formatShortDate = (date) => {
-  const monthNames = [
-    'January', 'February', 'March', 'April',
-    'May', 'June', 'July', 'August',
-    'September', 'October', 'November', 'December'
-  ];
-  const splitDate = date.indexOf('T') === -1 ? date.split('-') : date.split('T')[0].split('-')
-  const day = splitDate[2]
-  const month = monthNames[parseInt(splitDate[1], 10) - 1]
-  const year = splitDate[0]
-
-  return `${month} ${day}, ${year}`
-}
-
-
 exports.generateICS = (attributes) => {
   const start_time = formatTime(attributes.pick_up_time.split(' to ')[0])
   const end_time = formatTime(attributes.pick_up_time.split(' to ')[1])
-  console.log('attributes data', typeof attributes.ICSDate) //object?
-  console.log('attributes data1', Object.prototype.toString.call(attributes.ICSDate))
-  console.log('attributes data3', moment(attributes.ICSDate).format('YYYYMMDD'))
-  console.log('attributes data4', attributes.ICSDate.split('-'))
-  console.log('attributes data5', attributes.ICSDate.split('-').join(''))
-  console.log('attributes data6', attributes.ICSDate.split('-').join('').split('T'))
-  console.log('attributes data7', attributes.ICSDate.split('-').join('').split('T')[0])
-  const date = attributes.ICSDate.split('-').join('').split('T')[0]
+  const date = moment(attributes.date).format('YYYYMMDD')
 
   const icsData =
 `BEGIN:VCALENDAR

@@ -3,9 +3,6 @@ var models = require('../db.js');
 const email = require('./email')
 const payment = require('./payment.js')
 const ics = require('../ics-generator.js')
-const fs = require('fs')
-const moment = require('moment')
-
 
 // GET /api/v1/orders
 exports.list = function(req, res) {
@@ -94,8 +91,6 @@ exports.create = function(req, res) {
     models.orders.create(orderDetails)
       .then(order => {
         emailData.date = order.order_date
-        emailData.ICSDate = order.order_date
-        console.log('emaildata', moment(emailData.ICSDate))
 
         models.offers.findById(order.offer_id, {
           include: [{
