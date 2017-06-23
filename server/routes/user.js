@@ -119,6 +119,7 @@ exports.login = function(req, res) {
     body.email = body.email.toLowerCase();
     var userInstance;
     models.users.authenticate(body).then(function(user) {
+        console.log('auth user', user)
         var token = user.generateToken('authentication');
         userInstance = user;
         return models.tokens.create({
@@ -126,7 +127,9 @@ exports.login = function(req, res) {
         });
     }).then(function(tokenInstance) {
         var token = tokenInstance.get('token');
+        console.log('userinstance id', userInstance.id)
         models.users.findById(userInstance.id).then(function(user) {
+            console.log('user', user)
             var userDetails = _.pick(user.toPublicJSON(token), 'type', 'id');
             var userSend = {};
             userSend.token = token;
