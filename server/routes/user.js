@@ -164,7 +164,6 @@ exports.login = function(req, res) {
                         model: models.restaurants
                     }]
                 }).then(function(owner) {
-                    console.log('owner', owner.toJSON())
                     userSend.type = "owner";
                     userSend.user_id = owner.user_id;
                     userSend.owner_id = owner.id;
