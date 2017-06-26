@@ -97,6 +97,7 @@ exports.create = function(req, res) {
                 email: user.email,
                 password: body.password
             }
+            res.json(user);
             // email.sendWelcomeEmail(data, res);
         } else if (body.type === "owner") {
             var data = {
@@ -104,6 +105,7 @@ exports.create = function(req, res) {
                 email: user.email,
                 password: body.password
             }
+            res.json(user);
             // email.sendWelcomeEmail(data, res);
         } else {
             res.json(user);
