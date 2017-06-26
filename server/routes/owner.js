@@ -155,7 +155,6 @@ exports.delete = function(req, res) {
     models.owners.findById(ownerID).then(function(owner) {
         if (owner) {
             var user_id = owner.user_id;
-            console.log(user_id);
             models.owners.destroy({
                 where: {
                     id: ownerID

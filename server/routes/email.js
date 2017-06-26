@@ -4,6 +4,7 @@ var EmailTemplate = require('email-templates').EmailTemplate;
 var path = require('path');
 var fs = require('fs');
 var Handlebars = require('handlebars');
+const icsFile = path.resolve(__dirname, 'event.ics')
 
 //Your api key
 var api_key = '32b29fd6-338e-49a4-98be-25a4c21458d3';
@@ -29,13 +30,35 @@ fs.readdirSync(templatesDir).forEach(function (file) {
     }
 });
 
+const formatShortDate = (date) => {
+  const monthNames = [
+    'January', 'February', 'March', 'April',
+    'May', 'June', 'July', 'August',
+    'September', 'October', 'November', 'December'
+  ];
+  const splitDate = date.indexOf('T') === -1 ? date.split('-') : date.split('T')[0].split('-')
+  const day = splitDate[2]
+  const month = monthNames[parseInt(splitDate[1], 10) - 1]
+  const year = splitDate[0]
+
+  return `${month} ${day}, ${year}`
+}
+
 function send(locals, cb) {
+    const icsData = fs.readFileSync(icsFile, { encoding: 'base64' })
 
     client.sendEmailWithTemplate({
         "From": locals.from,
         "To": locals.data.email,
         "TemplateId": locals.templateID,
         "TemplateModel": locals.data,
+        "Attachments": [
+            {
+                "Name": "meal.ics",
+                "Content": icsData,
+                "ContentType": "text/calendar"
+            }
+        ],
         "TrackOpens": true,
         "TrackLinks": "HtmlOnly"
     }, function (error, result) {
@@ -72,6 +95,7 @@ var sendWelcomeEmail = function (data, res) {
 };
 
 var sendOrderEmail = function (data, res) {
+    data.date = formatShortDate(data.date.split('T')[0])
 
     var locals = {
         from: from_who,
@@ -86,8 +110,9 @@ var sendOrderEmail = function (data, res) {
 
 // Cancel Order Email
 var sendCOEmail = function (data, res) {
+    data.date = formatShortDate(data.date.split('T')[0])
 
-   var locals = {
+    var locals = {
         from: from_who,
         data: data,
         templateID: 2068322

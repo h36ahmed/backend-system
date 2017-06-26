@@ -3,17 +3,17 @@ VERSION:2.0
 CALSCALE:GREGORIAN
 PRODID:-//Adam Gibbons//agibbons.com//ICS: iCalendar Generator
 BEGIN:VEVENT
-UID:6d40e850-4e50-11e7-b93c-0d66b6937608
-DTSTAMP:20170611T024819Z
-DTSTART:20170608T065000Z
-DTEND:20170608T150000
-SUMMARY:Meal Reserved for June 08, 2017
+UID:43350da0-5839-11e7-a5b1-c1dffd79e670
+DTSTAMP:20170623T132742
+DTSTART:20170624T113000
+DTEND:20170624T114500
+SUMMARY:Meal reserved for June 24, 2017
 DESCRIPTION:Your meal, Malaysian Fried Sambal Udon, is reserved at Kaiju at 384 Yonge Street
-LOCATION:384 Yonge Street, Toronto, M5B241
-STATUS:tentative
+LOCATION:Kaiju, 384 Yonge Street, Toronto, M5B241
+STATUS:confirmed
 GEO:56.130366;-106.346771
-ATTENDEE;CN=test:mailto:test@test.com
 ATTENDEE;CN=Jeffrey:mailto:jeffreycj.chang@gmail.com
+ORGANIZER;CN=Lunch Society:mailto:admin@lunchsociety.ca
 CATEGORIES:10k races,Memorial Day Weekend,Boulder CO
 BEGIN:VALARM
 ACTION:DISPLAY
