@@ -12,7 +12,14 @@ var geocoder = NodeGeocoder(options);
 
 // GET /api/v1/restaurants
 exports.list = function(req, res) {
+    const where = {}
+
+    if (req.query.hasOwnProperty('status') && req.query.status.length > 0) {
+        where.status = req.query.status
+    }
+
     models.restaurants.findAll({
+        where: where,
         include: [{
             attributes: ['name', 'id', 'price', 'meal_image', 'ingredients'],
             model: models.meals
