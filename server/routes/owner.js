@@ -130,7 +130,7 @@ exports.update = function(req, res) {
     }
 
     if (body.hasOwnProperty('status')) {
-        attributes.status = parseInt(body.status, 10);
+        attributes.status = body.status;
     }
 
 
