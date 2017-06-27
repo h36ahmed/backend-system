@@ -14,8 +14,8 @@ var geocoder = NodeGeocoder(options);
 exports.list = function(req, res) {
     const where = {}
 
-    if (req.query.hasOwnProperty('status') && req.query.status.length > 0) {
-        where.status = req.query.status
+    if (req.params.hasOwnProperty('status') && req.params.status.length > 0) {
+        where.status = req.params.status
     }
 
     models.restaurants.findAll({
