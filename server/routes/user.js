@@ -255,3 +255,26 @@ exports.logout = function(req, res) {
         res.status(500).send();
     });
 };
+
+// POST /api/v1/user/authenticate
+exports.authenticate = function(req, res) {
+    const body = _.pick(req.body, 'id', 'password');
+    models.users.findById(body.id).then(user => {
+        body.email = user.email
+
+        models.users.authenticate(body).then(function(user) {
+            if (user) {
+                res.json(user)
+            } else {
+                res.status(500).send()
+            }
+        })
+        .catch(function() {
+            res.status(404).json({
+                error: 'Sorry, incorrect password'
+            });
+        });
+    }, function(e) {
+        res.status(400).json(e)
+    })
+}
