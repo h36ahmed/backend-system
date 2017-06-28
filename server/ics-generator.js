@@ -24,7 +24,12 @@ const formatTime = (time) => {
 
 const formatDate = (date) => {
   console.log('date', date)
-  let splitDate = date.split('-')
+  console.log('split date', date.split('T'))
+  console.log('split date[0]', date.split('T')[0])
+  console.log('split date[0].split', date.split('T')[0].split('-'))
+  console.log('split date[0].split.join', date.split('T')[0].split('-').join(''))
+
+  let splitDate = date.split('T')
 
   return `${splitDate[0]}${splitDate[2]}${splitDate[1]}`
 }
