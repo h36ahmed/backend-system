@@ -4,7 +4,8 @@ var EmailTemplate = require('email-templates').EmailTemplate;
 var path = require('path');
 var fs = require('fs');
 var Handlebars = require('handlebars');
-const icsFile = path.resolve(__dirname, 'event.ics')
+const icsFile = path.resolve(__dirname + '/icsData/', 'event.ics')
+
 
 //Your api key
 var api_key = '32b29fd6-338e-49a4-98be-25a4c21458d3';
@@ -36,9 +37,10 @@ const formatShortDate = (date) => {
     'May', 'June', 'July', 'August',
     'September', 'October', 'November', 'December'
   ];
-  const splitDate = date.indexOf('T') === -1 ? date.split('-') : date.split('T')[0].split('-')
-  const day = splitDate[2]
-  const month = monthNames[parseInt(splitDate[1], 10) - 1]
+
+  const splitDate = date.split('-')
+  const day = splitDate[1]
+  const month = monthNames[parseInt(splitDate[2], 10) - 1]
   const year = splitDate[0]
 
   return `${month} ${day}, ${year}`
@@ -46,19 +48,22 @@ const formatShortDate = (date) => {
 
 function send(locals, cb) {
     const icsData = fs.readFileSync(icsFile, { encoding: 'base64' })
+    let sendICS = []
+
+    if (locals.ics) {
+        sendICS = [{
+            "Name": "meal.ics",
+            "Content": icsData,
+            "ContentType": "text/calendar"
+        }]
+    }
 
     client.sendEmailWithTemplate({
         "From": locals.from,
         "To": locals.data.email,
         "TemplateId": locals.templateID,
         "TemplateModel": locals.data,
-        "Attachments": [
-            {
-                "Name": "meal.ics",
-                "Content": icsData,
-                "ContentType": "text/calendar"
-            }
-        ],
+        "Attachments": sendICS,
         "TrackOpens": true,
         "TrackLinks": "HtmlOnly"
     }, function (error, result) {
@@ -100,7 +105,8 @@ var sendOrderEmail = function (data, res) {
     var locals = {
         from: from_who,
         data: data,
-        templateID: 2067882
+        templateID: 2067882,
+        ics: true
     }
 
     response = res;
@@ -122,6 +128,19 @@ var sendCOEmail = function (data, res) {
     send(locals, complete);
 
 };
+
+var sendPasswordResetEmail = function (data, res) {
+
+    var locals = {
+        from: from_who,
+        data: data,
+        templateID: 2315281
+    }
+
+    response = res;
+
+    send(locals, complete);
+}
 
 
 function formatDate(date) {
@@ -222,6 +241,11 @@ exports.sendEmail = function (req, res) {
                 email: email
             }, res);
             break;
+        case "password-reset":
+            sendPasswordResetEmail({
+                email: email
+            }, res);
+            break;
         default:
             res.status(204).send();
     }
@@ -230,3 +254,4 @@ exports.sendEmail = function (req, res) {
 exports.sendWelcomeEmail = sendWelcomeEmail;
 exports.sendOrderEmail = sendOrderEmail;
 exports.sendCOEmail = sendCOEmail;
+exports.sendPasswordResetEmail = sendPasswordResetEmail;

@@ -190,7 +190,7 @@ exports.login = function(req, res) {
 // PUT /api/v1/user/:id
 exports.update = function(req, res) {
     var userID = parseInt(req.params.id, 10);
-    var body = _.pick(req.body, 'email', 'password', 'confirmed_email', 'type');
+    var body = _.pick(req.body, 'email', 'password', 'confirmed_email', 'type', 'user_reset');
     var attributes = {};
 
     if (body.hasOwnProperty('email')) {
@@ -214,6 +214,15 @@ exports.update = function(req, res) {
         if (user) {
             user.update(attributes).then(function(user) {
                 res.json(user.toPublicJSON());
+
+                if (body.user_reset) {
+                    const emailData = {
+                        email: user.toJSON().email,
+                        password: body.password
+                    }
+
+                    email.sendPasswordResetEmail(emailData, res)
+                }
             }, function(e) {
                 res.status(400).json(e);
             });

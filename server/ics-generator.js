@@ -22,10 +22,16 @@ const formatTime = (time) => {
   return `${hours}${minutes}`
 }
 
+const formatDate = (date) => {
+  let splitDate = date.split('-')
+
+  return `${splitDate[0]}${splitDate[2]}${splitDate[1]}`
+}
+
 exports.generateICS = (attributes) => {
   const start_time = formatTime(attributes.pick_up_time.split(' to ')[0])
   const end_time = formatTime(attributes.pick_up_time.split(' to ')[1])
-  const date = moment(attributes.date).format('YYYYMMDD')
+  const date = formatDate(attributes.date)
 
   const icsData =
 `BEGIN:VCALENDAR
@@ -59,7 +65,5 @@ END:VALARM
 END:VEVENT
 END:VCALENDAR`
 
-
-  fs.writeFileSync('./Users/event.ics', icsData)
-
+  fs.writeFileSync('./server/routes/icsData/event.ics', icsData)
 }
