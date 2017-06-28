@@ -259,7 +259,8 @@ exports.logout = function(req, res) {
 // POST /api/v1/user/authenticate
 exports.authenticate = function(req, res) {
     const body = _.pick(req.body, 'id', 'password');
-    models.users.findById(body.id).then(user => {
+    const userId = parseInt(body.id, 10)
+    models.users.findById(userId).then(user => {
         body.email = user.email
 
         models.users.authenticate(body).then(function(user) {
