@@ -45,7 +45,7 @@ router.post('/api/v1/users/login', user.login);
 router.put('/api/v1/user/:id', middleware.requireAuthentication, user.update);
 //router.delete('/api/v1/user/:id', middleware.requireAuthentication, user.delete);
 router.delete('/api/v1/users/login', middleware.requireAuthentication, user.logout);
-router.post('/api/v1/user/authenticate', user.authenticate)
+router.post('/api/v1/user/authenticate', middleware.requireAuthentication, user.authenticate)
 
 
 // Owners

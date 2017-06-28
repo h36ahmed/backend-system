@@ -260,12 +260,18 @@ exports.logout = function(req, res) {
 exports.authenticate = function(req, res) {
     const body = _.pick(req.body, 'id', 'password');
     const userId = parseInt(body.id, 10)
-    models.users.findById(userId).then(user => {
-        body.email = user.email
 
-        models.users.authenticate(body).then(function(user) {
-            if (user) {
-                res.json(user)
+    models.users.findById(userId).then(function(user) {
+        const authenticateData = {
+            email: user.email,
+            password: body.password.old_password
+        }
+
+        models.users.authenticate(authenticateData).then(function(authenticatedUser) {
+            if (authenticatedUser) {
+                user.update({ password: body.password.new_password }).then(function(user) {
+                    res.json(user.toPublicJSON())
+                })
             } else {
                 res.status(500).send()
             }
