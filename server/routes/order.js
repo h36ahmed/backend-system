@@ -28,6 +28,7 @@ exports.list = function(req, res) {
         order: [['id', 'DESC']],
         include: [{
             model: models.offers,
+            where: query.offer_date ? {offer_date: query.offer_date} : {},
             include: [{
                 model: models.meals,
                 attributes: ['name', 'ingredients'],
