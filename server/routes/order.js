@@ -33,8 +33,8 @@ exports.list = function(req, res) {
                 attributes: ['name', 'ingredients'],
                 include: [{
                     model: models.restaurants,
-                    where: query.restaurant ? {id: query.restaurant} : {}
                     attributes: ['name'],
+                    where: query.restaurant ? {id: query.restaurant} : {}
                 }],
             }]
         }, {
