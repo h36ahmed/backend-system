@@ -23,6 +23,7 @@ const formatTime = (time) => {
 }
 
 const formatDate = (date) => {
+  console.log('date', date)
   let splitDate = date.split('-')
 
   return `${splitDate[0]}${splitDate[2]}${splitDate[1]}`
