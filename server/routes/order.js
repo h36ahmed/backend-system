@@ -20,7 +20,7 @@ exports.list = function(req, res) {
     }
 
     if (query.hasOwnProperty('status') && query.status.length > 0) {
-      where.status = query.status
+        where.status = query.status
     }
 
     models.orders.findAll({
@@ -33,6 +33,7 @@ exports.list = function(req, res) {
                 attributes: ['name', 'ingredients'],
                 include: [{
                     model: models.restaurants,
+                    where: query.restaurant ? {id: query.restaurant} : {}
                     attributes: ['name'],
                 }],
             }]
