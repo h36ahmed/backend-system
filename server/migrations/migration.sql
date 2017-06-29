@@ -102,3 +102,17 @@ INSERT INTO weeks VALUES (26,'Week 51 - 52','18-Dec-17','31-Dec-17',2017);
 INSERT INTO payouts VALUES (1,'2017-02-27',2,'created',2.0,16.0,NULL,1,4);
 INSERT INTO payouts VALUES (2,'2017-02-27',3,'created',3.0,27.0,NULL,2,4);
 
+SELECT setval('users_id_seq', (SELECT MAX(id) from "users"));
+SELECT setval('owners_id_seq', (SELECT MAX(id) from "owners"));
+
+SELECT setval('restaurants_id_seq', (SELECT MAX(id) from "restaurants"));
+SELECT setval('meals_id_seq', (SELECT MAX(id) from "meals"));
+SELECT setval('customers_id_seq', (SELECT MAX(id) from "customers"));
+SELECT setval('invoices_id_seq', (SELECT MAX(id) from "invoices"));
+
+SELECT setval('offers_id_seq', (SELECT MAX(id) from "offers"));
+SELECT setval('orders_id_seq', (SELECT MAX(id) from "orders"));
+SELECT setval('feedbacks_id_seq', (SELECT MAX(id) from "feedbacks"));
+SELECT setval('payment_plans_id_seq', (SELECT MAX(id) from "payment_plans"));
+SELECT setval('pickup_times_id_seq', (SELECT MAX(id) from "pickup_times"));
+SELECT setval('weeks_id_seq', (SELECT MAX(id) from "weeks"));
