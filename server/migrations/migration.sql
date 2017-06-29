@@ -1,13 +1,13 @@
-INSERT INTO users VALUES (1,'hca@gmail.com','$2a$10$HQqUz5vSIfzHuM95S1M3w.','$2a$10$HQqUz5vSIfzHuM95S1M3w.0AIP9HXSHtiHwsFsV6Qog9ZCp.BfZTG','admin',0);
-INSERT INTO users VALUES (2,'monty@gmail.com','$2a$10$jvZIysjlBjzoVWWL8i7TPu','$2a$10$jvZIysjlBjzoVWWL8i7TPukvNOFeOjTTf4YqDUThfgSYZj9wP/Xpa','owner',0);
-INSERT INTO users VALUES (3,'bill@kaiju.com','$2a$10$5/z6LQw1wcbSp5cvpQ0cDu','$2a$10$5/z6LQw1wcbSp5cvpQ0cDuknYDbBvHGFdS1ZDIvDGSVQKDvVxAVcW','owner',0);
-INSERT INTO users VALUES (4,'bob@rs.com','$2a$10$JPmC/zClzMp12T9iZPhpaO','$2a$10$JPmC/zClzMp12T9iZPhpaOa6HI1PUkbozuNea7fzDawfoKCcK9Id.','owner',0);
-INSERT INTO users VALUES (5,'will@pai.com','$2a$10$GAuxDpv5sg0UMm.C3ZkkOu','$2a$10$GAuxDpv5sg0UMm.C3ZkkOu0UK2RC2s3gMoEvblA.64OWJ5GzSuO4.','owner',0);
-INSERT INTO users VALUES (6,'christmas@expendables.com','$2a$10$NWBeaabiqKucxLJGpBNxmO','$2a$10$NWBeaabiqKucxLJGpBNxmOPzbGAGbYGP4/6P3hVaQPLY7mxh//gQS','customer',0);
-INSERT INTO users VALUES (7,'joesoto@td.com','$2a$10$No26sxZ7R2xyAvnNL2QNpe','$2a$10$No26sxZ7R2xyAvnNL2QNpeW1dbS.4y4AyYnoJ8fB7YOreatKnNYNS','customer',0);
-INSERT INTO users VALUES (8,'chirsrock@hollywood.com','$2a$10$OBjAKkwgU4GJgCrI1sut6u','$2a$10$OBjAKkwgU4GJgCrI1sut6uGk8vji3N/8S9vyfPovP/ls0CP5agyf2','customer',0);
-INSERT INTO users VALUES (9,'zuckerberg@fb.com','$2a$10$k3lEbGW65aZunIxSuolGLO','$2a$10$k3lEbGW65aZunIxSuolGLOs.hw.quc13EGMUIdni2uYxZy7FTvA6i','customer',0);
-INSERT INTO users VALUES (10,'thomas@bayern.de','$2a$10$Da19EZuesvRdXZqOvTX4dO','$2a$10$Da19EZuesvRdXZqOvTX4dOVe.m3IRNUTGcdC4MfWpdE4/cHOF9u8q','customer',0);
+INSERT INTO users VALUES (1,'hca@gmail.com','$2a$10$HQqUz5vSIfzHuM95S1M3w.','$2a$10$HQqUz5vSIfzHuM95S1M3w.0AIP9HXSHtiHwsFsV6Qog9ZCp.BfZTG','admin',FALSE);
+INSERT INTO users VALUES (2,'monty@gmail.com','$2a$10$jvZIysjlBjzoVWWL8i7TPu','$2a$10$jvZIysjlBjzoVWWL8i7TPukvNOFeOjTTf4YqDUThfgSYZj9wP/Xpa','owner',FALSE);
+INSERT INTO users VALUES (3,'bill@kaiju.com','$2a$10$5/z6LQw1wcbSp5cvpQ0cDu','$2a$10$5/z6LQw1wcbSp5cvpQ0cDuknYDbBvHGFdS1ZDIvDGSVQKDvVxAVcW','owner',FALSE);
+INSERT INTO users VALUES (4,'bob@rs.com','$2a$10$JPmC/zClzMp12T9iZPhpaO','$2a$10$JPmC/zClzMp12T9iZPhpaOa6HI1PUkbozuNea7fzDawfoKCcK9Id.','owner',FALSE);
+INSERT INTO users VALUES (5,'will@pai.com','$2a$10$GAuxDpv5sg0UMm.C3ZkkOu','$2a$10$GAuxDpv5sg0UMm.C3ZkkOu0UK2RC2s3gMoEvblA.64OWJ5GzSuO4.','owner',FALSE);
+INSERT INTO users VALUES (6,'christmas@expendables.com','$2a$10$NWBeaabiqKucxLJGpBNxmO','$2a$10$NWBeaabiqKucxLJGpBNxmOPzbGAGbYGP4/6P3hVaQPLY7mxh//gQS','customer',FALSE);
+INSERT INTO users VALUES (7,'joesoto@td.com','$2a$10$No26sxZ7R2xyAvnNL2QNpe','$2a$10$No26sxZ7R2xyAvnNL2QNpeW1dbS.4y4AyYnoJ8fB7YOreatKnNYNS','customer',FALSE);
+INSERT INTO users VALUES (8,'chirsrock@hollywood.com','$2a$10$OBjAKkwgU4GJgCrI1sut6u','$2a$10$OBjAKkwgU4GJgCrI1sut6uGk8vji3N/8S9vyfPovP/ls0CP5agyf2','customer',FALSE);
+INSERT INTO users VALUES (9,'zuckerberg@fb.com','$2a$10$k3lEbGW65aZunIxSuolGLO','$2a$10$k3lEbGW65aZunIxSuolGLOs.hw.quc13EGMUIdni2uYxZy7FTvA6i','customer',FALSE);
+INSERT INTO users VALUES (10,'thomas@bayern.de','$2a$10$Da19EZuesvRdXZqOvTX4dO','$2a$10$Da19EZuesvRdXZqOvTX4dOVe.m3IRNUTGcdC4MfWpdE4/cHOF9u8q','customer',FALSE);
 
 
 INSERT INTO owners VALUES (1,'Monty','Singh','2017-02-16',4167822931,'','active',2);
@@ -34,11 +34,12 @@ INSERT INTO payment_plans VALUES (1,'The 12','Its simple.. You get 12 meals.',''
 INSERT INTO payment_plans VALUES (2,'The 20','And for this one, you get 20!','',7.45, 20, 'active', 'the-20');
 INSERT INTO payment_plans VALUES (3,'The 5','5 Lunches to try out our society!','',8, 20, 'active', 'the-5');
 
-INSERT INTO customers VALUES (1,'Christmas','Carter','2017-02-01','2017-02-28','2017-02-16',10,'M5V2J2','','active',0,NULL,'','',6,1);
-INSERT INTO customers VALUES (2,'Joe','Soto','2017-02-01','2017-02-28','2017-02-17',20,'M5V2J2','','active',0,NULL,'','',7,2);
-INSERT INTO customers VALUES (3,'Chris','Rock','2017-02-01','2017-02-28','2017-02-18',10,'M5V2J2','','active',0,NULL,'','',8,1);
-INSERT INTO customers VALUES (4,'Mark','Zuckerberg','2017-02-01','2017-02-28','2017-02-19',20,'M5V2J2','','active',0,NULL,'','',9,2);
-INSERT INTO customers VALUES (5,'Thomas','Muller','2017-02-01','2017-02-28','2017-02-20',20,'M5V2J2','','active',0,NULL,'','',10,2);
+INSERT INTO customers VALUES (1,'Christmas','Carter','2017-02-01','2017-02-28','2017-02-16',10,'M5V2J2','','active',FALSE,NULL,'','',6,1);
+INSERT INTO customers VALUES (2,'Joe','Soto','2017-02-01','2017-02-28','2017-02-17',20,'M5V2J2','','active',FALSE,NULL,'','',7,2);
+INSERT INTO customers VALUES (3,'Chris','Rock','2017-02-01','2017-02-28','2017-02-18',10,'M5V2J2','','active',FALSE,NULL,'','',8,1);
+INSERT INTO customers VALUES (4,'Mark','Zuckerberg','2017-02-01','2017-02-28','2017-02-19',20,'M5V2J2','','active',FALSE,NULL,'','',9,2);
+INSERT INTO customers VALUES (5,'Thomas','Muller','2017-02-01','2017-02-28','2017-02-20',20,'M5V2J2','','active',FALSE,NULL,'','',10,2);
+
 
 INSERT INTO invoices VALUES (1,'2017-02-01','paid',8.0,60.0,'',1);
 INSERT INTO invoices VALUES (2,'2017-02-01','paid',15.0,120.0,'',2);
@@ -55,10 +56,10 @@ INSERT INTO pickup_times VALUES (6,'12:45 PM to 13:00 PM');
 INSERT INTO pickup_times VALUES (7,'13:00 PM to 13:15 PM');
 INSERT INTO pickup_times VALUES (8,'13:15 PM to 13:30 PM');
 
-INSERT INTO offers VALUES (1,'2017-02-16',40,40,'completed',4);
-INSERT INTO offers VALUES (2,'2017-02-17',30,28,'completed',2);
-INSERT INTO offers VALUES (3,'2017-02-17',30,27,'completed',3);
-INSERT INTO offers VALUES (4,'2017-02-21',35,35,'completed',4);
+INSERT INTO offers VALUES (1,'2017-02-16',40,40,4);
+INSERT INTO offers VALUES (2,'2017-02-17',30,30,2);
+INSERT INTO offers VALUES (3,'2017-02-17',30,30,3);
+INSERT INTO offers VALUES (4,'2017-02-21',35,35,4);
 
 INSERT INTO orders VALUES (1,'2017-02-17','completed',2,3,1);
 INSERT INTO orders VALUES (2,'2017-02-17','completed',3,2,2);
