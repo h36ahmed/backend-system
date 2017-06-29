@@ -55,10 +55,10 @@ INSERT INTO pickup_times VALUES (6,'12:45 PM to 13:00 PM');
 INSERT INTO pickup_times VALUES (7,'13:00 PM to 13:15 PM');
 INSERT INTO pickup_times VALUES (8,'13:15 PM to 13:30 PM');
 
-INSERT INTO offers VALUES (1,'2017-02-16',40,40,4);
-INSERT INTO offers VALUES (2,'2017-02-17',30,28,2);
-INSERT INTO offers VALUES (3,'2017-02-17',30,27,3);
-INSERT INTO offers VALUES (4,'2017-02-21',35,35,4);
+INSERT INTO offers VALUES (1,'2017-02-16',40,40,'completed',4);
+INSERT INTO offers VALUES (2,'2017-02-17',30,28,'completed',2);
+INSERT INTO offers VALUES (3,'2017-02-17',30,27,'completed',3);
+INSERT INTO offers VALUES (4,'2017-02-21',35,35,'completed',4);
 
 INSERT INTO orders VALUES (1,'2017-02-17','completed',2,3,1);
 INSERT INTO orders VALUES (2,'2017-02-17','completed',3,2,2);

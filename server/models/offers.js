@@ -10,6 +10,7 @@ Attributes:
 -> Plates Left
 -> Plates Assigned
 -> Meal ID
+-> Status
 
 Use Cases:
 
@@ -33,6 +34,10 @@ module.exports = function(sequelize, DataTypes) {
             validate: {
                 min: 0
             }
+        },
+        status: {
+            type: DataTypes.STRING,
+            defaultValue: 'active'
         }
     }, {
         underscored: true,
