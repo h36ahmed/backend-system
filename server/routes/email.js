@@ -14,7 +14,8 @@ var api_key = '32b29fd6-338e-49a4-98be-25a4c21458d3';
 var domain = 'www.lunchsociety.ca';
 
 //Your sending email address
-var from_who = 'Lunch Society <daniel@lunchsociety.ca>';
+// var from_who = 'Lunch Society <daniel@lunchsociety.ca>';
+var from_who = 'admin@lunchsociety.ca'
 
 var client = new postmark.Client(api_key);
 

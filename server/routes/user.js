@@ -98,7 +98,7 @@ exports.create = function(req, res) {
                 password: body.password
             }
             res.json(user);
-            // email.sendWelcomeEmail(data, res);
+            email.sendWelcomeEmail(data, res);
         } else if (body.type === "owner") {
             var data = {
                 name: 'Restaurant Owner',
@@ -106,7 +106,7 @@ exports.create = function(req, res) {
                 password: body.password
             }
             res.json(user);
-            // email.sendWelcomeEmail(data, res);
+            email.sendWelcomeEmail(data, res);
         } else {
             res.json(user);
         }

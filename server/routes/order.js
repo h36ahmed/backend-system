@@ -195,7 +195,7 @@ exports.create = function(req, res) {
                                                     .then(pickup_time => {
                                                         emailData.pick_up_time = pickup_time.pickup_time
                                                         ics.generateICS(emailData)
-                                                        // email.sendOrderEmail(emailData, res)
+                                                        email.sendOrderEmail(emailData, res)
                                                         res.json(order)
                                                     })
                                             })
@@ -308,7 +308,7 @@ exports.update = (req, res) => {
                                                                                         const pickupTimeDetails = pickup_time.toJSON()
                                                                                         emailData.pick_up_time = pickupTimeDetails.pickup_time
                                                                                         if (attributesToUpdate.status === 'cancelled') {
-                                                                                            // email.sendCOEmail(emailData, res)
+                                                                                            email.sendCOEmail(emailData, res)
                                                                                         }
                                                                                         res.json(order)
                                                                                     })
