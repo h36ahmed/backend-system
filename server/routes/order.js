@@ -25,14 +25,13 @@ exports.list = function(req, res) {
 
     if (query.hasOwnProperty('groupedByPickups') && query.groupedByPickups) {
         models.pickup_times.findAll({
-            where: where,
             include: [{
                 model: models.orders,
+                where: {
+                    order_date: query.order_date
+                },
                 include: [{
                     model: models.offers,
-                    where: query.offer_date ? {
-                        offer_date: query.offer_date
-                    } : {},
                     include: [{
                         model: models.meals,
                         attributes: ['name', 'ingredients'],
