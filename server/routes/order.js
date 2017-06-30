@@ -45,8 +45,6 @@ exports.list = function(req, res) {
                     }]
                 }, {
                     model: models.customers
-                }, {
-                    model: models.feedbacks
                 }]
             }]
         }).then(function(orders) {
