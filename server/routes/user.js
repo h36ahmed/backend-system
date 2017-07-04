@@ -157,7 +157,7 @@ exports.login = function(req, res) {
                 });
             } else if (userDetails.type === 'owner') {
                 models.owners.findOne({
-                    attributes: ['id', 'user_id'],
+                    attributes: ['id', 'user_id', 'status'],
                     where: {
                         user_id: userDetails.id
                     },
