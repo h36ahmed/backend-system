@@ -5,6 +5,7 @@ var path = require('path');
 var fs = require('fs');
 var Handlebars = require('handlebars');
 const icsFile = path.resolve(__dirname + '/icsData/', 'event.ics')
+const moment = require('moment')
 
 
 //Your api key
@@ -102,6 +103,7 @@ var sendWelcomeEmail = function (data, res) {
 
 var sendOrderEmail = function (data, res) {
     console.log('data', data)
+    console.log('moment', moment(data.date).format('MMMM DD, YYYY'))
     // data.date = formatShortDate(data.date.split('T')[0])
 
     var locals = {
