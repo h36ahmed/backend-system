@@ -170,6 +170,7 @@ exports.login = function(req, res) {
                     userSend.user_id = owner.user_id;
                     userSend.owner_id = owner.id;
                     userSend.restaurant_id = owner.restaurant.id;
+                    userSend.status = owner.status
                     res.header('Auth', token).json(userSend);
                 }, function(e) {
                     res.status(500).send();
