@@ -33,21 +33,6 @@ fs.readdirSync(templatesDir).forEach(function (file) {
     }
 });
 
-const formatShortDate = (date) => {
-  const monthNames = [
-    'January', 'February', 'March', 'April',
-    'May', 'June', 'July', 'August',
-    'September', 'October', 'November', 'December'
-  ];
-
-  const splitDate = date.split('-')
-  const day = splitDate[1]
-  const month = monthNames[parseInt(splitDate[2], 10) - 1]
-  const year = splitDate[0]
-
-  return `${month} ${day}, ${year}`
-}
-
 function send(locals, cb) {
     const icsData = fs.readFileSync(icsFile, { encoding: 'base64' })
     let sendICS = []
@@ -102,9 +87,7 @@ var sendWelcomeEmail = function (data, res) {
 };
 
 var sendOrderEmail = function (data, res) {
-    console.log('data', data)
-    console.log('moment', moment(data.date).format('MMMM DD, YYYY'))
-    // data.date = formatShortDate(data.date.split('T')[0])
+    data.date = moment(data.date).format('MMMM DD, YYYY')
 
     var locals = {
         from: from_who,
@@ -120,7 +103,7 @@ var sendOrderEmail = function (data, res) {
 
 // Cancel Order Email
 var sendCOEmail = function (data, res) {
-    data.date = formatShortDate(data.date.split('T')[0])
+    data.date = moment(data.date).format('MMMM DD, YYYY')
 
     var locals = {
         from: from_who,
