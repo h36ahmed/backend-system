@@ -101,7 +101,7 @@ exports.view = function(req, res) {
                 model: models.offers,
                 include: [{
                     model: models.meals,
-                    attributes: ['name', 'description', 'ingredients'],
+                    attributes: ['name', 'description', 'ingredients', 'meal_image'],
                     include: [{
                         model: models.restaurants,
                         attributes: ['name', 'street_address', 'city', 'state', 'country', 'postal_code', 'longitude', 'latitude'],
