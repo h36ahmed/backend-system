@@ -75,6 +75,8 @@ function complete(err) {
 
 var sendWelcomeEmail = function (data, res) {
 
+    console.log('data', data)
+
     var locals = {
         from: from_who,
         data: data,
