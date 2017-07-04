@@ -101,7 +101,8 @@ var sendWelcomeEmail = function (data, res) {
 };
 
 var sendOrderEmail = function (data, res) {
-    data.date = formatShortDate(data.date.split('T')[0])
+    console.log('data', data)
+    // data.date = formatShortDate(data.date.split('T')[0])
 
     var locals = {
         from: from_who,
