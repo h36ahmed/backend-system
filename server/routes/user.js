@@ -98,7 +98,10 @@ exports.create = function(req, res) {
                 password: body.password
             }
             res.json(user);
-            email.sendWelcomeEmail(data, res);
+            data.trial_start_date = moment().format('MMMM DD, YYYY')
+            data.trial_end_date = moment().add(30, 'd').format('MMMM DD, YYYY')
+            data.trial_length = 30
+            email.sendCustomerWelcomeEmail(data, res);
         } else if (body.type === "owner") {
             var data = {
                 name: 'Restaurant Owner',
@@ -106,10 +109,7 @@ exports.create = function(req, res) {
                 password: body.password
             }
             res.json(user);
-            data.trial_start_date = moment().format('MMMM DD, YYYY')
-            data.trial_end_date = moment().add(30, 'd').format('MMMM DD, YYYY')
-            data.trial_length = 30
-            email.sendWelcomeEmail(data, res);
+            email.sendOwnerWelcomeEmail(data, res);
         } else {
             res.json(user);
         }

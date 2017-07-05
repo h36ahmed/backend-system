@@ -73,12 +73,25 @@ function complete(err) {
     }
 }
 
-var sendWelcomeEmail = function (data, res) {
+var sendCustomerWelcomeEmail = function (data, res) {
 
     var locals = {
         from: from_who,
         data: data,
         templateID: 2066904
+    }
+
+    response = res;
+
+    send(locals, complete);
+};
+
+var sendOwnerWelcomeEmail = function (data, res) {
+
+    var locals = {
+        from: from_who,
+        data: data,
+        templateID: 2404441
     }
 
     response = res;
@@ -213,8 +226,13 @@ exports.sendEmail = function (req, res) {
     var email = req.body.email;
 
     switch (emailType) {
-        case "welcome":
-            sendWelcomeEmail({
+        case "customer-welcome":
+            sendCustomerWelcomeEmail({
+                email: email
+            }, res);
+            break;
+        case "customer-welcome":
+            sendCOwnerWelcomeEmail({
                 email: email
             }, res);
             break;
@@ -238,7 +256,8 @@ exports.sendEmail = function (req, res) {
     }
 };
 
-exports.sendWelcomeEmail = sendWelcomeEmail;
+exports.sendCustomerWelcomeEmail = sendCustomerWelcomeEmail;
+exports.sendOwnerWelcomeEmail = sendOwnerWelcomeEmail
 exports.sendOrderEmail = sendOrderEmail;
 exports.sendCOEmail = sendCOEmail;
 exports.sendPasswordResetEmail = sendPasswordResetEmail;
