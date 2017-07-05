@@ -315,6 +315,7 @@ exports.forgotPassword = function(req, res) {
         if (user) {
             user.update(updateAttributes).then(updatedUser => {
                 res.json(updatedUser.toPublicJSON())
+                updateAttributes.email = body.email
                 email.sendPasswordResetEmail(updateAttributes, res)
             })
         } else {
