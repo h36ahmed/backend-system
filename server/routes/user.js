@@ -158,10 +158,17 @@ exports.login = function(req, res) {
                             console.log('order', order.toJSON())
                             console.log('today', today)
                             console.log('tomorrowOrderDate', tomorrowOrderDate)
+                            console.log('order.order_date', order.order_date)
+                            console.log('tomorrowOrderDate1', tomorrowOrderDate1)
+
+                            //2017-07-05 !== 2017-07-06
                             console.log('moment compare', moment(today).isSame(tomorrowOrderDate)) // false
+                            //2017-07-05
                             console.log('moment compare1', moment(today).isAfter(order.order_date)) // true
-                            console.log('moment compare2', moment(today).isSame(tomorrowOrderDate1))
-                            console.log('moment compare3', moment(today).isSame(order.order_date))
+                            //2017-07-05
+                            console.log('moment compare2', moment(today).isSame(tomorrowOrderDate1)) // true
+                            //2017-07-05
+                            console.log('moment compare3', moment(today).isSame(order.order_date)) // false
 
                             if (tomorrowOrderDate === today) {
                                 userSend.needOrderFeedback = order.toJSON().id
