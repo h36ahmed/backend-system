@@ -153,6 +153,10 @@ exports.login = function(req, res) {
                             const today = moment().format('YYYY-MM-DD')
                             const tomorrowOrderDate = moment(order.order_date).add(1, 'd').format('YYYY-MM-DD')
 
+                            console.log('order', order.toJSON())
+                            console.log('today', today)
+                            console.log('tomorrowOrderDate', tomorrowOrderDate)
+
                             if (tomorrowOrderDate === today) {
                                 userSend.needOrderFeedback = order.toJSON().id
                             }
