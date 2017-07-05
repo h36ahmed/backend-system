@@ -154,7 +154,10 @@ exports.login = function(req, res) {
                             //e.g 2017-07-05T00:00:00.000Z with moment === 2017-07-04
                             const tomorrowOrderDate = moment(order.order_date).add(2, 'd').format('YYYY-MM-DD')
 
+                            console.log('moment', moment(today).isSame(tomorrowOrderDate))
+
                             if (moment(today).isSame(tomorrowOrderDate)) {
+                                console.log('trigger')
                                 userSend.needOrderFeedback = order.toJSON().id
                             }
                         }
