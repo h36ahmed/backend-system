@@ -143,13 +143,19 @@ exports.login = function(req, res) {
                     },
                     attributes: ['payment_plan_id', 'id', 'user_id'],
                 }).then(function(customer) {
-                    models.orders.findAll({where: {
+                    models.orders.findOne({where: {
                         status: 'active',
                         customer_id: customer[0].id
                     }})
                     .then(order => {
-                        if (order.length > 0) {
-                            userSend.needOrderFeedback = order[0].id
+                        console.log('order.toJSON()', order.toJSON())
+                        if (order) {
+                            const today = moment().format('YYYY-MM-DD')
+                            const tomorrowOrderDate = moment(order.order_date).add(1, 'd').format('YYYY-MM-DD')
+
+                            if (tomorrowOrderDate === today) {
+                                userSend.needOrderFeedback = order.toJSON().id
+                            }
                         }
                         userSend.user_id = customer[0].user_id;
                         userSend.customer_id = customer[0].id;

@@ -3,16 +3,16 @@ VERSION:2.0
 CALSCALE:GREGORIAN
 PRODID:-//Adam Gibbons//agibbons.com//ICS: iCalendar Generator
 BEGIN:VEVENT
-UID:46fa9210-5c13-11e7-8fc0-379491a06303
-DTSTAMP:20170628T110552
-DTSTART:20170628T114500
-DTEND:20170628T240000
-SUMMARY:Meal reserved for Invalid date
-DESCRIPTION:Your meal, Malaysian Fried Sambal Udon, is reserved at Kaiju at 384 Yonge Street
+UID:bb3bc330-61cf-11e7-92ad-71f27f89797d
+DTSTAMP:20170705T181728
+DTSTART:20170705T114500
+DTEND:20170705T240000
+SUMMARY:Meal reserved for July 05, 2017
+DESCRIPTION:Your meal, Crispy Pepper Chicken, is reserved at Kaiju at 384 Yonge Street
 LOCATION:Kaiju, 384 Yonge Street, Toronto, M5B241
 STATUS:confirmed
-GEO:56.130366;-106.346771
-ATTENDEE;CN=Jeffrey:mailto:jeffreycj.chang@gmail.com
+GEO:null;null
+ATTENDEE;CN=Christmas:mailto:christmas@expendables.com
 ORGANIZER;CN=Lunch Society:mailto:admin@lunchsociety.ca
 CATEGORIES:10k races,Memorial Day Weekend,Boulder CO
 BEGIN:VALARM
