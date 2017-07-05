@@ -153,7 +153,7 @@ exports.login = function(req, res) {
                             //moment rounds down when date has T00:00:00.000Z
                             //e.g 2017-07-05T00:00:00.000Z with moment === 2017-07-04
                             const tomorrowOrderDate = moment(order.order_date).add(2, 'd').format('YYYY-MM-DD')
-
+                            userSend.hasOrder = order.toJSON().id
                             if (moment(today).isSame(tomorrowOrderDate)) {
                                 userSend.needOrderFeedback = order.toJSON().id
                             }
