@@ -2,6 +2,7 @@ var _ = require('underscore');
 var models = require('../db.js');
 var cryptojs = require('crypto-js');
 var email = require('./email');
+const moment = require('moment')
 
 // GET /api/v1/users
 exports.list = function(req, res) {
