@@ -150,13 +150,9 @@ exports.login = function(req, res) {
                     .then(order => {
                         if (order) {
                             const today = moment().format('YYYY-MM-DD')
-                            const tomorrowOrderDate = moment(order.order_date).add(1, 'd').format('YYYY-MM-DD')
-
-                            console.log('test', moment(order.order_date).format('YYYY-MM-DD'))
-                            console.log('order', order.toJSON())
-                            console.log('today', today)
-                            console.log('tomorrowOrderDate', tomorrowOrderDate)
-
+                            //moment rounds down when date has T00:00:00.000Z
+                            //e.g 2017-07-05T00:00:00.000Z with moment === 2017-07-04
+                            const tomorrowOrderDate = moment(order.order_date).add(2, 'd').format('YYYY-MM-DD')
 
                             if (tomorrowOrderDate === today) {
                                 userSend.needOrderFeedback = order.toJSON().id
