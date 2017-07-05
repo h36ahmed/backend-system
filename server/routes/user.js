@@ -295,3 +295,34 @@ exports.authenticate = function(req, res) {
         res.status(400).json(e)
     })
 }
+
+exports.forgotPassword = function(req, res) {
+    const body = _.pick(req.body, 'email', 'password')
+    const where = {}
+    const updateAttributes = {}
+
+    if (body.hasOwnProperty('email')) {
+        where.email = body.email
+    }
+
+    if (body.hasOwnProperty('password')) {
+        updateAttributes.password = body.password
+    }
+
+    models.users.findOne({
+        where: where
+    }).then(user => {
+        if (user) {
+            user.update(updateAttributes).then(updatedUser => {
+                res.json(updatedUser.toPublicJSON())
+            })
+        } else {
+            res.status(500).send()
+        }
+    })
+    .catch(() => {
+        res.status(404).json({error: 'Invalid email'})
+    }, function(e) {
+        res.status(400).json(e)
+    })
+}
