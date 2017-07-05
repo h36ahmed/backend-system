@@ -157,6 +157,8 @@ exports.login = function(req, res) {
                             console.log('order', order.toJSON())
                             console.log('today', today)
                             console.log('tomorrowOrderDate', tomorrowOrderDate)
+                            console.log('moment compare', moment(today).isSame(tomorrowOrderDate))
+                            console.log('moment compare1', moment(today).isAfter(order.order_date))
 
                             if (tomorrowOrderDate === today) {
                                 userSend.needOrderFeedback = order.toJSON().id
