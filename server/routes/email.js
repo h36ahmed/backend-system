@@ -7,7 +7,6 @@ var Handlebars = require('handlebars');
 const icsFile = path.resolve(__dirname + '/icsData/', 'event.ics')
 const moment = require('moment')
 
-
 //Your api key
 var api_key = '32b29fd6-338e-49a4-98be-25a4c21458d3';
 
@@ -123,6 +122,7 @@ var sendCOEmail = function (data, res) {
         data: data,
         templateID: 2068322
     }
+
     response = res;
 
     send(locals, complete);
@@ -135,6 +135,19 @@ var sendPasswordResetEmail = function (data, res) {
         from: from_who,
         data: data,
         templateID: 2315281
+    }
+
+    response = res;
+
+    send(locals, complete);
+}
+
+var sendRestaurantDailyOrdersEmail = function (data ,res) {
+
+    var locals = {
+        from: from_who,
+        data: data,
+        templateID: 2461661
     }
 
     response = res;
@@ -251,6 +264,11 @@ exports.sendEmail = function (req, res) {
                 email: email
             }, res);
             break;
+        case "daily-orders":
+            sendRestaurantDailyOrdersEmail({
+                email: email
+            }, res);
+            break;
         default:
             res.status(204).send();
     }
@@ -261,3 +279,4 @@ exports.sendOwnerWelcomeEmail = sendOwnerWelcomeEmail
 exports.sendOrderEmail = sendOrderEmail;
 exports.sendCOEmail = sendCOEmail;
 exports.sendPasswordResetEmail = sendPasswordResetEmail;
+exports.sendRestaurantDailyOrdersEmail = sendRestaurantDailyOrdersEmail;
