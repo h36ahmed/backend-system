@@ -5,7 +5,7 @@ var path = require('path');
 var fs = require('fs');
 var Handlebars = require('handlebars');
 const icsFile = path.resolve(__dirname + '/icsData/', 'event.ics')
-
+const moment = require('moment')
 
 //Your api key
 var api_key = '32b29fd6-338e-49a4-98be-25a4c21458d3';
@@ -14,7 +14,8 @@ var api_key = '32b29fd6-338e-49a4-98be-25a4c21458d3';
 var domain = 'www.lunchsociety.ca';
 
 //Your sending email address
-var from_who = 'Lunch Society <daniel@lunchsociety.ca>';
+// var from_who = 'Lunch Society <daniel@lunchsociety.ca>';
+var from_who = 'admin@lunchsociety.ca'
 
 var client = new postmark.Client(api_key);
 
@@ -30,21 +31,6 @@ fs.readdirSync(templatesDir).forEach(function (file) {
         templates[file] = new EmailTemplate(path.join(templatesDir, file));
     }
 });
-
-const formatShortDate = (date) => {
-  const monthNames = [
-    'January', 'February', 'March', 'April',
-    'May', 'June', 'July', 'August',
-    'September', 'October', 'November', 'December'
-  ];
-
-  const splitDate = date.split('-')
-  const day = splitDate[1]
-  const month = monthNames[parseInt(splitDate[2], 10) - 1]
-  const year = splitDate[0]
-
-  return `${month} ${day}, ${year}`
-}
 
 function send(locals, cb) {
     const icsData = fs.readFileSync(icsFile, { encoding: 'base64' })
@@ -86,7 +72,7 @@ function complete(err) {
     }
 }
 
-var sendWelcomeEmail = function (data, res) {
+var sendCustomerWelcomeEmail = function (data, res) {
 
     var locals = {
         from: from_who,
@@ -99,8 +85,21 @@ var sendWelcomeEmail = function (data, res) {
     send(locals, complete);
 };
 
+var sendOwnerWelcomeEmail = function (data, res) {
+
+    var locals = {
+        from: from_who,
+        data: data,
+        templateID: 2404441
+    }
+
+    response = res;
+
+    send(locals, complete);
+};
+
 var sendOrderEmail = function (data, res) {
-    data.date = formatShortDate(data.date.split('T')[0])
+    data.date = moment(data.date).format('MMMM DD, YYYY')
 
     var locals = {
         from: from_who,
@@ -116,13 +115,14 @@ var sendOrderEmail = function (data, res) {
 
 // Cancel Order Email
 var sendCOEmail = function (data, res) {
-    data.date = formatShortDate(data.date.split('T')[0])
+    data.date = moment(data.date).format('MMMM DD, YYYY')
 
     var locals = {
         from: from_who,
         data: data,
         templateID: 2068322
     }
+
     response = res;
 
     send(locals, complete);
@@ -135,6 +135,19 @@ var sendPasswordResetEmail = function (data, res) {
         from: from_who,
         data: data,
         templateID: 2315281
+    }
+
+    response = res;
+
+    send(locals, complete);
+}
+
+var sendRestaurantDailyOrdersEmail = function (data ,res) {
+
+    var locals = {
+        from: from_who,
+        data: data,
+        templateID: 2461661
     }
 
     response = res;
@@ -226,8 +239,13 @@ exports.sendEmail = function (req, res) {
     var email = req.body.email;
 
     switch (emailType) {
-        case "welcome":
-            sendWelcomeEmail({
+        case "customer-welcome":
+            sendCustomerWelcomeEmail({
+                email: email
+            }, res);
+            break;
+        case "customer-welcome":
+            sendCOwnerWelcomeEmail({
                 email: email
             }, res);
             break;
@@ -246,12 +264,19 @@ exports.sendEmail = function (req, res) {
                 email: email
             }, res);
             break;
+        case "daily-orders":
+            sendRestaurantDailyOrdersEmail({
+                email: email
+            }, res);
+            break;
         default:
             res.status(204).send();
     }
 };
 
-exports.sendWelcomeEmail = sendWelcomeEmail;
+exports.sendCustomerWelcomeEmail = sendCustomerWelcomeEmail;
+exports.sendOwnerWelcomeEmail = sendOwnerWelcomeEmail
 exports.sendOrderEmail = sendOrderEmail;
 exports.sendCOEmail = sendCOEmail;
 exports.sendPasswordResetEmail = sendPasswordResetEmail;
+exports.sendRestaurantDailyOrdersEmail = sendRestaurantDailyOrdersEmail;

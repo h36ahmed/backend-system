@@ -49,7 +49,7 @@ exports.createSubscription = function (req, res) {
                     };
                     models.customers.create(attributes).then(function (customer) {
                         res.json(customer);
-                        //email.sendWelcomeEmail(userAttributes, res);
+                        email.sendWelcomeEmail(userAttributes, res);
                     }, function (e) {
                         res.status(400).json(e);
                     });

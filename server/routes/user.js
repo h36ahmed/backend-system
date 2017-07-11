@@ -2,6 +2,7 @@ var _ = require('underscore');
 var models = require('../db.js');
 var cryptojs = require('crypto-js');
 var email = require('./email');
+const moment = require('moment')
 
 // GET /api/v1/users
 exports.list = function(req, res) {
@@ -98,7 +99,10 @@ exports.create = function(req, res) {
                 password: body.password
             }
             res.json(user);
-            // email.sendWelcomeEmail(data, res);
+            data.trial_start_date = moment().format('MMMM DD, YYYY')
+            data.trial_end_date = moment().add(30, 'd').format('MMMM DD, YYYY')
+            data.trial_length = 30
+            email.sendCustomerWelcomeEmail(data, res);
         } else if (body.type === "owner") {
             var data = {
                 name: 'Restaurant Owner',
@@ -106,7 +110,7 @@ exports.create = function(req, res) {
                 password: body.password
             }
             res.json(user);
-            // email.sendWelcomeEmail(data, res);
+            email.sendOwnerWelcomeEmail(data, res);
         } else {
             res.json(user);
         }
@@ -139,13 +143,20 @@ exports.login = function(req, res) {
                     },
                     attributes: ['payment_plan_id', 'id', 'user_id'],
                 }).then(function(customer) {
-                    models.orders.findAll({where: {
+                    models.orders.findOne({where: {
                         status: 'active',
                         customer_id: customer[0].id
                     }})
                     .then(order => {
-                        if (order.length > 0) {
-                            userSend.needOrderFeedback = order[0].id
+                        if (order) {
+                            const today = moment().format('YYYY-MM-DD')
+                            //moment rounds down when date has T00:00:00.000Z
+                            //e.g 2017-07-05T00:00:00.000Z with moment === 2017-07-04
+                            const tomorrowOrderDate = moment(order.order_date).add(2, 'd').format('YYYY-MM-DD')
+                            userSend.hasOrder = order.toJSON().id
+                            if (moment(today).isSame(tomorrowOrderDate)) {
+                                userSend.needOrderFeedback = order.toJSON().id
+                            }
                         }
                         userSend.user_id = customer[0].user_id;
                         userSend.customer_id = customer[0].id;
@@ -157,7 +168,7 @@ exports.login = function(req, res) {
                 });
             } else if (userDetails.type === 'owner') {
                 models.owners.findOne({
-                    attributes: ['id', 'user_id'],
+                    attributes: ['id', 'user_id', 'status'],
                     where: {
                         user_id: userDetails.id
                     },
@@ -170,6 +181,7 @@ exports.login = function(req, res) {
                     userSend.user_id = owner.user_id;
                     userSend.owner_id = owner.id;
                     userSend.restaurant_id = owner.restaurant.id;
+                    userSend.status = owner.status
                     res.header('Auth', token).json(userSend);
                 }, function(e) {
                     res.status(500).send();
@@ -290,6 +302,39 @@ exports.authenticate = function(req, res) {
                 error: 'Sorry, incorrect password'
             });
         });
+    }, function(e) {
+        res.status(400).json(e)
+    })
+}
+
+exports.forgotPassword = function(req, res) {
+    const body = _.pick(req.body, 'email', 'password')
+    const where = {}
+    const updateAttributes = {}
+
+    if (body.hasOwnProperty('email')) {
+        where.email = body.email
+    }
+
+    if (body.hasOwnProperty('password')) {
+        updateAttributes.password = body.password
+    }
+
+    models.users.findOne({
+        where: where
+    }).then(user => {
+        if (user) {
+            user.update(updateAttributes).then(updatedUser => {
+                res.json(updatedUser.toPublicJSON())
+                updateAttributes.email = body.email
+                email.sendPasswordResetEmail(updateAttributes, res)
+            })
+        } else {
+            res.status(500).send()
+        }
+    })
+    .catch(() => {
+        res.status(404).json({error: 'Invalid email'})
     }, function(e) {
         res.status(400).json(e)
     })
