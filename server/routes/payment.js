@@ -6,8 +6,8 @@ var cryptojs = require('crypto-js');
 
 moment.tz.setDefault("America/Toronto");
 
-//var stripe = require("stripe")("sk_test_shNAbxyQyXRm3LCZLmladgez");
-var stripe = require("stripe")("sk_live_TZpALEAqujGW2Td9rpEod8fu");
+var stripe = require("stripe")("sk_test_shNAbxyQyXRm3LCZLmladgez");
+//var stripe = require("stripe")("sk_live_TZpALEAqujGW2Td9rpEod8fu");
 
 // POST /api/v1/create-subscription
 exports.createSubscription = function (req, res) {
