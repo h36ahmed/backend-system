@@ -48,8 +48,8 @@ exports.createSubscription = function (req, res) {
                         user_id: paymentDetails.user_id
                     };
                     models.customers.create(attributes).then(function (customer) {
-                        res.json(customer);
-                        email.sendWelcomeEmail(userAttributes, res);
+                        //res.json(customer);
+                        email.sendCustomerWelcomeEmail(userAttributes, res);
                     }, function (e) {
                         res.status(400).json(e);
                     });
