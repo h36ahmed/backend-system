@@ -113,6 +113,7 @@ exports.offers = function (req, res) {
                     $lte: weekDetails.to_date
                 }
             },
+            order: [['id', 'DESC']]
             include: [{
                 attributes: ['id', 'name', 'ingredients'],
                 model: models.meals,
