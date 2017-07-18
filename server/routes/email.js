@@ -214,6 +214,7 @@ exports.sendROEmail = function (req, res) {
                         return {
                             From: from_who,
                             To: restaurant.owner.user.email,
+                            Cc: from_who,
                             Subject: 'LUNCH SOCIETY: Orders for: ' + todayDate,
                             HtmlBody: results.html,
                             TextBody: results.text
