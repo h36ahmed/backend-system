@@ -47,6 +47,7 @@ exports.list = function (req, res) {
     models.offers.findAll({
         where: where,
         include: include,
+        order: [['id', 'DESC']]
     }).then(function (offers) {
         res.json(offers);
     }, function (e) {
@@ -112,6 +113,7 @@ exports.offers = function (req, res) {
                     $lte: weekDetails.to_date
                 }
             },
+            order: [['id', 'DESC']],
             include: [{
                 attributes: ['id', 'name', 'ingredients'],
                 model: models.meals,
