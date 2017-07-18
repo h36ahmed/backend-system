@@ -48,7 +48,9 @@ exports.createSubscription = function (req, res) {
                         user_id: paymentDetails.user_id
                     };
                     models.customers.create(attributes).then(function (customer) {
-                        //res.json(customer);
+                        userAttributes.trial_start_date = attributes.cycle_start_date;
+                        userAttributes.trial_end_date = attributes.cycle_end_date;
+                        userAttributes.trial_length = 30;
                         email.sendCustomerWelcomeEmail(userAttributes, res);
                     }, function (e) {
                         res.status(400).json(e);
