@@ -5,10 +5,9 @@ INSERT INTO users VALUES (4,'bob@rs.com','$2a$10$JPmC/zClzMp12T9iZPhpaO','$2a$10
 INSERT INTO users VALUES (5,'will@pai.com','$2a$10$GAuxDpv5sg0UMm.C3ZkkOu','$2a$10$GAuxDpv5sg0UMm.C3ZkkOu0UK2RC2s3gMoEvblA.64OWJ5GzSuO4.','owner',FALSE);
 INSERT INTO users VALUES (6,'christmas@expendables.com','$2a$10$NWBeaabiqKucxLJGpBNxmO','$2a$10$NWBeaabiqKucxLJGpBNxmOPzbGAGbYGP4/6P3hVaQPLY7mxh//gQS','customer',FALSE);
 INSERT INTO users VALUES (7,'joesoto@td.com','$2a$10$No26sxZ7R2xyAvnNL2QNpe','$2a$10$No26sxZ7R2xyAvnNL2QNpeW1dbS.4y4AyYnoJ8fB7YOreatKnNYNS','customer',FALSE);
-INSERT INTO users VALUES (8,'chirsrock@hollywood.com','$2a$10$OBjAKkwgU4GJgCrI1sut6u','$2a$10$OBjAKkwgU4GJgCrI1sut6uGk8vji3N/8S9vyfPovP/ls0CP5agyf2','customer',FALSE);
+INSERT INTO users VALUES (8,'chrisrock@hollywood.com','$2a$10$OBjAKkwgU4GJgCrI1sut6u','$2a$10$OBjAKkwgU4GJgCrI1sut6uGk8vji3N/8S9vyfPovP/ls0CP5agyf2','customer',FALSE);
 INSERT INTO users VALUES (9,'zuckerberg@fb.com','$2a$10$k3lEbGW65aZunIxSuolGLO','$2a$10$k3lEbGW65aZunIxSuolGLOs.hw.quc13EGMUIdni2uYxZy7FTvA6i','customer',FALSE);
 INSERT INTO users VALUES (10,'thomas@bayern.de','$2a$10$Da19EZuesvRdXZqOvTX4dO','$2a$10$Da19EZuesvRdXZqOvTX4dOVe.m3IRNUTGcdC4MfWpdE4/cHOF9u8q','customer',FALSE);
-
 
 INSERT INTO owners VALUES (1,'Monty','Singh','2017-02-16',4167822931,'','active',2);
 INSERT INTO owners VALUES (2,'Bill','Xiu','2017-02-16',4127443512,'','active', 3);
@@ -20,15 +19,14 @@ INSERT INTO restaurants VALUES (2,'Kaiju','384 Yonge Street','Toronto','Ontario'
 INSERT INTO restaurants VALUES (3,'Richmond Station','1 Richmond Street W','Toronto','Ontario','Canada','M5H3W4',6477481444,'','active',NULL,NULL,5.00,NULL,3);
 INSERT INTO restaurants VALUES (4,'PAI','18 Duncan Street','Toronto','Ontario','Canada','M5H3G6',4169014724,'','active',NULL,NULL,5.00,NULL,4);
 
-
-INSERT INTO meals VALUES (1,'Chocolate Milkshake','Amazingly Good','Chocolate, Milk, Sugar',5.0,'',1);
-INSERT INTO meals VALUES (2,'Pizza Panini','You gotta have this one','Veggies, Tomato, Chicken',8.0,'',1);
-INSERT INTO meals VALUES (3,'Malaysian Fried Sambal Udon','Udon noodles stir-fried with homemade sambal sauce, onion, fish balls, and chicken','Sambal sauce, Onions, Fish Balls, Chicken',9.0,'',2);
-INSERT INTO meals VALUES (4,'Crispy Pepper Chicken','Stir-fried crispy chicken seasoned with freshly ground black pepper', 'Veggies, Chicken, Black Pepper',9.0,'',2);
-INSERT INTO meals VALUES (5,'Grilled Cornish Hen','Hen stirred in potato sauce.','rutabaga puree, potato pave, truffled celery, carrots, white wine jus, watercress',26.0,'',3);
-INSERT INTO meals VALUES (6,'Station Burger','Burger that is in a station.','lettuce, beet chutney, aged cheddar, milk bun, rosemary fries, dill pickle, garlic aioli',21.0,'',3);
-INSERT INTO meals VALUES (7,'Khao Soi with braised beef','Fresh egg noodles in a golden curry topped with crispy noodles, coriander, green onions and braised beef (contains shrimp paste)','shrimp paste, beef, noodles, coriander, green onions',13.0,'',4);
-INSERT INTO meals VALUES (8,'Fried Fish with Green Curry sauce and Rice','Crispy Basa Fillet with crispy shallots served with green curry sauce and rice. (contains oyster sauce)', 'fish, shallots, green curry sauce, rice, oyster sauce',13.0,'',4);
+INSERT INTO meals VALUES (1,'Chocolate Milkshake','Amazingly Good','Chocolate, Milk, Sugar',5.0,'',TRUE,1);
+INSERT INTO meals VALUES (2,'Pizza Panini','You gotta have this one','Veggies, Tomato, Chicken',8.0,'',FALSE,1);
+INSERT INTO meals VALUES (3,'Malaysian Fried Sambal Udon','Udon noodles stir-fried with homemade sambal sauce, onion, fish balls, and chicken','Sambal sauce, Onions, Fish Balls, Chicken',9.0,'',TRUE,2);
+INSERT INTO meals VALUES (4,'Crispy Pepper Chicken','Stir-fried crispy chicken seasoned with freshly ground black pepper', 'Veggies, Chicken, Black Pepper',9.0,'',FALSE,2);
+INSERT INTO meals VALUES (5,'Grilled Cornish Hen','Hen stirred in potato sauce.','rutabaga puree, potato pave, truffled celery, carrots, white wine jus, watercress',26.0,'',TRUE,3);
+INSERT INTO meals VALUES (6,'Station Burger','Burger that is in a station.','lettuce, beet chutney, aged cheddar, milk bun, rosemary fries, dill pickle, garlic aioli',21.0,'',FALSE,3);
+INSERT INTO meals VALUES (7,'Khao Soi with braised beef','Fresh egg noodles in a golden curry topped with crispy noodles, coriander, green onions and braised beef (contains shrimp paste)','shrimp paste, beef, noodles, coriander, green onions',13.0,'',TRUE,4);
+INSERT INTO meals VALUES (8,'Fried Fish with Green Curry sauce and Rice','Crispy Basa Fillet with crispy shallots served with green curry sauce and rice. (contains oyster sauce)', 'fish, shallots, green curry sauce, rice, oyster sauce',13.0,'',FALSE,4);
 
 INSERT INTO payment_plans VALUES (1,'The 12','Its simple.. You get 12 meals.','',8.25, 12, 'active','the-12');
 INSERT INTO payment_plans VALUES (2,'The 20','And for this one, you get 20!','',7.45, 20, 'active', 'the-20');
@@ -39,7 +37,6 @@ INSERT INTO customers VALUES (2,'Joe','Soto','2017-02-01','2017-02-28','2017-02-
 INSERT INTO customers VALUES (3,'Chris','Rock','2017-02-01','2017-02-28','2017-02-18',10,'M5V2J2','','active',FALSE,NULL,'','',8,1);
 INSERT INTO customers VALUES (4,'Mark','Zuckerberg','2017-02-01','2017-02-28','2017-02-19',20,'M5V2J2','','active',FALSE,NULL,'','',9,2);
 INSERT INTO customers VALUES (5,'Thomas','Muller','2017-02-01','2017-02-28','2017-02-20',20,'M5V2J2','','active',FALSE,NULL,'','',10,2);
-
 
 INSERT INTO invoices VALUES (1,'2017-02-01','paid',8.0,60.0,'',1);
 INSERT INTO invoices VALUES (2,'2017-02-01','paid',15.0,120.0,'',2);
@@ -60,6 +57,7 @@ INSERT INTO offers VALUES (1,'2017-02-16',40,40,'completed',4);
 INSERT INTO offers VALUES (2,'2017-02-17',30,28,'completed',2);
 INSERT INTO offers VALUES (3,'2017-02-17',30,27,'completed',3);
 INSERT INTO offers VALUES (4,'2017-02-21',35,35,'completed',4);
+INSERT INTO offers VALUES (5,'2017-02-21',35,35,'completed',4);
 
 INSERT INTO orders VALUES (1,'2017-02-17','completed',2,3,1);
 INSERT INTO orders VALUES (2,'2017-02-17','completed',3,2,2);
