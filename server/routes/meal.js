@@ -14,6 +14,7 @@ exports.list = function(req, res) {
     models.meals.findAll({
         attributes: ['id', 'name', 'description', 'ingredients', 'price', 'meal_image', 'default_meal'],
         where: where,
+        order: [['default_meal', 'DESC', 'id']],
         include: [{
             attributes: ['name', 'id'],
             model: models.restaurants,
