@@ -6,15 +6,20 @@ exports.list = function(req, res) {
     var query = req.query;
     var where = {};
     var restaurantWhere = {};
+    let order = []
 
     if (query.hasOwnProperty('restaurant_id') && query.restaurant_id.length > 0) {
         where.restaurant_id = query.restaurant_id;
     }
 
+    if (query.hasOwnProperty('changeDefaultMeal') && query.changeDefaultMeal) {
+        order.push(['default_meal', 'DESC'])
+    }
+
     models.meals.findAll({
         attributes: ['id', 'name', 'description', 'ingredients', 'price', 'meal_image', 'default_meal'],
         where: where,
-        order: [['default_meal', 'DESC', 'id']],
+        order: order,
         include: [{
             attributes: ['name', 'id'],
             model: models.restaurants,
@@ -23,6 +28,7 @@ exports.list = function(req, res) {
     }).then(function(meals) {
         res.json(meals);
     }, function(e) {
+        console.log('e', e)
         res.status(500).json(e);
     });
 };
