@@ -12,7 +12,7 @@ exports.list = function(req, res) {
     }
 
     models.meals.findAll({
-        attributes: ['id', 'name', 'description', 'ingredients', 'price', 'meal_image'],
+        attributes: ['id', 'name', 'description', 'ingredients', 'price', 'meal_image', 'default_meal'],
         where: where,
         include: [{
             attributes: ['name', 'id'],
@@ -55,7 +55,7 @@ exports.create = function(req, res) {
 // PUT /api/v1/meal/:id
 exports.update = function(req, res) {
     var mealID = parseInt(req.params.id, 10);
-    var body = _.pick(req.body, 'name', 'description', 'ingredients', 'price', 'meal_image', 'restaurant_id');
+    var body = _.pick(req.body, 'name', 'description', 'ingredients', 'price', 'meal_image', 'restaurant_id', 'default_meal');
 
     var attributes = {};
 
@@ -81,6 +81,10 @@ exports.update = function(req, res) {
 
     if (body.hasOwnProperty('restaurant_id')) {
         attributes.restaurant_id = body.restaurant_id;
+    }
+
+    if (body.hasOwnProperty('default_meal')) {
+        attributes.default_meal = body.default_meal
     }
 
     models.meals.findById(mealID).then(function(meal) {
