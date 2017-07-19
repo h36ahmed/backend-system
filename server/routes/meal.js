@@ -94,10 +94,22 @@ exports.update = function(req, res) {
         attributes.default_meal = body.default_meal
     }
 
+    if (body.hasOwnProperty('oldDefaultMealId')) {
+        attributes.oldDefaultMealId = body.oldDefaultMealId
+    }
+
     models.meals.findById(mealID).then(function(meal) {
         if (meal) {
             meal.update(attributes).then(function(meal) {
-                res.json(meal);
+                if (attributes.oldDefaultMealId) {
+                    models.meals.findById(attributes.oldDefaultMealId).then(meal => {
+                        meal.update({ default_meal: false }).then(meal => {
+                            res.json(meal)
+                        })
+                    })
+                } else {
+                    res.json(meal);
+                }
             }, function(e) {
                 res.status(400).json(e);
             });
