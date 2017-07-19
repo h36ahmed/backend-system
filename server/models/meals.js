@@ -46,6 +46,10 @@ module.exports = function(sequelize, DataTypes) {
         },
         meal_image: {
             type: DataTypes.STRING
+        },
+        default_meal: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
         }
     }, {
         timestamps: false,
