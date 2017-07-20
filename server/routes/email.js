@@ -165,12 +165,6 @@ exports.sendROEmail = function (req, res) {
 
     var body = _.pick(req.body, 'order_date');
 
-    // QUERY PARAMETERS
-
-    if (query.hasOwnProperty('order_date') && query.order_date.length > 0) {
-        where.order_date = query.order_date;
-    }
-
     models.restaurants.findAll({
         attributes: ['id', 'name'],
         include: [{
