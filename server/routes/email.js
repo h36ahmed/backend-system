@@ -178,21 +178,7 @@ exports.sendROEmail = function (req, res) {
             model: models.meals,
             include: [{
                 attributes: ['id'],
-                model: models.offers,
-                include: [{
-                    model: models.orders,
-                    where: where,
-                    order: [
-                        ['pickup_time']
-                    ],
-                    include: [{
-                        model: models.customers,
-                        attributes: ['first_name', 'last_name']
-                    }, {
-                        model: models.pickup_times,
-                        attributes: ['pickup_time']
-                    }]
-                }]
+                model: models.offers
             }]
         }, {
             attributes: ['first_name', 'last_name', 'phone_number'],
