@@ -197,8 +197,6 @@ exports.sendROEmail = function (req, res) {
             }]
         }]
     }).then(function (restaurants) {
-        var final_restaurants = restaurants
-        var count = 0;
         _.each(restaurants, function(restaurant) {
 
             var pickup_times = {};
@@ -209,21 +207,22 @@ exports.sendROEmail = function (req, res) {
                 pickup_times[order.pickup_time.pickup_time].push(order);
             });
 
-            var arr = [];
+            var pickupTimes = _.keys(pickup_times);
 
-            for (var prop in pickup_times) {
-                if (pickup_times.hasOwnProperty(prop)) {
-                    var innerObj = {};
-                    innerObj[prop] = pickup_times[prop];
-                    arr.push(innerObj)
-                }
+            var pickupOrders = _.values(pickup_times);
+
+            var ordersGrouped = [];
+
+            for( var i = 0; i < pickupOrders.length; i++) {
+                ordersGrouped.push({
+                    pickupTimes[i]: pickupOrders[i]
+                })
             }
-            console.log(arr.length);
-            final_restaurants[count].order = true;
-            final_restaurants[count].meals[0].offers[0].orders_grouped_by_pickup = arr;
-            count += 1;
+            console.log(ordersGrouped.length);
+            restaurant.orders_grouped = ordersGrouped
         });
-        res.json(final_restaurants);
+
+        res.json(restaurants);
         /*
         Promise.all(_.map(restaurants, function (restaurant) {
                 return template.render(restaurant)
