@@ -204,6 +204,8 @@ exports.sendROEmail = function (req, res) {
             }]
         }]
     }).then(function (restaurants) {
+        var final_restaurants = restaurants
+        var count = 0;
         _.each(restaurants, function(restaurant) {
 
             var pickup_times = {};
@@ -223,10 +225,11 @@ exports.sendROEmail = function (req, res) {
                     arr.push(innerObj)
                 }
             }
-            console.log(pickup_times);
-            restaurant.meals[0].offers[0]["orders_grouped_by_pickup"] = arr;
+            console.log(arr.length);
+            final_restaurants[count].meals[0].offers[0].orders_grouped_by_pickup = arr;
+            count += 1;
         });
-        res.json(restaurants);
+        res.json(final_restaurants);
         /*
         Promise.all(_.map(restaurants, function (restaurant) {
                 return template.render(restaurant)
