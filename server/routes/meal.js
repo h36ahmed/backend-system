@@ -6,14 +6,20 @@ exports.list = function(req, res) {
     var query = req.query;
     var where = {};
     var restaurantWhere = {};
+    let order = []
 
     if (query.hasOwnProperty('restaurant_id') && query.restaurant_id.length > 0) {
         where.restaurant_id = query.restaurant_id;
     }
 
+    if (query.hasOwnProperty('changeDefaultMeal') && query.changeDefaultMeal) {
+        order.push(['default_meal', 'DESC'])
+    }
+
     models.meals.findAll({
-        attributes: ['id', 'name', 'description', 'ingredients', 'price', 'meal_image'],
+        attributes: ['id', 'name', 'description', 'ingredients', 'price', 'meal_image', 'default_meal'],
         where: where,
+        order: order,
         include: [{
             attributes: ['name', 'id'],
             model: models.restaurants,
@@ -22,6 +28,7 @@ exports.list = function(req, res) {
     }).then(function(meals) {
         res.json(meals);
     }, function(e) {
+        console.log('e', e)
         res.status(500).json(e);
     });
 };
@@ -55,9 +62,11 @@ exports.create = function(req, res) {
 // PUT /api/v1/meal/:id
 exports.update = function(req, res) {
     var mealID = parseInt(req.params.id, 10);
-    var body = _.pick(req.body, 'name', 'description', 'ingredients', 'price', 'meal_image', 'restaurant_id');
+    var body = _.pick(req.body, 'name', 'description', 'ingredients', 'price', 'meal_image', 'restaurant_id', 'default_meal');
 
     var attributes = {};
+    const where = {}
+    const restaurantWhere = {}
 
     if (body.hasOwnProperty('name')) {
         attributes.name = body.name;
@@ -81,8 +90,36 @@ exports.update = function(req, res) {
 
     if (body.hasOwnProperty('restaurant_id')) {
         attributes.restaurant_id = body.restaurant_id;
+        where.restaurant_id = body.restaurant_id // 3
     }
 
+    if (body.hasOwnProperty('default_meal')) {
+        attributes.default_meal = body.default_meal
+        where.default_meal = body.default_meal // true
+    }
+
+    if (body.hasOwnProperty('oldDefaultMealId')) {
+        attributes.oldDefaultMealId = body.oldDefaultMealId
+    }
+
+    if (attributes.default_meal) {
+        models.meals.findAll({
+            where: where,
+            include: [{
+                attributes: ['name', 'id'],
+                model: models.restaurants,
+                where: restaurantWhere
+            }]
+        })
+        .then(meal => {
+            meal[0].update({ default_meal: false })
+            .then(meal => {}, e => {
+                res.status(400).json(e)
+            })
+        }, () => {
+            res.status(500).send()
+        })
+    }
     models.meals.findById(mealID).then(function(meal) {
         if (meal) {
             meal.update(attributes).then(function(meal) {

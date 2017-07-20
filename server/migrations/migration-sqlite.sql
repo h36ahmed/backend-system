@@ -9,7 +9,6 @@ INSERT INTO users VALUES (8,'chirsrock@hollywood.com','$2a$10$OBjAKkwgU4GJgCrI1s
 INSERT INTO users VALUES (9,'zuckerberg@fb.com','$2a$10$k3lEbGW65aZunIxSuolGLO','$2a$10$k3lEbGW65aZunIxSuolGLOs.hw.quc13EGMUIdni2uYxZy7FTvA6i','customer',0);
 INSERT INTO users VALUES (10,'thomas@bayern.de','$2a$10$Da19EZuesvRdXZqOvTX4dO','$2a$10$Da19EZuesvRdXZqOvTX4dOVe.m3IRNUTGcdC4MfWpdE4/cHOF9u8q','customer',0);
 
-
 INSERT INTO owners VALUES (1,'Monty','Singh','2017-02-16',4167822931,'','active',2);
 INSERT INTO owners VALUES (2,'Bill','Xiu','2017-02-16',4127443512,'','active', 3);
 INSERT INTO owners VALUES (3,'Bob','Thames','2017-02-16',4124135221,'','active', 4);
@@ -20,15 +19,14 @@ INSERT INTO restaurants VALUES (2,'Kaiju','384 Yonge Street','Toronto','Ontario'
 INSERT INTO restaurants VALUES (3,'Richmond Station','1 Richmond Street W','Toronto','Ontario','Canada','M5H3W4',6477481444,'','active',NULL,NULL,5.00,NULL,3);
 INSERT INTO restaurants VALUES (4,'PAI','18 Duncan Street','Toronto','Ontario','Canada','M5H3G6',4169014724,'','active',NULL,NULL,5.00,NULL,4);
 
-
-INSERT INTO meals VALUES (1,'Chocolate Milkshake','Amazingly Good','Chocolate, Milk, Sugar',5.0,'',1);
-INSERT INTO meals VALUES (2,'Pizza Panini','You gotta have this one','Veggies, Tomato, Chicken',8.0,'',1);
-INSERT INTO meals VALUES (3,'Malaysian Fried Sambal Udon','Udon noodles stir-fried with homemade sambal sauce, onion, fish balls, and chicken','Sambal sauce, Onions, Fish Balls, Chicken',9.0,'',2);
-INSERT INTO meals VALUES (4,'Crispy Pepper Chicken','Stir-fried crispy chicken seasoned with freshly ground black pepper', 'Veggies, Chicken, Black Pepper',9.0,'',2);
-INSERT INTO meals VALUES (5,'Grilled Cornish Hen','Hen stirred in potato sauce.','rutabaga puree, potato pave, truffled celery, carrots, white wine jus, watercress',26.0,'',3);
-INSERT INTO meals VALUES (6,'Station Burger','Burger that is in a station.','lettuce, beet chutney, aged cheddar, milk bun, rosemary fries, dill pickle, garlic aioli',21.0,'',3);
-INSERT INTO meals VALUES (7,'Khao Soi with braised beef','Fresh egg noodles in a golden curry topped with crispy noodles, coriander, green onions and braised beef (contains shrimp paste)','shrimp paste, beef, noodles, coriander, green onions',13.0,'',4);
-INSERT INTO meals VALUES (8,'Fried Fish with Green Curry sauce and Rice','Crispy Basa Fillet with crispy shallots served with green curry sauce and rice. (contains oyster sauce)', 'fish, shallots, green curry sauce, rice, oyster sauce',13.0,'',4);
+INSERT INTO meals VALUES (1,'Chocolate Milkshake','Amazingly Good','Chocolate, Milk, Sugar',5.0,'',1,1);
+INSERT INTO meals VALUES (2,'Pizza Panini','You gotta have this one','Veggies, Tomato, Chicken',8.0,'',0,1);
+INSERT INTO meals VALUES (3,'Malaysian Fried Sambal Udon','Udon noodles stir-fried with homemade sambal sauce, onion, fish balls, and chicken','Sambal sauce, Onions, Fish Balls, Chicken',9.0,'',1,2);
+INSERT INTO meals VALUES (4,'Crispy Pepper Chicken','Stir-fried crispy chicken seasoned with freshly ground black pepper', 'Veggies, Chicken, Black Pepper',9.0,'',0,2);
+INSERT INTO meals VALUES (5,'Grilled Cornish Hen','Hen stirred in potato sauce.','rutabaga puree, potato pave, truffled celery, carrots, white wine jus, watercress',26.0,'',1,3);
+INSERT INTO meals VALUES (6,'Station Burger','Burger that is in a station.','lettuce, beet chutney, aged cheddar, milk bun, rosemary fries, dill pickle, garlic aioli',21.0,'',0,3);
+INSERT INTO meals VALUES (7,'Khao Soi with braised beef','Fresh egg noodles in a golden curry topped with crispy noodles, coriander, green onions and braised beef (contains shrimp paste)','shrimp paste, beef, noodles, coriander, green onions',13.0,'',1,4);
+INSERT INTO meals VALUES (8,'Fried Fish with Green Curry sauce and Rice','Crispy Basa Fillet with crispy shallots served with green curry sauce and rice. (contains oyster sauce)', 'fish, shallots, green curry sauce, rice, oyster sauce',13.0,'',0,4);
 
 INSERT INTO payment_plans VALUES (1,'The 12','Its simple.. You get 12 meals.','',8.25, 12, 'active','the-12');
 INSERT INTO payment_plans VALUES (2,'The 20','And for this one, you get 20!','',7.45, 20, 'active', 'the-20');

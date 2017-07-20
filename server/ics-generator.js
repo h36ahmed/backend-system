@@ -1,5 +1,4 @@
 const fs = require('fs')
-const uuid = require('uuid')
 const moment = require('moment')
 
 const formatTime = (time) => {
@@ -22,6 +21,10 @@ const formatTime = (time) => {
   return `${hours}${minutes}`
 }
 
+const encodeToHTML = (url) => {
+  return `https://www.google.com/calendar/event?action=TEMPLATE&${url.replace(/ /g, '%20').replace(/@/g, '%40').replace(/\//g, '%2F').replace(/:/g, '%3A').replace(/,/g, '%2C')}`
+}
+
 exports.generateICS = (attributes) => {
   const start_time = formatTime(attributes.pick_up_time.split(' to ')[0])
   const end_time = formatTime(attributes.pick_up_time.split(' to ')[1])
@@ -33,7 +36,6 @@ VERSION:2.0
 CALSCALE:GREGORIAN
 PRODID:-//Adam Gibbons//agibbons.com//ICS: iCalendar Generator
 BEGIN:VEVENT
-UID:${uuid.v1()}
 DTSTAMP:${moment().format('YYYYMMDDTHHmmss')}
 DTSTART:${date}T${start_time}00
 DTEND:${date}T${end_time}00
@@ -60,4 +62,12 @@ END:VEVENT
 END:VCALENDAR`
 
   fs.writeFileSync('./server/routes/icsData/event.ics', icsData)
+
+  const emailLink = `dates=${date}T${start_time}00%2F${date}T${end_time}00&text=Meal%20reserved%20for%20${moment(attributes.date).format('MMMM DD, YYYY')}&location=${attributes.restaurant.name}%2C%20${attributes.restaurant.street_address}%2C%20${attributes.restaurant.city}%2C%20${attributes.restaurant.postal_code}&details=Your%20meal%2C%20${attributes.meal.name}%2C%20is%20reserved%20at%20${attributes.restaurant.name}%20at%20${attributes.restaurant.street_address}&add=${attributes.email}`
+
+  return encodeToHTML(emailLink)
 }
+
+
+
+
