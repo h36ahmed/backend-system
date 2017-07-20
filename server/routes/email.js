@@ -207,19 +207,21 @@ exports.sendROEmail = function (req, res) {
                 pickup_times[order.pickup_time.pickup_time].push(order);
             });
 
-            var pickupTimes = _.keys(pickup_times);
+            var pickupTimeKeys = _.keys(pickup_times);
 
-            var pickupOrders = _.values(pickup_times);
+            var pickupTimeValues = _.values(pickup_times);
 
             var ordersGrouped = [];
 
-            for( var i = 0; i < pickupOrders.length; i++) {
+            for( var i = 0; i < pickupTimeValues.length; i++) {
+                var pickupTimeKey = pickupTimeKeys[i]
                 ordersGrouped.push({
-                    pickupTimes[i]: pickupOrders[i]
-                })
+                     pickupTimeKey: pickupTimeValues[i]
+                });
             }
+            
             console.log(ordersGrouped.length);
-            restaurant.orders_grouped = ordersGrouped
+            restaurant.orders_grouped = ordersGrouped;
         });
 
         res.json(restaurants);
