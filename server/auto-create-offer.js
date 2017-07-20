@@ -33,8 +33,8 @@ models.restaurants.findAll()
 
           models.offers.create({
             offer_date: tomorrow,
-            plates_assigned: 50,
-            plates_left: 50,
+            plates_assigned: 20,
+            plates_left: 20,
             status: 'active',
             meal_id: restaurantDefaultMealId
           })
