@@ -175,7 +175,7 @@ exports.sendROEmail = function (req, res) {
                 model: models.offers,
                 include: [{
                     model: models.orders,
-                    where: body.order_date,
+                    where: body,
                     order: [
                         ['pickup_time']
                     ],
