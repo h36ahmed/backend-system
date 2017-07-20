@@ -142,19 +142,6 @@ var sendPasswordResetEmail = function (data, res) {
     send(locals, complete);
 }
 
-var sendRestaurantDailyOrdersEmail = function (data ,res) {
-
-    var locals = {
-        from: from_who,
-        data: data,
-        templateID: 2461661
-    }
-
-    response = res;
-
-    send(locals, complete);
-}
-
 
 function formatDate(date) {
     var dd = date.getDate();
@@ -207,6 +194,8 @@ exports.sendROEmail = function (req, res) {
             }]
         }]
     }).then(function (restaurants) {
+        res.json(restaurants);
+        /*
         Promise.all(_.map(restaurants, function (restaurant) {
                 return template.render(restaurant)
                     .then(function (results) {
@@ -229,6 +218,7 @@ exports.sendROEmail = function (req, res) {
                     console.info('Messages sent to postmark');
                 });
             });
+            */
     }, function (e) {
         res.status(500).json(e);
     });
@@ -265,11 +255,6 @@ exports.sendEmail = function (req, res) {
                 email: email
             }, res);
             break;
-        case "daily-orders":
-            sendRestaurantDailyOrdersEmail({
-                email: email
-            }, res);
-            break;
         default:
             res.status(204).send();
     }
@@ -280,4 +265,3 @@ exports.sendOwnerWelcomeEmail = sendOwnerWelcomeEmail
 exports.sendOrderEmail = sendOrderEmail;
 exports.sendCOEmail = sendCOEmail;
 exports.sendPasswordResetEmail = sendPasswordResetEmail;
-exports.sendRestaurantDailyOrdersEmail = sendRestaurantDailyOrdersEmail;
