@@ -223,7 +223,7 @@ exports.sendROEmail = function (req, res) {
                     arr.push(innerObj)
                 }
             }
-            restaurant.restaurant.meals[0].offers[0]["orders_grouped_by_pickup"] = arr;
+            restaurant.meals[0].offers[0]["orders_grouped_by_pickup"] = arr;
         });
         res.json(restaurants);
         /*
