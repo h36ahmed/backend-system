@@ -3,16 +3,15 @@ VERSION:2.0
 CALSCALE:GREGORIAN
 PRODID:-//Adam Gibbons//agibbons.com//ICS: iCalendar Generator
 BEGIN:VEVENT
-UID:bb3bc330-61cf-11e7-92ad-71f27f89797d
-DTSTAMP:20170705T181728
-DTSTART:20170705T114500
-DTEND:20170705T240000
-SUMMARY:Meal reserved for July 05, 2017
-DESCRIPTION:Your meal, Crispy Pepper Chicken, is reserved at Kaiju at 384 Yonge Street
-LOCATION:Kaiju, 384 Yonge Street, Toronto, M5B241
+DTSTAMP:20170718T184354
+DTSTART:20170718T113000
+DTEND:20170718T114500
+SUMMARY:Meal reserved for July 18, 2017
+DESCRIPTION:Your meal, Chocolate Milkshake, is reserved at Riddle Room at 579 Yonge Street
+LOCATION:Riddle Room, 579 Yonge Street, Toronto, M4Y1Z2
 STATUS:confirmed
 GEO:null;null
-ATTENDEE;CN=Christmas:mailto:christmas@expendables.com
+ATTENDEE;CN=Chris:mailto:jeffreycj.chang@gmail.com
 ORGANIZER;CN=Lunch Society:mailto:admin@lunchsociety.ca
 CATEGORIES:10k races,Memorial Day Weekend,Boulder CO
 BEGIN:VALARM
