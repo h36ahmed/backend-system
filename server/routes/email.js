@@ -197,6 +197,7 @@ exports.sendROEmail = function (req, res) {
             }]
         }]
     }).then(function (restaurants) {
+        var ordersGrouped = []
         _.each(restaurants, function(restaurant) {
 
             var pickup_times = {};
@@ -211,20 +212,18 @@ exports.sendROEmail = function (req, res) {
 
             var pickupTimeValues = _.values(pickup_times);
 
-            var ordersGrouped = [];
-
             for( var i = 0; i < pickupTimeValues.length; i++) {
                 var pickupTimeKey = pickupTimeKeys[i]
                 ordersGrouped.push({
                      pickupTimeKey: pickupTimeValues[i]
                 });
             }
-            
-            console.log(ordersGrouped.length);
+
             restaurant.orders_grouped = ordersGrouped;
         });
 
-        res.json(restaurants);
+        res.json(ordersGrouped);
+        
         /*
         Promise.all(_.map(restaurants, function (restaurant) {
                 return template.render(restaurant)
