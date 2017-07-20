@@ -204,7 +204,7 @@ exports.sendROEmail = function (req, res) {
             }]
         }]
     }).then(function (restaurants) {
-        _.each(restuarants, function(restaurant) {
+        _.each(restaurants, function(restaurant) {
 
             var pickup_times = {};
             _.each(restaurant.meals[0].offers[0].orders, function(order) {
