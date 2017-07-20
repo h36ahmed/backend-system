@@ -163,8 +163,7 @@ exports.sendROEmail = function (req, res) {
 
     var roEmail = new EmailTemplate(path.join(templatesDir, 'restaurant-orders'));
 
-    var query = req.query;
-    var where = {};
+    var body = _.pick(req.body, 'order_date');
 
     // QUERY PARAMETERS
 
@@ -182,7 +181,7 @@ exports.sendROEmail = function (req, res) {
                 model: models.offers,
                 include: [{
                     model: models.orders,
-                    where: where,
+                    where: body.order_date,
                     order: [
                         ['pickup_time']
                     ],
@@ -226,6 +225,7 @@ exports.sendROEmail = function (req, res) {
                 }
             }
             console.log(arr.length);
+            final_restaurants[count].order = true;
             final_restaurants[count].meals[0].offers[0].orders_grouped_by_pickup = arr;
             count += 1;
         });
