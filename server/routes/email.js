@@ -4,8 +4,9 @@ var EmailTemplate = require('email-templates').EmailTemplate;
 var path = require('path');
 var fs = require('fs');
 var Handlebars = require('handlebars');
-const icsFile = path.resolve(__dirname + '/icsData/', 'event.ics')
-const moment = require('moment')
+const icsFile = path.resolve(__dirname + '/icsData/', 'event.ics');
+const moment = require('moment');
+var models = require('../db.js');
 
 //Your api key
 var api_key = '32b29fd6-338e-49a4-98be-25a4c21458d3';
@@ -178,7 +179,21 @@ exports.sendROEmail = function (req, res) {
             model: models.meals,
             include: [{
                 attributes: ['id'],
-                model: models.offers
+                model: models.offers,
+                include: [{
+                    model: models.orders,
+                    where: where,
+                    order: [
+                        ['pickup_time']
+                    ],
+                    include: [{
+                        model: models.customers,
+                        attributes: ['first_name', 'last_name']
+                    }, {
+                        model: models.pickup_times,
+                        attributes: ['pickup_time']
+                    }]
+                }]
             }]
         }, {
             attributes: ['first_name', 'last_name', 'phone_number'],
