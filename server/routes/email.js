@@ -178,7 +178,7 @@ exports.sendROEmail = function (req, res) {
             attributes: ['name', 'id'],
             model: models.meals,
             include: [{
-                attributes: ['id'],
+                attributes: ['id', 'offer_date'],
                 model: models.offers,
                 include: [{
                     model: models.orders,
@@ -204,6 +204,29 @@ exports.sendROEmail = function (req, res) {
             }]
         }]
     }).then(function (restaurants) {
+        _.each(restuarants, function(restaurant) {
+
+            var pickup_times = {};
+            _.each(restaurant.meals[0].offers[0].orders, function(order) {
+                if (typeof pickup_times[order.pickup_time.pickup_time] === 'undefined') {
+                    pickup_times[order.pickup_time.pickup_time] = [];
+                }
+                pickup_times[order.pickup_time.pickup_time].push(order);
+            });
+
+            var arr = [];
+
+            for (var prop in pickup_times) {
+                if (pickup_times.hasOwnProperty(prop)) {
+                    var innerObj = {};
+                    innerObj[prop] = obj[prop];
+                    arr.push(innerObj)
+                }
+            }
+            restaurant.push({
+                "orders_grouped_by_pickup": arr
+            });
+        });
         res.json(restaurants);
         /*
         Promise.all(_.map(restaurants, function (restaurant) {
