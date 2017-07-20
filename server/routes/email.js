@@ -219,7 +219,7 @@ exports.sendROEmail = function (req, res) {
             for (var prop in pickup_times) {
                 if (pickup_times.hasOwnProperty(prop)) {
                     var innerObj = {};
-                    innerObj[prop] = obj[prop];
+                    innerObj[prop] = pickup_times[prop];
                     arr.push(innerObj)
                 }
             }
