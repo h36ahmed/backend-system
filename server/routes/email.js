@@ -162,6 +162,15 @@ exports.sendROEmail = function (req, res) {
 
     var roEmail = new EmailTemplate(path.join(templatesDir, 'restaurant-orders'));
 
+    var query = req.query;
+    var where = {};
+
+    // QUERY PARAMETERS
+
+    if (query.hasOwnProperty('order_date') && query.order_date.length > 0) {
+        where.order_date = query.order_date;
+    }
+
     models.restaurants.findAll({
         attributes: ['id', 'name'],
         include: [{
