@@ -11,6 +11,22 @@
         ------------------------------------- */
         @import url('https://fonts.googleapis.com/css?family=Nunito+Sans');
 
+        .email-masthead {
+          padding: 25px 0;
+          text-align: center;
+          background-color: #F47820;
+        }
+
+        .email-masthead_logo {
+          width: 94px;
+        }
+
+        .email-masthead_name {
+          font-size: 16px;
+          font-weight: bold;
+          color: #fff;
+          text-decoration: none;
+        }
         @media only screen and (max-width: 640px) {
             body {
                 padding: 0 !important;
@@ -63,10 +79,12 @@
                             <td class="content-wrap">
                                 <meta itemprop="name" content="Confirm Email" />
                                 <table width="100%" cellpadding="0" cellspacing="0">
-                                    <tr class="ls-header">
-                                        <td class="content-block">
-                                            <h1>Lunch Society</h1>
-                                        </td>
+                                    <tr>
+                                      <td class="email-masthead">
+                                        <a href="https://example.com" class="email-masthead_name">
+                                            <img src="https://www.lunchsociety.ca/assets/img/lunch-society-white-logo.png"/>
+                                        </a>
+                                      </td>
                                     </tr>
                                     <tr>
                                         <td class="content-block ls-body">
@@ -79,17 +97,14 @@
                                             orders for {{restaurant.meals[0].name}}for your restaurant, {{restaurant.name}}, on <strong>{{restaurant.meals[0].offers[0].offer_date}}</strong>:
                                         </td>
                                     </tr>
-                                    {{#each estaurant.meals[0].offers[0].orders}}
-                                    <tr class="">
-                                        <td class="content-block">
-                                            <h2 class="ls-pickup-time">Pick-Up Time: <strong>{{this.pickup_time.pickup_time}}</strong></h2>
-                                        </td>
-                                    </tr>
+                                    {{#each restaurant.meals[0].offers[0].orders}}
                                     <tr>
                                         <td class="content-block">
                                             <ul>
-                                                <li></li>
-                                                <li>Logan Wol - logan@gmail.com</li>
+                                                <li>{{this.id}} -
+                                                    {{this.customer.first_name"}}
+                                                    {{this.customer.last_name}}
+                                                    - {{this.pickup_time.pickup_time}} </li>
                                             </ul>
                                         </td>
                                     </tr>
@@ -101,7 +116,21 @@
                     <div class="footer">
                         <table width="100%">
                             <tr>
-                                <td class="aligncenter content-block">Follow <a href="http://twitter.com/mail_gun">@Lunch_Society</a> on Twitter.</td>
+                              <td>
+                                <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0">
+                                  <tr>
+                                    <td class="content-cell" align="center">
+                                      <p class="sub align-center">&copy; 2017 LunchSociety. All rights reserved.</p>
+                                      <p class="sub align-center">
+                                        LunchSociety, Inc.
+                                        <br>449 Drake Circle
+                                        <br>Waterloo, Ontario
+                                        <br>Canada
+                                      </p>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </td>
                             </tr>
                         </table>
                     </div>

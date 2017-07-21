@@ -197,34 +197,7 @@ exports.sendROEmail = function (req, res) {
             }]
         }]
     }).then(function (restaurants) {
-        var ordersGrouped = []
-        _.each(restaurants, function(restaurant) {
 
-            var pickup_times = {};
-            _.each(restaurant.meals[0].offers[0].orders, function(order) {
-                if (typeof pickup_times[order.pickup_time.pickup_time] === 'undefined') {
-                    pickup_times[order.pickup_time.pickup_time] = [];
-                }
-                pickup_times[order.pickup_time.pickup_time].push(order);
-            });
-
-            var pickupTimeKeys = _.keys(pickup_times);
-
-            var pickupTimeValues = _.values(pickup_times);
-
-            for( var i = 0; i < pickupTimeValues.length; i++) {
-                var pickupTimeKey = pickupTimeKeys[i]
-                ordersGrouped.push({
-                     pickupTimeKey: pickupTimeValues[i]
-                });
-            }
-
-            restaurant.orders_grouped = ordersGrouped;
-        });
-
-        res.json(ordersGrouped);
-        
-        /*
         Promise.all(_.map(restaurants, function (restaurant) {
                 return template.render(restaurant)
                     .then(function (results) {
@@ -247,7 +220,7 @@ exports.sendROEmail = function (req, res) {
                     console.info('Messages sent to postmark');
                 });
             });
-            */
+        
     }, function (e) {
         res.status(500).json(e);
     });
