@@ -26,19 +26,19 @@ exports.createSubscription = function (req, res) {
             if (referralCodes.length == 0 || referralCodes === null) {
                 res.json(404);
             } else {
-                executePayment(paymentDetails);
+                executePayment(paymentDetails, res);
             }
         }, function(e) {
             res.status(500).send();
         });
 
     } else {
-        executePayment(paymentDetails);
+        executePayment(paymentDetails, res);
     }
 
 };
 
-var executePayment = function(paymentDetails) {
+var executePayment = function(paymentDetails, res) {
     stripe.customers.create({
         email: paymentDetails.email,
         source: paymentDetails.stripe_token
