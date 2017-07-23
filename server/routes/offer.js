@@ -14,8 +14,8 @@ exports.list = function (req, res) {
             model: models.restaurants,
             where: req.query.restaurant ? {id: parseInt(req.query.restaurant)} : {},
             attributes: ['id', 'name', 'longitude', 'latitude', 'street_address']
-            }]
-        }];
+        }]
+    }];
 
     if (query.hasOwnProperty('offer_date') && query.offer_date.length > 0) {
         where.offer_date = query.offer_date;
