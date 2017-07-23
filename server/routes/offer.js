@@ -44,6 +44,10 @@ exports.list = function (req, res) {
         });
     }
 
+    if (query.hasOwnProperty('offer_status') && query.offer_status.length > 0) {
+        where.status = query.offer_status
+    }
+
     models.offers.findAll({
         where: where,
         include: include,
