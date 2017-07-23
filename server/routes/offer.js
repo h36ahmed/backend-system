@@ -47,7 +47,7 @@ exports.list = function (req, res) {
     models.offers.findAll({
         where: where,
         include: include,
-        order: [['offer_date', 'DESC']]
+        order: 'offer_date DESC'
     }).then(function (offers) {
         res.json(offers);
     }, function (e) {
