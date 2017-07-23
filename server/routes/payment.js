@@ -23,7 +23,7 @@ exports.createSubscription = function (req, res) {
         models.referral_codes.findAll({
             where: where
         }).then(function(referralCodes) {
-            if (referralCodes === null) {
+            if (referralCodes.length == 0 || referralCodes === null) {
                 res.json(404);
             } else {
                 executePayment(paymentDetails);
