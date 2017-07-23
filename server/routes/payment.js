@@ -20,7 +20,7 @@ exports.createSubscription = function (req, res) {
         var where = {};
         where.referral_code = paymentDetails.promo_code;
 
-        models.referralCodes.findAll({
+        models.referral_codes.findAll({
             where: where
         }).then(function(referralCodes) {
             if (referralCodes === null) {
