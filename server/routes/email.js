@@ -69,7 +69,7 @@ function complete(err) {
         response.status(err.status).send();
         console.log("got an error: ", err.msg);
     } else {
-        response.status(200).send();
+        response.status(200).send('Successful');
     }
 }
 
@@ -220,7 +220,7 @@ exports.sendROEmail = function (req, res) {
                     console.info('Messages sent to postmark');
                 });
             });
-        
+
     }, function (e) {
         res.status(500).json(e);
     });
