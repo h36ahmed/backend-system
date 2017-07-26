@@ -14,8 +14,8 @@ exports.list = function (req, res) {
             model: models.restaurants,
             where: req.query.restaurant ? {id: parseInt(req.query.restaurant)} : {},
             attributes: ['id', 'name', 'longitude', 'latitude', 'street_address']
-            }]
-        }];
+        }]
+    }];
 
     if (query.hasOwnProperty('offer_date') && query.offer_date.length > 0) {
         where.offer_date = query.offer_date;
@@ -42,6 +42,10 @@ exports.list = function (req, res) {
                 attributes: ['pickup_time']
             }]
         });
+    }
+
+    if (query.hasOwnProperty('offer_status') && query.offer_status.length > 0) {
+        where.status = query.offer_status
     }
 
     models.offers.findAll({
@@ -113,7 +117,7 @@ exports.offers = function (req, res) {
                     $lte: weekDetails.to_date
                 }
             },
-            order: [['id', 'DESC']],
+            order: [['offer_date', 'DESC']],
             include: [{
                 attributes: ['id', 'name', 'ingredients'],
                 model: models.meals,

@@ -100,7 +100,7 @@ var sendOwnerWelcomeEmail = function (data, res) {
 };
 
 var sendOrderEmail = function (data, res) {
-    data.date = moment(data.date).format('MMMM DD, YYYY')
+    data.date = moment(data.date).add(1, 'd').format('MMMM DD, YYYY')
 
     var locals = {
         from: from_who,
@@ -116,7 +116,7 @@ var sendOrderEmail = function (data, res) {
 
 // Cancel Order Email
 var sendCOEmail = function (data, res) {
-    data.date = moment(data.date).format('MMMM DD, YYYY')
+    data.date = moment(data.date).add(1, 'd').format('MMMM DD, YYYY')
 
     var locals = {
         from: from_who,
