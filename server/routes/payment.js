@@ -76,7 +76,7 @@ var executePayment = function(paymentDetails, res) {
                         userAttributes.trial_start_date = attributes.cycle_start_date;
                         userAttributes.trial_end_date = attributes.cycle_end_date;
                         userAttributes.trial_length = 30;
-                        email.sendPreorderEmail(res);
+                        email.sendPreorderEmail(userAttributes, res);
                         // email.sendCustomerWelcomeEmail(userAttributes, res);
                     }, function (e) {
                         res.status(400).json(e);
