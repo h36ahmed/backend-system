@@ -143,6 +143,19 @@ var sendPasswordResetEmail = function (data, res) {
     send(locals, complete);
 }
 
+var sendPreorderEmail = function (data, res) {
+
+    var locals = {
+        from: from_who,
+        data: data,
+        templateID: 2637661
+    }
+
+    response = res;
+
+    send(locals, complete);
+}
+
 
 function formatDate(date) {
     var dd = date.getDate();
@@ -257,6 +270,10 @@ exports.sendEmail = function (req, res) {
                 email: email
             }, res);
             break;
+        case "pre-order":
+            sendPreorderEmail({
+                email: email
+            }, res);
         default:
             res.status(204).send();
     }
@@ -267,3 +284,4 @@ exports.sendOwnerWelcomeEmail = sendOwnerWelcomeEmail
 exports.sendOrderEmail = sendOrderEmail;
 exports.sendCOEmail = sendCOEmail;
 exports.sendPasswordResetEmail = sendPasswordResetEmail;
+exports.sendPreorderEmail = sendPreorderEmail;
