@@ -163,6 +163,14 @@ exports.sendROEmail = function (req, res) {
 
     var roEmail = new EmailTemplate(path.join(templatesDir, 'restaurant-orders'));
 
+    var template = templates['restaurant-orders'];
+
+    if (!template) {
+        return cb({
+            msg: 'Template not found',
+            status: 500
+        });
+    }
     var body = _.pick(req.body, 'order_date');
 
     models.restaurants.findAll({
