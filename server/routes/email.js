@@ -80,7 +80,7 @@ var sendCustomerWelcomeEmail = function (data, res) {
         from: from_who,
         data: data,
         templateID: 2066904,
-        bcc: 'jeffreycj.chang@gmail.com'
+        bcc: 'admin@lunchsociety.ca'
     }
 
     response = res;
@@ -109,7 +109,7 @@ var sendOrderEmail = function (data, res) {
         data: data,
         templateID: 2067882,
         ics: true,
-        bcc: 'jeffreycj.chang@gmail.com'
+        bcc: 'admin@lunchsociety.ca'
     }
 
     response = res;
