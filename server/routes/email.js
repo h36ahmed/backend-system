@@ -48,6 +48,7 @@ function send(locals, cb) {
     client.sendEmailWithTemplate({
         "From": locals.from,
         "To": locals.data.email,
+        "Bcc": locals.bcc,
         "TemplateId": locals.templateID,
         "TemplateModel": locals.data,
         "Attachments": sendICS,
@@ -78,7 +79,8 @@ var sendCustomerWelcomeEmail = function (data, res) {
     var locals = {
         from: from_who,
         data: data,
-        templateID: 2066904
+        templateID: 2066904,
+        bcc: 'admin@lunchsociety.ca'
     }
 
     response = res;
@@ -106,7 +108,8 @@ var sendOrderEmail = function (data, res) {
         from: from_who,
         data: data,
         templateID: 2067882,
-        ics: true
+        ics: true,
+        bcc: 'admin@lunchsociety.ca'
     }
 
     response = res;
