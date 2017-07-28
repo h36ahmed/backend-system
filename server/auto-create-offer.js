@@ -29,7 +29,7 @@ models.restaurants.findAll()
           }]
         })
         .then(meal => {
-          console.log('meal', meal)
+          console.log('meal.toJSON()', meal.toJSON())
           const restaurantDefaultMealId = meal.toJSON().id
 
           models.offers.create({
