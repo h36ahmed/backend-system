@@ -177,9 +177,7 @@ function formatDate(date) {
 // POST /api/v1/sendROEmail
 exports.sendROEmail = function (req, res) {
 
-    var roEmail = new EmailTemplate(path.join(templatesDir, 'restaurant-orders'));
-
-    var template = templates['restaurant-orders'];
+    var template = new EmailTemplate(path.join(templatesDir, 'restaurant-orders'));
 
     if (!template) {
         return cb({
@@ -223,9 +221,9 @@ exports.sendROEmail = function (req, res) {
     }).then(function (restaurants) {
 
         Promise.all(_.map(restaurants, function (restaurant) {
-                return template.render(restaurant)
+                return template.render(restaurant.toJSON())
                     .then(function (results) {
-                        const todayDate = formatDate(new Date());
+                        var todayDate = formatDate(new Date());
                         return {
                             From: from_who,
                             To: restaurant.owner.user.email,
@@ -234,6 +232,9 @@ exports.sendROEmail = function (req, res) {
                             HtmlBody: results.html,
                             TextBody: results.text
                         }
+                    })
+                    .catch(err => {
+                        console.log('err', err)
                     })
             }))
             .then(function (messages) {
@@ -244,7 +245,6 @@ exports.sendROEmail = function (req, res) {
                     console.info('Messages sent to postmark');
                 });
             });
-
     }, function (e) {
         res.status(500).json(e);
     });

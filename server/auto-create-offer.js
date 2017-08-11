@@ -19,7 +19,7 @@ models.restaurants.findAll()
       }]
     })
     .then(offers => {
-      // If there are no offeres for that restaurant then find the default meal and make an offer off it
+      // If there are no offers for that restaurant then find the default meal and make an offer off it
       if (offers.length === 0) {
         models.meals.findOne({
           where: { default_meal: true },
