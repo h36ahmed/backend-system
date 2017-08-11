@@ -12,30 +12,8 @@ var stripe = require("stripe")("sk_live_TZpALEAqujGW2Td9rpEod8fu");
 // POST /api/v1/create-subscription
 exports.createSubscription = function (req, res) {
 
-    var paymentDetails = _.pick(req.body, 'email', 'stripe_token', 'plan', 'first_name', 'last_name', 'postal_code', 'password', 'promo_code');
-
-
-    if (paymentDetails.promo_code != '') {
-
-        var where = {};
-        where.referral_code = paymentDetails.promo_code;
-
-        models.referral_codes.findAll({
-            where: where
-        }).then(function(referralCodes) {
-            if (referralCodes.length == 0 || referralCodes === null) {
-                res.json(404);
-            } else {
-                executePayment(paymentDetails, res);
-            }
-        }, function(e) {
-            res.status(500).send();
-        });
-
-    } else {
-        executePayment(paymentDetails, res);
-    }
-
+    var paymentDetails = _.pick(req.body, 'email', 'stripe_token', 'plan', 'first_name', 'last_name', 'password', 'promo_code');
+    executePayment(paymentDetails, res);
 };
 
 var executePayment = function(paymentDetails, res) {
@@ -64,7 +42,7 @@ var executePayment = function(paymentDetails, res) {
                         first_name: paymentDetails.first_name,
                         last_name: paymentDetails.last_name,
                         meals_remaining: paymentDetails.plan.meals,
-                        postal_code: paymentDetails.postal_code,
+                        postal_code: "",
                         stripe_customer_id: customerStripeID,
                         stripe_subscription_id: subscription.id,
                         cycle_start_date: moment().format(),
