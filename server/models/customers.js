@@ -61,8 +61,7 @@ module.exports = function(sequelize, DataTypes) {
             }
         },
         postal_code: {
-            type: DataTypes.STRING,
-            allowNull: false
+            type: DataTypes.STRING
         },
         profile_image: {
             type: DataTypes.STRING
