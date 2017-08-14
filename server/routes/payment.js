@@ -6,8 +6,8 @@ var cryptojs = require('crypto-js');
 
 moment.tz.setDefault("America/Toronto");
 
-var stripe = require("stripe")("sk_test_shNAbxyQyXRm3LCZLmladgez");
-//var stripe = require("stripe")("sk_live_TZpALEAqujGW2Td9rpEod8fu");
+//var stripe = require("stripe")("sk_test_shNAbxyQyXRm3LCZLmladgez");
+var stripe = require("stripe")("sk_live_TZpALEAqujGW2Td9rpEod8fu");
 
 // POST /api/v1/create-subscription
 exports.createSubscription = function (req, res) {
@@ -43,7 +43,7 @@ var executePayment = function(paymentDetails, res) {
                         last_name: paymentDetails.last_name,
                         meals_remaining: paymentDetails.plan.meals,
                         stripe_customer_id: customerStripeID,
-                        postal_code: "M5V",
+                        postal_code: "Unavailable",
                         stripe_subscription_id: subscription.id,
                         cycle_start_date: moment().format(),
                         cycle_end_date: moment().add(30, 'days').format(),
