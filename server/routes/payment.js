@@ -43,6 +43,7 @@ var executePayment = function(paymentDetails, res) {
                         last_name: paymentDetails.last_name,
                         meals_remaining: paymentDetails.plan.meals,
                         stripe_customer_id: customerStripeID,
+                        postal_code: "  ",
                         stripe_subscription_id: subscription.id,
                         cycle_start_date: moment().format(),
                         cycle_end_date: moment().add(30, 'days').format(),
