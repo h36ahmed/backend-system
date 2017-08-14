@@ -49,6 +49,7 @@ var executePayment = function(paymentDetails, res) {
                         payment_plan_id: paymentDetails.plan.id,
                         user_id: paymentDetails.user_id
                     };
+                    console.log(attributes)
                     models.customers.create(attributes).then(function (customer) {
                         userAttributes.trial_start_date = attributes.cycle_start_date;
                         userAttributes.trial_end_date = attributes.cycle_end_date;
@@ -56,6 +57,7 @@ var executePayment = function(paymentDetails, res) {
                         email.sendPreorderEmail(userAttributes, res);
                         // email.sendCustomerWelcomeEmail(userAttributes, res);
                     }, function (e) {
+                        console.log("fails here")
                         res.status(400).json(e);
                     });
                 }, function (e) {
