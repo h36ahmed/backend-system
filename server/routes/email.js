@@ -238,11 +238,11 @@ exports.sendROEmail = function (req, res) {
                     })
             }))
             .then(function (messages) {
-                return client.sendEmailBatch(messages, function (err, batchResults) {
+                client.sendEmailBatch(messages, function (err, batchResults) {
                     // Throwing inside a promise will just reject the promise
                     // not stop your server
                     if (err) throw err
-                    console.info('Messages sent to postmark');
+                    return console.info('Messages sent to postmark');
                 });
             });
     }, function (e) {
