@@ -221,6 +221,8 @@ exports.sendROEmail = function (req, res) {
     }).then(function (restaurants) {
 
         Promise.all(_.map(restaurants, function (restaurant) {
+                console.log('restaurant.meals[0].offers[0].offer_date', restaurant.meals[0].offers[0].offer_date)
+                console.log(`restaurant.meals[0].offers[0].offer_date.split(' 00:00:00')[0]`, restaurant.meals[0].offers[0].offer_date.split(' 00:00:00')[0])
                 restaurant.meals[0].offers[0].offer_date = restaurant.meals[0].offers[0].offer_date.split(' 00:00:00')[0]
 
                 return template.render(restaurant.toJSON())
