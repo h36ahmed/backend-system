@@ -94,7 +94,7 @@
                                     <tr class="">
                                         <td class="content-block">
                                             Here are your <strong><%= meals[0].offers[0].orders.length %></strong>
-                                            orders for <%= meals[0].name %> for your restaurant, <%= name %>, on <strong><%= meals[0].offers[0].offer_date.split(' 00:00:00')[0] %></strong>
+                                            orders for <%= meals[0].name %> for your restaurant, <%= name %>, on <strong><%= meals[0].offers[0].offer_date %></strong>
                                         </td>
                                     </tr>
                                     <% meals[0].offers[0].orders.forEach(order => { %>
