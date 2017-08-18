@@ -223,7 +223,7 @@ exports.sendROEmail = function (req, res) {
         Promise.all(_.map(restaurants, function (restaurant) {
                 const restaurantData = restaurant
                 console.log('restaurantData.meals[0].offers[0].offer_date', restaurantData.meals[0].offers[0].offer_date)
-                console.log(`restaurantData.meals[0].offers[0].offer_date.split('T')`, restaurantData.meals[0].offers[0].offer_date.split('T'))
+                console.log(`restaurantData.meals[0].offers[0].offer_date.split('T')`, typeof restaurantData.meals[0].offers[0].offer_date)
                 console.log('restaurant.meals[0].offers[0].offer_date', restaurant.meals[0].offers[0].offer_date)
                 console.log('hello')
                 console.log(`restaurant.meals[0].offers[0].offer_date.split('T')`, restaurant.meals[0].offers[0].offer_date.split('T'))
