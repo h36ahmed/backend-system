@@ -186,6 +186,7 @@ exports.sendROEmail = function (req, res) {
         });
     }
     var body = _.pick(req.body, 'order_date');
+    body.status = 'active'
 
     models.restaurants.findAll({
         attributes: ['id', 'name'],
