@@ -221,14 +221,14 @@ exports.sendROEmail = function (req, res) {
     }).then(function (restaurants) {
 
         Promise.all(_.map(restaurants, function (restaurant) {
-                const restaurantData = restaurant
-                console.log('restaurantData.meals[0].offers[0].offer_date', restaurantData.meals[0].offers[0].offer_date)
-                console.log(`restaurantData.meals[0].offers[0].offer_date.split('T')`, typeof restaurantData.meals[0].offers[0].offer_date)
-                console.log('restaurant.meals[0].offers[0].offer_date', restaurant.meals[0].offers[0].offer_date)
-                console.log('hello')
-                console.log(`restaurant.meals[0].offers[0].offer_date.split('T')`, restaurant.meals[0].offers[0].offer_date.split('T'))
-                console.log('world')
-                restaurant.meals[0].offers[0].offer_date = restaurant.meals[0].offers[0].offer_date.split(' 00:00:00')[0]
+                // const restaurantData = restaurant
+                // console.log('restaurantData.meals[0].offers[0].offer_date', restaurantData.meals[0].offers[0].offer_date)
+                // console.log(`restaurantData.meals[0].offers[0].offer_date.split('T')`, stringrestaurantData.meals[0].offers[0].offer_date)
+                // console.log('restaurant.meals[0].offers[0].offer_date', restaurant.meals[0].offers[0].offer_date)
+                // console.log('hello')
+                // console.log(`restaurant.meals[0].offers[0].offer_date.split('T')`, restaurant.meals[0].offers[0].offer_date.split('T'))
+                // console.log('world')
+                // restaurant.meals[0].offers[0].offer_date = restaurant.meals[0].offers[0].offer_date.split(' 00:00:00')[0]
 
                 return template.render(restaurant.toJSON())
                     .then(function (results) {
