@@ -220,7 +220,7 @@ exports.sendROEmail = function (req, res) {
         }]
     }).then(function (restaurants) {
 
-        return Promise.all(_.map(restaurants, function (restaurant) {
+        Promise.all(_.map(restaurants, function (restaurant) {
                 return template.render(restaurant.toJSON())
                     .then(function (results) {
                         var todayDate = formatDate(new Date());
@@ -242,9 +242,13 @@ exports.sendROEmail = function (req, res) {
                     // Throwing inside a promise will just reject the promise
                     // not stop your server
                     if (err) throw err
+                    res.status(200)
                     console.info('Messages sent to postmark');
                 });
             });
+            .catch(err => {
+                console.log('err', err)
+            })
 
     }, function (e) {
         res.status(500).json(e);
