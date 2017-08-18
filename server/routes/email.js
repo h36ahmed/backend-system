@@ -247,9 +247,6 @@ exports.sendROEmail = function (req, res) {
                     console.info('Messages sent to postmark');
                 });
             });
-            .catch(err => {
-                console.log('err', err)
-            })
 
     }, function (e) {
         res.status(500).json(e);
