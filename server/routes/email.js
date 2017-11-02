@@ -185,6 +185,7 @@ exports.sendROEmail = function (req, res) {
         });
     }
     var body = _.pick(req.body, 'order_date');
+    body.status = 'active'
 
     models.restaurants.findAll({
         attributes: ['id', 'name'],
@@ -241,9 +242,11 @@ exports.sendROEmail = function (req, res) {
                     // Throwing inside a promise will just reject the promise
                     // not stop your server
                     if (err) throw err
+                    res.status(200).send()
                     console.info('Messages sent to postmark');
                 });
             });
+
     }, function (e) {
         res.status(500).json(e);
     });

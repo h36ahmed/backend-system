@@ -39,7 +39,7 @@ BEGIN:VEVENT
 DTSTAMP:${moment().format('YYYYMMDDTHHmmss')}
 DTSTART:${date}T${start_time}00
 DTEND:${date}T${end_time}00
-SUMMARY:Meal reserved for ${moment(attributes.date).format('MMMM DD, YYYY')}
+SUMMARY:Meal reserved for ${moment(attributes.date).add(2, 'd').format('MMMM DD, YYYY')}
 DESCRIPTION:Your meal, ${attributes.meal.name}, is reserved at ${attributes.restaurant.name} at ${attributes.restaurant.street_address}
 LOCATION:${attributes.restaurant.name}, ${attributes.restaurant.street_address}, ${attributes.restaurant.city}, ${attributes.restaurant.postal_code}
 STATUS:confirmed

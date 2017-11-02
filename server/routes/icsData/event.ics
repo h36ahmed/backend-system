@@ -3,15 +3,15 @@ VERSION:2.0
 CALSCALE:GREGORIAN
 PRODID:-//Adam Gibbons//agibbons.com//ICS: iCalendar Generator
 BEGIN:VEVENT
-DTSTAMP:20170718T184354
-DTSTART:20170718T113000
-DTEND:20170718T114500
-SUMMARY:Meal reserved for July 18, 2017
-DESCRIPTION:Your meal, Chocolate Milkshake, is reserved at Riddle Room at 579 Yonge Street
-LOCATION:Riddle Room, 579 Yonge Street, Toronto, M4Y1Z2
+DTSTAMP:20170817T181005
+DTSTART:20170817T241500
+DTEND:20170817T243000
+SUMMARY:Meal reserved for August 17, 2017
+DESCRIPTION:Your meal, Khao Soi with braised beef, is reserved at PAI at 18 Duncan Street
+LOCATION:PAI, 18 Duncan Street, Toronto, M5H3G6
 STATUS:confirmed
 GEO:null;null
-ATTENDEE;CN=Chris:mailto:jeffreycj.chang@gmail.com
+ATTENDEE;CN=Chris:mailto:chirsrock@hollywood.com
 ORGANIZER;CN=Lunch Society:mailto:admin@lunchsociety.ca
 CATEGORIES:10k races,Memorial Day Weekend,Boulder CO
 BEGIN:VALARM
