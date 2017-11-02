@@ -4,8 +4,8 @@ var models = require('../db.js');
 var aws = {
     bucket: 'ls-frontend',
     region: 'ca-central-1',
-    secret: 'AKIAIIFU7XS25I6B7FMA',
-    key: 'i+sAULkpYNsysKv/Z7+Kx5lPr2OAhRmxIGywKiru'
+    secret: '',
+    key: ''
 }
 var crypto = require('crypto');
 var moment = require('moment');

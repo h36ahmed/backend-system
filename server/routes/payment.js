@@ -6,8 +6,7 @@ var cryptojs = require('crypto-js');
 
 moment.tz.setDefault("America/Toronto");
 
-//var stripe = require("stripe")("sk_test_shNAbxyQyXRm3LCZLmladgez");
-var stripe = require("stripe")("sk_live_TZpALEAqujGW2Td9rpEod8fu");
+var stripe = require("stripe")("sk_test_shNAbxyQyXRm3LCZLmladgez");
 
 // POST /api/v1/create-subscription
 exports.createSubscription = function (req, res) {
@@ -37,7 +36,7 @@ var executePayment = function(paymentDetails, res) {
                 }
                 models.users.create(userAttributes).then(function (user) {
                     paymentDetails.user_id = user.id;
-                    userAttributes.name = 'Lunch Society Member';
+                    userAttributes.name = 'Member';
                     var attributes = {
                         first_name: paymentDetails.first_name,
                         last_name: paymentDetails.last_name,
